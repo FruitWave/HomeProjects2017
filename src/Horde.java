@@ -3,11 +3,7 @@ import java.awt.Graphics;
 
 public class Horde extends GameObject {
 	public Horde(int x, int y, int width, int height) {
-		super();
-		this.x = x;
-		this.y = y;
-		this.width = width;
-		this.height = height;
+		super(x, y, width, height);
 	}
 
 	public void update() {
@@ -17,7 +13,8 @@ public class Horde extends GameObject {
 	}
 
 	public void draw(Graphics littleBlueBox) {
-		//littleBlueBox.drawImage(SketcHex.alienImg, x, y, width, height, null);
+		// littleBlueBox.drawImage(SketcHex.alienImg, x, y, width, height,
+		// null);
 
 	}
 }
