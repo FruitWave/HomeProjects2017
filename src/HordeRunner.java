@@ -2,7 +2,7 @@ import javax.swing.JFrame;
 
 public class HordeRunner {
 	JFrame frame;
-	static final int width = 500;
+	static final int width = 1000;
 	static final int height = 800;
 	SketcHex hex;
 

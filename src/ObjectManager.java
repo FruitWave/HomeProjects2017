@@ -1,18 +1,27 @@
 
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.Random;
 
 public class ObjectManager {
 	ArrayList<GameObject> objects;
-
+	
 	private int score = 0;
-
+	/**
+	 * the below showScore method/variable/code does not work. This message has been printed below every instance where something related to it is mentioned.
+	 */
+	//Font funFont;
 	long enemyTimer = 0;
 	int enemySpawnTime = 1;
 
 	public ObjectManager() {
 		objects = new ArrayList<GameObject>();
+		/**
+		 * the below showScore method/variable/code does not work. This message has been printed below every instance where something related to it is mentioned.
+		 */
+		// funFont = new Font("Comic Sans MS", Font.CENTER_BASELINE, 30);
 	}
 
 	public void addObject(GameObject o) {
@@ -82,6 +91,21 @@ public class ObjectManager {
 
 	public void setScore(int s) {
 		score = s;
+	}
+	
+	/**
+	 * the below showScore method/variable/code does not work. This message has been printed below every instance where something related to it is mentioned.
+	 */
+//	public void showScore(Graphics g) {
+//		g.setColor(Color.WHITE);
+//		g.fillRect(800, 200, 75, 25);
+//		g.setColor(Color.BLACK);
+//		g.setFont(funFont);
+//		g.drawString(xavier, 805, 22);
+//	}
+	
+	public void cheatScore(int s){
+		setScore(score + s);
 	}
 
 	public void reset() {

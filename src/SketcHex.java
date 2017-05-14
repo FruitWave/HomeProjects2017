@@ -8,6 +8,7 @@ import java.awt.event.KeyListener;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
@@ -18,16 +19,14 @@ public class SketcHex extends JPanel implements ActionListener, KeyListener {
 	final int END_STATE = 2;
 	static int currentState = 0;
 	static int casualtyCount;
-	Hecker flynn = new Hecker(250, 700, 25, 50);
+	Hecker flynn = new Hecker(250, 700, 30, 60);
+	Horde arnold = new Horde(20, 500, 30, 60);
 	ObjectManager megahead = new ObjectManager();
-	SketcHex heimey = new SketcHex();
-	int charles = megahead.getScore();
-	String xavier = Integer.toString(charles);
 
 	public SketcHex() {
 		gameSpeed = new Timer(1000 / 120, this);
 		// font = new Font("Arial", Font.PLAIN, 48);
-		// funFont = new Font("Comic Sans MS", Font.CENTER_BASELINE, 30);
+		// Font funFont = new Font("Comic Sans MS", Font.CENTER_BASELINE, 30);
 		casualtyCount = 0;
 		megahead.addObject(flynn);
 		// try {
@@ -44,14 +43,7 @@ public class SketcHex extends JPanel implements ActionListener, KeyListener {
 	}
 
 	public void startGame() {
-		// TODO Auto-generated method stub
 		gameSpeed.start();
-	}
-
-	public void scorescratcher(Graphics claw) {
-		claw.setColor(Color.WHITE);
-		claw.fillRect(800, 200, 75, 25);
-		claw.drawString(xavier, 805, 22);
 	}
 
 	void updateMenuState() {
@@ -60,7 +52,7 @@ public class SketcHex extends JPanel implements ActionListener, KeyListener {
 
 	void updateGameState() {
 		flynn.update();
-		heimey.scorescratcher(claw);
+		arnold.update();
 	}
 
 	void updateEndState() {
@@ -73,15 +65,22 @@ public class SketcHex extends JPanel implements ActionListener, KeyListener {
 	}
 
 	void drawGameState(Graphics b) {
-
 		b.setColor(Color.GREEN);
 		b.fillRect(0, 0, 1000, 1000);
 		flynn.draw(b);
+		arnold.draw(b);
+
 	}
 
 	void drawEndState(Graphics c) {
 		c.setColor(Color.red);
 		c.fillRect(0, 0, 1000, 1000);
+		/**
+		 * the below showScore method/variable/code does not work. This message
+		 * has been printed below every instance where something related to it
+		 * is mentioned.
+		 */
+		// megahead.showScore(c);
 	}
 
 	public void paintComponent(Graphics delta) {
@@ -97,9 +96,6 @@ public class SketcHex extends JPanel implements ActionListener, KeyListener {
 
 	@Override
 	public void keyTyped(KeyEvent e) {
-		if (e.getKeyCode() == KeyEvent.VK_1) {
-			megahead.setScore(charles + 50000);
-		}
 	}
 
 	@Override
@@ -124,6 +120,13 @@ public class SketcHex extends JPanel implements ActionListener, KeyListener {
 				currentState = MENU_STATE;
 			}
 			System.out.println(currentState);
+		}
+
+		if (e.getKeyCode() == KeyEvent.VK_1) {
+			String a = JOptionPane.showInputDialog("Please enter the additional score amount below.");
+			int b = Integer.parseInt(a);
+			megahead.cheatScore(b);
+			System.out.println(megahead.getScore());
 		}
 	}
 
