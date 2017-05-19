@@ -15,7 +15,9 @@ public class Hecker extends GameObject {
 		super.update();
 		x += transpex;
 		y += transpey;
-		
+		if (x >= 1000) {
+
+		}
 	}
 
 	public void draw(Graphics pvd) {

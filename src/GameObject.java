@@ -18,6 +18,7 @@ public abstract class GameObject {
 
 	public void update() {
 		collisionArea.setBounds(x, y, width, height);
+		
 	}
 
 	public void draw(Graphics g) {

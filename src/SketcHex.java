@@ -13,6 +13,7 @@ import javax.swing.JPanel;
 import javax.swing.Timer;
 
 public class SketcHex extends JPanel implements ActionListener, KeyListener {
+	Color roomColor;
 	Timer gameSpeed;
 	final int MENU_STATE = 0;
 	final int GAME_STATE = 1;
@@ -23,6 +24,7 @@ public class SketcHex extends JPanel implements ActionListener, KeyListener {
 	Horde arnold;
 	Horde rick;
 	ObjectManager megahead;
+	Room base;
 
 	public SketcHex() {
 		gameSpeed = new Timer(1000 / 120, this);
@@ -47,10 +49,13 @@ public class SketcHex extends JPanel implements ActionListener, KeyListener {
 		gameSpeed.start();
 		arnold = new Horde(20, 500, 30, 60, this);
 		rick = new Horde(20, 600, 30, 60, this);
+		base = new Room(0, 0, 1000, 1000, this);
 		megahead = new ObjectManager(this);
 		megahead.addObject(flynn);
 		megahead.addObject(arnold);
 		megahead.addObject(rick);
+		megahead.addObject(base);
+		roomColor = Color.green;
 	}
 
 	void updateMenuState() {
@@ -58,7 +63,6 @@ public class SketcHex extends JPanel implements ActionListener, KeyListener {
 	}
 
 	void updateGameState() {
-		
 		megahead.update();
 	}
 
@@ -72,7 +76,7 @@ public class SketcHex extends JPanel implements ActionListener, KeyListener {
 	}
 
 	void drawGameState(Graphics b) {
-		b.setColor(Color.GREEN);
+		b.setColor(roomColor);
 		b.fillRect(0, 0, 1000, 1000);
 		megahead.draw(b);
 
