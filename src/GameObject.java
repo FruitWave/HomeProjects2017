@@ -1,7 +1,7 @@
 import java.awt.Graphics;
 import java.awt.Rectangle;
 
-public class GameObject {
+public abstract class GameObject {
 	int x;
 	int y;
 	int width;

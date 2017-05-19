@@ -8,7 +8,6 @@ public class HordeRunner {
 
 	// constructor
 	public HordeRunner() {
-		// TODO Auto-generated constructor stub
 		frame = new JFrame();
 		hex = new SketcHex();
 		setup();

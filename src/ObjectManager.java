@@ -7,21 +7,27 @@ import java.util.Random;
 
 public class ObjectManager {
 	ArrayList<GameObject> objects;
-	
+	SketcHex hex;
 	private int score = 0;
+	// static int
 	/**
-	 * the below showScore method/variable/code does not work. This message has been printed below every instance where something related to it is mentioned.
+	 * the below showScore method/variable/code does not work. This message has
+	 * been printed below every instance where something related to it is
+	 * mentioned.
 	 */
-	//Font funFont;
+	// Font funFont;
 	long enemyTimer = 0;
 	int enemySpawnTime = 1;
 
-	public ObjectManager() {
+	public ObjectManager(SketcHex hex) {
 		objects = new ArrayList<GameObject>();
 		/**
-		 * the below showScore method/variable/code does not work. This message has been printed below every instance where something related to it is mentioned.
+		 * the below showScore method/variable/code does not work. This message
+		 * has been printed below every instance where something related to it
+		 * is mentioned.
 		 */
 		// funFont = new Font("Comic Sans MS", Font.CENTER_BASELINE, 30);
+		this.hex = hex;
 	}
 
 	public void addObject(GameObject o) {
@@ -33,7 +39,7 @@ public class ObjectManager {
 			GameObject o = objects.get(i);
 			o.update();
 		}
-
+		checkCollision();
 		purgeObjects();
 	}
 
@@ -54,7 +60,7 @@ public class ObjectManager {
 
 	public void manageEnemies() {
 		if (System.currentTimeMillis() - enemyTimer >= enemySpawnTime) {
-			addObject(new Horde(new Random().nextInt(HordeRunner.width), 0, 200, 200));
+			addObject(new Horde(new Random().nextInt(HordeRunner.width), 0, 200, 200, hex));
 			enemyTimer = System.currentTimeMillis();
 		}
 	}
@@ -78,6 +84,15 @@ public class ObjectManager {
 							|| (o2 instanceof Horde && o1 instanceof Hecker)) {
 						o1.isAlive = false;
 						o2.isAlive = false;
+					} else if (o1 instanceof Horde && o2 instanceof Horde) {
+						o1.isAlive = true;
+						o2.isAlive = false;
+						Horde topdoggey = (Horde) o1;
+						System.out.println("horde o1");
+						topdoggey.color = Color.magenta;
+						topdoggey.width *= 2;
+						topdoggey.height *= 2;
+						topdoggey.speed += 1;
 					}
 
 				}
@@ -92,19 +107,21 @@ public class ObjectManager {
 	public void setScore(int s) {
 		score = s;
 	}
-	
+
 	/**
-	 * the below showScore method/variable/code does not work. This message has been printed below every instance where something related to it is mentioned.
+	 * the below showScore method/variable/code does not work. This message has
+	 * been printed below every instance where something related to it is
+	 * mentioned.
 	 */
-//	public void showScore(Graphics g) {
-//		g.setColor(Color.WHITE);
-//		g.fillRect(800, 200, 75, 25);
-//		g.setColor(Color.BLACK);
-//		g.setFont(funFont);
-//		g.drawString(xavier, 805, 22);
-//	}
-	
-	public void cheatScore(int s){
+	// public void showScore(Graphics g) {
+	// g.setColor(Color.WHITE);
+	// g.fillRect(800, 200, 75, 25);
+	// g.setColor(Color.BLACK);
+	// g.setFont(funFont);
+	// g.drawString(xavier, 805, 22);
+	// }
+
+	public void cheatScore(int s) {
 		setScore(score + s);
 	}
 

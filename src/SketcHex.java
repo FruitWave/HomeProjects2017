@@ -20,15 +20,16 @@ public class SketcHex extends JPanel implements ActionListener, KeyListener {
 	static int currentState = 0;
 	static int casualtyCount;
 	Hecker flynn = new Hecker(250, 700, 30, 60);
-	Horde arnold = new Horde(20, 500, 30, 60);
-	ObjectManager megahead = new ObjectManager();
+	Horde arnold;
+	Horde rick;
+	ObjectManager megahead;
 
 	public SketcHex() {
 		gameSpeed = new Timer(1000 / 120, this);
 		// font = new Font("Arial", Font.PLAIN, 48);
 		// Font funFont = new Font("Comic Sans MS", Font.CENTER_BASELINE, 30);
 		casualtyCount = 0;
-		megahead.addObject(flynn);
+
 		// try {
 		// alienImg =
 		// ImageIO.read(this.getClass().getResourceAsStream("alien.png"));
@@ -44,6 +45,12 @@ public class SketcHex extends JPanel implements ActionListener, KeyListener {
 
 	public void startGame() {
 		gameSpeed.start();
+		arnold = new Horde(20, 500, 30, 60, this);
+		rick = new Horde(20, 600, 30, 60, this);
+		megahead = new ObjectManager(this);
+		megahead.addObject(flynn);
+		megahead.addObject(arnold);
+		megahead.addObject(rick);
 	}
 
 	void updateMenuState() {
@@ -51,8 +58,8 @@ public class SketcHex extends JPanel implements ActionListener, KeyListener {
 	}
 
 	void updateGameState() {
-		flynn.update();
-		arnold.update();
+		
+		megahead.update();
 	}
 
 	void updateEndState() {
@@ -67,8 +74,7 @@ public class SketcHex extends JPanel implements ActionListener, KeyListener {
 	void drawGameState(Graphics b) {
 		b.setColor(Color.GREEN);
 		b.fillRect(0, 0, 1000, 1000);
-		flynn.draw(b);
-		arnold.draw(b);
+		megahead.draw(b);
 
 	}
 
@@ -144,7 +150,6 @@ public class SketcHex extends JPanel implements ActionListener, KeyListener {
 			updateMenuState();
 		} else if (currentState == GAME_STATE) {
 			updateGameState();
-
 		} else if (currentState == END_STATE) {
 			updateEndState();
 		}

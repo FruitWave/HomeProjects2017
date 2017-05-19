@@ -2,35 +2,47 @@ import java.awt.Color;
 import java.awt.Graphics;
 
 public class Horde extends GameObject {
-	SketcHex quarantine = new SketcHex();
+	SketcHex hex;
 	int transpex;
 	int transpey;
+	Color color;
+	int speed;
 
-	public Horde(int x, int y, int width, int height) {
+	public Horde(int x, int y, int width, int height, SketcHex hex) {
 		super(x, y, width, height);
 		transpex = 0;
 		transpey = 0;
+		this.hex = hex;
+		this.color = Color.darkGray;
+		this.speed = 1;
 	}
 
 	public void update() {
 		super.update();
-		if (quarantine.flynn.x > x) {
-			transpex++;
-		} else if (quarantine.flynn.x > x) {
-			transpex--;
+		if (hex.flynn.x > x) {
+			transpex = 0;
+			transpex += speed;
+		} else if (hex.flynn.x < x) {
+			transpex = 0;
+			transpex -= speed;
 		}
-		if (quarantine.flynn.y > y) {
-			transpey++;
-		} else if (quarantine.flynn.y > y) {
-			transpey--;
+		if (hex.flynn.y > y) {
+			transpey = 0;
+			transpey += speed;
+		} else if (hex.flynn.y < y) {
+			transpey = 0;
+			transpey -= speed;
 		}
+		x += transpex;
+		y += transpey;
+		// fix shaking
 
 	}
 
 	public void draw(Graphics pvd) {
 		// pvd.drawImage(SketcHex.alienImg, x, y, width, height,
 		// null);
-		pvd.setColor(Color.darkGray);
+		pvd.setColor(color);
 		pvd.fillRect(x, y, width, height);
 	}
 }
