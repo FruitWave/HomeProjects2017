@@ -31,20 +31,24 @@ public class Room extends GameObject {
 		// moving to the next room right
 		if (/* ( */hex.flynn.x >= 1000/* ) && (xNum == 1) */) {
 			System.out.println(">= 1000 x 2nd");
+			hex.hordeAdder = 2;
 			hex.flynn.x -= 1000;
 			hex.arnold.x -= 1000;
 			hex.rick.x -= 1000;
 			Color a = randomXColor();
 			hex.roomColor = a;
+			hex.enteredNewRoom();
 		}
 		// moving to the next room left
 		if (/* ( */hex.flynn.x <= 0/* ) && (xNum > 0) */) {
 			System.out.println("<= 0 x");
+			hex.hordeAdder = 2;
 			hex.flynn.x += 1000;
 			hex.arnold.x += 1000;
 			hex.rick.x += 1000;
 			Color a = randomXColor();
 			hex.roomColor = a;
+			hex.enteredNewRoom();
 		}
 	}
 

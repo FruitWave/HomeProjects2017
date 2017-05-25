@@ -7,6 +7,7 @@ public class Horde extends GameObject {
 	int transpey;
 	Color color;
 	int speed;
+	int deathPotential;
 
 	public Horde(int x, int y, int width, int height, SketcHex hex) {
 		super(x, y, width, height);
@@ -15,6 +16,7 @@ public class Horde extends GameObject {
 		this.hex = hex;
 		this.color = Color.darkGray;
 		this.speed = 1;
+		deathPotential = 1;
 	}
 
 	public void update() {
@@ -45,4 +47,5 @@ public class Horde extends GameObject {
 		pvd.setColor(color);
 		pvd.fillRect(x, y, width, height);
 	}
+
 }

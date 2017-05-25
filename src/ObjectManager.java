@@ -21,12 +21,6 @@ public class ObjectManager {
 
 	public ObjectManager(SketcHex hex) {
 		objects = new ArrayList<GameObject>();
-		/**
-		 * the below showScore method/variable/code does not work. This message
-		 * has been printed below every instance where something related to it
-		 * is mentioned.
-		 */
-		// funFont = new Font("Comic Sans MS", Font.CENTER_BASELINE, 30);
 		this.hex = hex;
 	}
 
@@ -59,10 +53,11 @@ public class ObjectManager {
 	}
 
 	public void manageEnemies() {
-		if (System.currentTimeMillis() - enemyTimer >= enemySpawnTime) {
-			addObject(new Horde(new Random().nextInt(HordeRunner.width), 0, 200, 200, hex));
-			enemyTimer = System.currentTimeMillis();
-		}
+		// if (System.currentTimeMillis() - enemyTimer >= enemySpawnTime) {
+		// addObject(new Horde(new Random().nextInt(HordeRunner.width), 0, 200,
+		// 200, hex));
+		// enemyTimer = System.currentTimeMillis();
+		// }
 	}
 
 	public void checkCollision() {
@@ -76,19 +71,53 @@ public class ObjectManager {
 					if ((o1 instanceof Horde && o2 instanceof Bullet)
 							|| (o2 instanceof Horde && o1 instanceof Bullet)) {
 						System.out.println("true");
-						score++;
-						System.out.println(score);
+						SketcHex.casualtyCount++;
+						System.out.println(SketcHex.casualtyCount);
 						o1.isAlive = false;
 						o2.isAlive = false;
-					} else if ((o1 instanceof Horde && o2 instanceof Hecker)
-							|| (o2 instanceof Horde && o1 instanceof Hecker)) {
+					} else if (o1 instanceof Horde && o2 instanceof Hecker) {
+						o1.isAlive = false;/* o1.isAlive = true; instead */
+						o2.isAlive = true;
+						// Horde deadHorde = (Horde) o1;
+						Hecker omflynn = (Hecker) o2;
+						omflynn.health -= 1;
+						// omflynn.health -= deadHorde.deathPotential;
+						System.out.println("Flynn's health is now " + omflynn.health + "! Be careful, and quick!");
 						o1.isAlive = false;
-						o2.isAlive = false;
+
+						// this temporary life grant to the horde is likely to
+						// cause an issue as it might be able to combine with
+						// other horde during that small temporary life grant
+						// period
+						SketcHex.casualtyCount++;
+						if (omflynn.health <= 0) {
+							o2.isAlive = false;
+						}
+					} else if (o2 instanceof Horde && o1 instanceof Hecker) {
+						o2.isAlive = false;/* o2.isAlive = true; instead */
+						o1.isAlive = true;
+						// Horde deadHorde = (Horde) o2;
+						Hecker omflynn = (Hecker) o1;
+						omflynn.health -= 1;
+						// omflynn.health -= deadHorde.deathPotential;
+						// find out why the above line doesn't work
+						System.out.println("Flynn's health is now " + omflynn.health + "! Be careful, and quick!");
+						// o2.isAlive = false;
+
+						SketcHex.casualtyCount++;
+						if (omflynn.health <= 0) {
+							o1.isAlive = false;
+						}
+						// this temporary life grant to the horde is likely to
+						// cause an issue as it might be able to combine with
+						// other horde during that small temporary life grant
+						// period
 					} else if (o1 instanceof Horde && o2 instanceof Horde) {
 						o1.isAlive = true;
 						o2.isAlive = false;
 						Horde topdoggey = (Horde) o1;
-						System.out.println("horde o1");
+						System.out.println("The horde has combined!");
+						topdoggey.deathPotential *= 2;
 						topdoggey.color = Color.magenta;
 						topdoggey.width *= 2;
 						topdoggey.height *= 2;
@@ -108,11 +137,6 @@ public class ObjectManager {
 		score = s;
 	}
 
-	/**
-	 * the below showScore method/variable/code does not work. This message has
-	 * been printed below every instance where something related to it is
-	 * mentioned.
-	 */
 	// public void showScore(Graphics g) {
 	// g.setColor(Color.WHITE);
 	// g.fillRect(800, 200, 75, 25);
@@ -120,10 +144,6 @@ public class ObjectManager {
 	// g.setFont(funFont);
 	// g.drawString(xavier, 805, 22);
 	// }
-
-	public void cheatScore(int s) {
-		setScore(score + s);
-	}
 
 	public void reset() {
 		objects.clear();
