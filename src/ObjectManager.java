@@ -52,12 +52,19 @@ public class ObjectManager {
 		}
 	}
 
-	public void manageEnemies() {
+	public void manageEnemies(int xdisplacement) {
 		// if (System.currentTimeMillis() - enemyTimer >= enemySpawnTime) {
 		// addObject(new Horde(new Random().nextInt(HordeRunner.width), 0, 200,
 		// 200, hex));
 		// enemyTimer = System.currentTimeMillis();
 		// }
+		for (int i = 0; i < objects.size(); i++) {
+			GameObject o1 = objects.get(i);
+			if (o1 instanceof Horde) {
+				o1.x += xdisplacement;
+			}
+		}
+
 	}
 
 	public void checkCollision() {

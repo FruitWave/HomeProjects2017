@@ -13,6 +13,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
+@SuppressWarnings("serial")
 public class SketcHex extends JPanel implements ActionListener, KeyListener {
 	Color roomColor;
 	Timer gameSpeed;
@@ -21,7 +22,7 @@ public class SketcHex extends JPanel implements ActionListener, KeyListener {
 	final int END_STATE = 2;
 	static int currentState = 0;
 	static int casualtyCount;
-	Hecker flynn = new Hecker(250, 700, 30, 60, 10, 200);
+	Hecker flynn = new Hecker(250, 700, 30, 60, 10, 100);
 	Horde arnold;
 	Horde rick;
 	ObjectManager megahead;
@@ -52,37 +53,29 @@ public class SketcHex extends JPanel implements ActionListener, KeyListener {
 
 	}
 
-	public void enteredNewRoom() {
+	public void enteredNewRoom(boolean isGoingRight) {
 		roomsEntered++;
+		int xdisplacement = -1000;
+		if (isGoingRight) {
+			System.out.println("Going right! WHEEEEEEE!");
+		} else {
+			xdisplacement = 1000;
+		}
+		megahead.manageEnemies(xdisplacement);
 		addToHorde(hordeAdder);
 	}
 
-	public void bulletfire() {
-		System.out.println("pew pew");
-		Bullet bullet = new Bullet(flynn.x, flynn.y + 28, 8, 4, this);
+	public void bulletfirel() {
+		System.out.println("pew pew left");
+		Bullet bullet = new Bullet(flynn.x, flynn.y + (flynn.height/2), 8, 4, this);
+		bullet.leftorrightLEFTisZEROrightISone = 0;
 		megahead.addObject(bullet);
-		if (Hecker.bulletAmmo >= 25) {
-			// 25 ammo or above
-			int randomSide = new Random().nextInt(2);
-			if (randomSide == 0) {
-				bullet.x += 30;
-				bullet.x -= bullet.speed;
-			} else if (randomSide == 1) {
-				bullet.x += bullet.speed;
-			}
-			// 25 ammo or above
-		} else if (Hecker.bulletAmmo < 25) {
-			if (flynn.transpex > 0) {
-				bullet.x -= bullet.speed;
-			} else if (flynn.transpex < 0) {
-				bullet.x += bullet.speed;
-			}
-			if (flynn.transpey > 0) {
-				bullet.y -= bullet.speed;
-			} else if (flynn.transpey < 0) {
-				bullet.y += bullet.speed;
-			}
-		}
+	}
+	public void bulletfirer() {
+		System.out.println("pew pew right");
+		Bullet bullet = new Bullet(flynn.x + flynn.width, flynn.y + (flynn.height/2), 8, 4, this);
+		bullet.leftorrightLEFTisZEROrightISone = 1;
+		megahead.addObject(bullet);
 	}
 
 	public void addToHorde(int a) {
@@ -93,6 +86,7 @@ public class SketcHex extends JPanel implements ActionListener, KeyListener {
 			megahead.addObject(dissolvent);
 			System.out.println("Zombie add count " + i);
 		}
+
 	}
 
 	public void startGame() {
@@ -182,7 +176,9 @@ public class SketcHex extends JPanel implements ActionListener, KeyListener {
 		} else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
 			flynn.transpey = 5;
 		} else if (e.getKeyCode() == KeyEvent.VK_SHIFT) {
-			bulletfire();
+			bulletfirel();
+		} else if (e.getKeyCode() == KeyEvent.VK_CONTROL) {
+			bulletfirer();
 		}
 		if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 			if (currentState == MENU_STATE) {
