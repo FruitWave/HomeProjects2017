@@ -8,13 +8,14 @@ public class Horde extends GameObject {
 	Color color;
 	int speed;
 	int deathPotential;
+	int health;
 
-	public Horde(int x, int y, int width, int height, SketcHex hex) {
+	public Horde(int x, int y, int width, int height, SketcHex hex, Color color, int health) {
 		super(x, y, width, height);
 		transpex = 0;
 		transpey = 0;
 		this.hex = hex;
-		this.color = Color.darkGray;
+		this.color = color;
 		this.speed = 1;
 		deathPotential = 1;
 	}

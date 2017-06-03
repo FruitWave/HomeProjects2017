@@ -22,7 +22,7 @@ public class SketcHex extends JPanel implements ActionListener, KeyListener {
 	final int END_STATE = 2;
 	static int currentState = 0;
 	static int casualtyCount;
-	Hecker flynn = new Hecker(250, 700, 30, 60, 10, 100);
+	Hecker flynn = new Hecker(250, 700, 30, 60, 1000, 100);
 	Horde arnold;
 	Horde rick;
 	ObjectManager megahead;
@@ -82,7 +82,7 @@ public class SketcHex extends JPanel implements ActionListener, KeyListener {
 		for (int i = 1; i < (a + 1); i++) {
 			int randomx = new Random().nextInt((700) + 200);
 			int randomy = new Random().nextInt((700) + 200);
-			Horde dissolvent = new Horde(randomx, randomy, 30, 60, this);
+			Horde dissolvent = new Horde(randomx, randomy, 30, 60, this, Color.darkGray, 1);
 			megahead.addObject(dissolvent);
 			System.out.println("Zombie add count " + i);
 		}
@@ -91,8 +91,8 @@ public class SketcHex extends JPanel implements ActionListener, KeyListener {
 
 	public void startGame() {
 		gameSpeed.start();
-		arnold = new Horde(20, 500, 30, 60, this);
-		rick = new Horde(20, 600, 30, 60, this);
+		arnold = new Horde(20, 500, 30, 60, this, Color.darkGray, 1);
+		rick = new Horde(20, 600, 30, 60, this, Color.darkGray, 1);
 		base = new Room(0, 0, 1000, 1000, this);
 		megahead = new ObjectManager(this);
 		megahead.addObject(flynn);
