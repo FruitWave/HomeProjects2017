@@ -77,13 +77,13 @@ public class ObjectManager {
 
 					if (o1 instanceof Horde && o2 instanceof Bullet) {
 						System.out.println("sniped");
-						// SketcHex.casualtyCount++;
-						// System.out.println(SketcHex.casualtyCount);
 						Horde shotHorde = (Horde) o1;
 						shotHorde.health -= 1;
 						o2.isAlive = false;
-						if (shotHorde.health == 0) {
+						if (shotHorde.health <= 0) {
 							shotHorde.isAlive = false;
+							SketcHex.casualtyCount++;
+
 						}
 					}
 					if (o2 instanceof Horde && o1 instanceof Bullet) {
@@ -93,12 +93,20 @@ public class ObjectManager {
 						Horde shotHorde = (Horde) o2;
 						shotHorde.health -= 1;
 						o1.isAlive = false;
-						if (shotHorde.health == 0) {
+						if (shotHorde.health <= 0) {
 							shotHorde.isAlive = false;
 						}
 					} else if (o1 instanceof Horde && o2 instanceof Hecker) {
-						o1.isAlive = false;/* o1.isAlive = true; instead */
+						o1.isAlive = true;
 						o2.isAlive = true;
+						Horde hordie = (Horde) o1;
+						hordie.health -= 1;
+						int randomDisplacementNum = new Random().nextInt(2);
+						if (randomDisplacementNum == 0) {
+							hordie.x -= 100;
+						} else if (randomDisplacementNum == 1) {
+							hordie.x += 100;
+						}
 						// Horde deadHorde = (Horde) o1;
 						Hecker omflynn = (Hecker) o2;
 						omflynn.health -= 1;
@@ -134,6 +142,7 @@ public class ObjectManager {
 						// period
 					} else if (o1 instanceof Horde && o2 instanceof Horde) {
 						Horde zombieone = (Horde) o1;
+						System.out.println("zombie one initial health is at " + zombieone.health);
 						Horde zombietwo = (Horde) o2;
 						if ((zombieone.color == Color.darkGray) && (zombietwo.color == Color.darkGray)) {
 							zombieone.color = Color.magenta;
@@ -221,9 +230,10 @@ public class ObjectManager {
 							zombieone.health += 1;
 							System.out.println("Hellhorde!");
 						} else {
-							System.out.println("Hey, don't bump into me you stupid Horde!!");
+							System.out.println("Hey, don't bump into me you stupid Horde!!" + "ZombieOne color: "
+									+ zombieone.color + ". ZombieTwo color: " + zombietwo.color + ".");
 						}
-
+						System.out.println("Zombie One health is " + zombieone.health);
 						// zombieone.deathPotential *= 2;
 						// zombieone.width *= 2;
 						// zombieone.height *= 2;
@@ -235,21 +245,9 @@ public class ObjectManager {
 		}
 	}
 
-	public int getScore() {
-		return score;
-	}
+	
 
-	public void setScore(int s) {
-		score = s;
-	}
 
-	// public void showScore(Graphics g) {
-	// g.setColor(Color.WHITE);
-	// g.fillRect(800, 200, 75, 25);
-	// g.setColor(Color.BLACK);
-	// g.setFont(funFont);
-	// g.drawString(xavier, 805, 22);
-	// }
 
 	public void reset() {
 		objects.clear();

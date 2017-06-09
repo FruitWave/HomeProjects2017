@@ -18,7 +18,12 @@ public abstract class GameObject {
 
 	public void update() {
 		collisionArea.setBounds(x, y, width, height);
-		
+		if (y < (0)) {
+			y = 0;
+		} else if (y > 1000 - height) {
+			y = 1000 - height;
+		}
+
 	}
 
 	public void draw(Graphics g) {

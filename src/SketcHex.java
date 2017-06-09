@@ -53,6 +53,23 @@ public class SketcHex extends JPanel implements ActionListener, KeyListener {
 
 	}
 
+	public int getcasualtyCount() {
+		return casualtyCount;
+	}
+
+	public void setcasualtyCount(int s) {
+		casualtyCount = s;
+	}
+
+	public void showcasualtyCount(Graphics g) {
+		g.setColor(Color.WHITE);
+		g.fillRect(800, 10, 75, 25);
+		g.setColor(Color.BLACK);
+		g.setFont(funFont);
+		String rampage = "" + casualtyCount;
+		g.drawString(rampage, 805, 34);
+	}
+
 	public void enteredNewRoom(boolean isGoingRight) {
 		roomsEntered++;
 		int xdisplacement = -1000;
@@ -67,13 +84,14 @@ public class SketcHex extends JPanel implements ActionListener, KeyListener {
 
 	public void bulletfirel() {
 		System.out.println("pew pew left");
-		Bullet bullet = new Bullet(flynn.x, flynn.y + (flynn.height/2), 8, 4, this);
+		Bullet bullet = new Bullet(flynn.x, flynn.y + (flynn.height / 2), 8, 4, this);
 		bullet.leftorrightLEFTisZEROrightISone = 0;
 		megahead.addObject(bullet);
 	}
+
 	public void bulletfirer() {
 		System.out.println("pew pew right");
-		Bullet bullet = new Bullet(flynn.x + flynn.width, flynn.y + (flynn.height/2), 8, 4, this);
+		Bullet bullet = new Bullet(flynn.x + flynn.width, flynn.y + (flynn.height / 2), 8, 4, this);
 		bullet.leftorrightLEFTisZEROrightISone = 1;
 		megahead.addObject(bullet);
 	}
@@ -127,7 +145,7 @@ public class SketcHex extends JPanel implements ActionListener, KeyListener {
 		b.setColor(roomColor);
 		b.fillRect(0, 0, 1000, 1000);
 		megahead.draw(b);
-
+		showcasualtyCount(b);
 	}
 
 	void drawEndState(Graphics c) {
@@ -137,7 +155,7 @@ public class SketcHex extends JPanel implements ActionListener, KeyListener {
 		c.setColor(Color.WHITE);
 		c.drawString("GAME OVER", 370, 300);
 		c.setColor(Color.BLACK);
-		c.drawString("You killed " + casualtyCount + " aliens.", 340, 400);
+		c.drawString("You killed " + casualtyCount + " zombies.", 340, 400);
 		c.setFont(funFont);
 		c.setColor(Color.WHITE);
 		c.drawString("press delete to restart", 355,
@@ -193,6 +211,12 @@ public class SketcHex extends JPanel implements ActionListener, KeyListener {
 		if ((e.getKeyCode() == 8) && (currentState >= END_STATE)) {
 			casualtyCount = 0;
 			currentState = MENU_STATE;
+		}
+		if ((e.getKeyCode() == KeyEvent.VK_K) && (currentState == GAME_STATE)) {
+			String healthpane = JOptionPane.showInputDialog("Cheat Code Activated! Enter Flynn's desired health!");
+			int newhealth = Integer.parseInt(healthpane);
+			flynn.health = newhealth;
+
 		}
 	}
 

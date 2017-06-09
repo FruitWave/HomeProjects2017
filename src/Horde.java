@@ -18,6 +18,7 @@ public class Horde extends GameObject {
 		this.color = color;
 		this.speed = 1;
 		deathPotential = 1;
+		this.health = health;
 	}
 
 	public void update() {

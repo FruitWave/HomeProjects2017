@@ -19,7 +19,9 @@ public class Hecker extends GameObject {
 		super.update();
 		x += transpex;
 		y += transpey;
-
+if (health <= 0) {
+	isAlive = false;
+}
 	}
 
 	public void draw(Graphics pvd) {
