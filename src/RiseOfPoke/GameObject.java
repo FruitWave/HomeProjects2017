@@ -1,3 +1,5 @@
+package RiseOfPoke;
+
 import java.awt.Graphics;
 import java.awt.Rectangle;
 
@@ -20,8 +22,8 @@ public abstract class GameObject {
 		collisionArea.setBounds(x, y, width, height);
 		if (y < (0)) {
 			y = 0;
-		} else if (y > 800 - height) {
-			y = 800 - height;
+		} else if (y > 1000 - height) {
+			y = 1000 - height;
 		}
 
 	}

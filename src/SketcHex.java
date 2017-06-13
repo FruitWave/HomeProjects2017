@@ -133,7 +133,7 @@ public class SketcHex extends JPanel implements ActionListener, KeyListener {
 	}
 
 	void updateEndState() {
-
+ 
 	}
 
 	void drawMenuState(Graphics a) {
@@ -209,6 +209,7 @@ public class SketcHex extends JPanel implements ActionListener, KeyListener {
 			System.out.println("The current state is " + currentState + ".");
 		}
 		if ((e.getKeyCode() == 8) && (currentState >= END_STATE)) {
+			flynn.isAlive = true;
 			casualtyCount = 0;
 			currentState = MENU_STATE;
 		}

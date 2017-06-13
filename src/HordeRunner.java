@@ -19,7 +19,7 @@ public class HordeRunner {
 
 	void setup() {
 		frame.add(hex);
-		frame.setTitle("League Invaders");
+		frame.setTitle("Horde Runner");
 		frame.addKeyListener(hex);
 		frame.setSize(width, height);
 		frame.setVisible(true);
