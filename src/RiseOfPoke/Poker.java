@@ -7,7 +7,7 @@ import java.awt.Polygon;
 public class Poker extends GameObject {
 
 	int health;
-	Color color = new Color(health, health, health);
+	Color color = new Color(50, 250, 250);
 
 	public Poker(int x, int y, int width, int height, int health) {
 		super(x, y, width, height);
@@ -18,7 +18,9 @@ public class Poker extends GameObject {
 	public void update() {
 		// TODO Auto-generated method stub
 		super.update();
-
+		if (health <= 0) {
+			isAlive = false;
+		}
 	}
 
 	@Override
