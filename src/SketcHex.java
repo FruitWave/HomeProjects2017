@@ -22,7 +22,7 @@ public class SketcHex extends JPanel implements ActionListener, KeyListener {
 	final int END_STATE = 2;
 	static int currentState = 0;
 	static int casualtyCount;
-	Hecker flynn = new Hecker(250, 700, 30, 60, 10, 10);
+	Hecker flynn = new Hecker(250, 700, 30, 60, 1000000, 100);
 	Horde arnold;
 	Horde rick;
 	ObjectManager megahead;

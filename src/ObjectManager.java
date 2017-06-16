@@ -9,8 +9,7 @@ public class ObjectManager {
 	ArrayList<GameObject> objects;
 	SketcHex hex;
 	HordeRunner ohgoddontcauseaglitch;
-	private int score = 0;
-	// static int
+
 	/**
 	 * the below showScore method/variable/code does not work. This message has
 	 * been printed below every instance where something related to it is
@@ -111,7 +110,7 @@ public class ObjectManager {
 							hordie.x += 200;
 						}
 						omflynn.health -= hordie.deathPotential;
-						//SketcHex.casualtyCount++;
+						// SketcHex.casualtyCount++; // comment(out) this
 						System.out.println("Flynn's health is now " + omflynn.health + "! Be careful, and quick!");
 
 						if (omflynn.health <= 0) {
