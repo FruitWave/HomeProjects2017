@@ -8,6 +8,7 @@ import java.util.Random;
 public class ObjectManager {
 	ArrayList<GameObject> objects;
 	SketcHex hex;
+	HordeRunner ohgoddontcauseaglitch;
 	private int score = 0;
 	// static int
 	/**
@@ -95,54 +96,33 @@ public class ObjectManager {
 						o1.isAlive = false;
 						if (shotHorde.health <= 0) {
 							shotHorde.isAlive = false;
+							SketcHex.casualtyCount++;
 						}
-					} else if (o1 instanceof Horde && o2 instanceof Hecker) {
-						o1.isAlive = true;
-						o2.isAlive = true;
-						Horde hordie = (Horde) o1;
-						hordie.health -= 1;
+					} else if ((o1 instanceof Horde && o2 instanceof Hecker)
+							|| (o2 instanceof Horde && o1 instanceof Hecker)) {
+
+						Horde hordie = o1 instanceof Horde ? (Horde) o1 : (Horde) o2;
+						Hecker omflynn = o1 instanceof Hecker ? (Hecker) o1 : (Hecker) o2;
+
 						int randomDisplacementNum = new Random().nextInt(2);
 						if (randomDisplacementNum == 0) {
-							hordie.x -= 100;
+							hordie.x -= 200;
 						} else if (randomDisplacementNum == 1) {
-							hordie.x += 100;
+							hordie.x += 200;
 						}
-						// Horde deadHorde = (Horde) o1;
-						Hecker omflynn = (Hecker) o2;
-						omflynn.health -= 1;
-						// omflynn.health -= deadHorde.deathPotential;
+						omflynn.health -= hordie.deathPotential;
+						//SketcHex.casualtyCount++;
 						System.out.println("Flynn's health is now " + omflynn.health + "! Be careful, and quick!");
-						o1.isAlive = false;
 
-						// this temporary life grant to the horde is likely to
-						// cause an issue as it might be able to combine with
-						// other horde during that small temporary life grant
-						// period
-						SketcHex.casualtyCount++;
 						if (omflynn.health <= 0) {
-							o2.isAlive = false;
+							omflynn.isAlive = false;
+						} else if (hordie.health <= 0) {
+							hordie.isAlive = false;
 						}
-					} else if (o2 instanceof Horde && o1 instanceof Hecker) {
-						o2.isAlive = false;/* o2.isAlive = true; instead */
-						o1.isAlive = true;
-						// Horde deadHorde = (Horde) o2;
-						Hecker omflynn = (Hecker) o1;
-						omflynn.health -= 1;
-						// omflynn.health -= deadHorde.deathPotential;
-						// find out why the above line doesn't work
-						System.out.println("Flynn's health is now " + omflynn.health + "! Be careful, and quick!");
-						// o2.isAlive = false;
-						SketcHex.casualtyCount++;
-						if (omflynn.health <= 0) {
-							o1.isAlive = false;
-						}
-						// this temporary life grant to the horde is likely to
-						// cause an issue as it might be able to combine with
-						// other horde during that small temporary life grant
-						// period
 					} else if (o1 instanceof Horde && o2 instanceof Horde) {
 						Horde zombieone = (Horde) o1;
-						System.out.println("zombie one initial health is at " + zombieone.health);
+						// System.out.println("zombie one initial health is at "
+						// + zombieone.health);
 						Horde zombietwo = (Horde) o2;
 						if ((zombieone.color == Color.darkGray) && (zombietwo.color == Color.darkGray)) {
 							zombieone.color = Color.magenta;
@@ -153,7 +133,6 @@ public class ObjectManager {
 							zombieone.speed += 1;
 							zombieone.health += 1;
 							System.out.println("Minihorde!");
-
 						} else if ((zombieone.color == Color.magenta) && (zombietwo.color == Color.magenta)) {
 							zombieone.color = Color.green;
 							zombietwo.isAlive = false;
@@ -163,25 +142,6 @@ public class ObjectManager {
 							zombieone.speed += 1;
 							zombieone.health += 1;
 							System.out.println("Horde!");
-						} else if ((zombietwo.color == Color.magenta) && (zombieone.color == Color.magenta)) {
-							zombietwo.color = Color.green;
-							zombieone.isAlive = false;
-							zombieone.deathPotential *= 2;
-							zombieone.width *= 2;
-							zombieone.height *= 2;
-							zombieone.speed += 1;
-							zombieone.health += 1;
-							System.out.println("Horde!");
-						}
-						if ((zombieone.color == Color.green) && (zombietwo.color == Color.green)) {
-							zombieone.color = Color.blue;
-							zombietwo.isAlive = false;
-							zombieone.deathPotential *= 2;
-							zombieone.width *= 2;
-							zombieone.height *= 2;
-							zombieone.speed += 1;
-							zombieone.health += 1;
-							System.out.println("Megahorde!");
 						} else if ((zombietwo.color == Color.green) && (zombieone.color == Color.green)) {
 							zombietwo.color = Color.blue;
 							zombieone.isAlive = false;
@@ -191,63 +151,34 @@ public class ObjectManager {
 							zombieone.speed += 1;
 							zombieone.health += 1;
 							System.out.println("Megahorde!");
-						}
-						if ((zombieone.color == Color.blue) && (zombietwo.color == Color.blue)) {
-							zombieone.color = Color.red;
-							zombietwo.isAlive = false;
-							zombieone.deathPotential *= 2;
-							zombieone.width *= 2;
-							zombieone.height *= 2;
-							zombieone.speed += 1;
-							zombieone.health += 1;
-							System.out.println("Ultrahorde!");
 						} else if ((zombietwo.color == Color.blue) && (zombieone.color == Color.blue)) {
 							zombietwo.color = Color.red;
 							zombieone.isAlive = false;
 							zombieone.deathPotential *= 2;
-							zombieone.width *= 2;
-							zombieone.height *= 2;
+							zombieone.width++;
+							zombieone.height++;
 							zombieone.speed += 1;
 							zombieone.health += 1;
 							System.out.println("Ultrahorde!");
-						}
-						if ((zombieone.color == Color.red) && (zombietwo.color == Color.red)) {
+						} else if ((zombieone.color == Color.red) && (zombietwo.color == Color.red)) {
 							zombieone.color = Color.yellow;
 							zombietwo.isAlive = false;
 							zombieone.deathPotential *= 2;
-							zombieone.width *= 2;
-							zombieone.height *= 2;
+							zombieone.width++;
+							zombieone.height++;
 							zombieone.speed += 1;
 							zombieone.health += 1;
 							System.out.println("Hellhorde!");
-						} else if ((zombietwo.color == Color.red) && (zombieone.color == Color.red)) {
-							zombietwo.color = Color.yellow;
-							zombieone.isAlive = false;
-							zombieone.deathPotential *= 2;
-							zombieone.width *= 2;
-							zombieone.height *= 2;
-							zombieone.speed += 1;
-							zombieone.health += 1;
-							System.out.println("Hellhorde!");
-						} else {
-							System.out.println("Hey, don't bump into me you stupid Horde!!" + "ZombieOne color: "
-									+ zombieone.color + ". ZombieTwo color: " + zombietwo.color + ".");
 						}
-						System.out.println("Zombie One health is " + zombieone.health);
-						// zombieone.deathPotential *= 2;
-						// zombieone.width *= 2;
-						// zombieone.height *= 2;
-						// zombieone.speed += 1; zombieone.health += 1;
+						// System.out.println("Zombie health is " +
+						// zombieone.health);
+
 					}
 
 				}
 			}
 		}
 	}
-
-	
-
-
 
 	public void reset() {
 		objects.clear();

@@ -22,7 +22,7 @@ public class SketcHex extends JPanel implements ActionListener, KeyListener {
 	final int END_STATE = 2;
 	static int currentState = 0;
 	static int casualtyCount;
-	Hecker flynn = new Hecker(250, 700, 30, 60, 1000, 100);
+	Hecker flynn = new Hecker(250, 700, 30, 60, 10, 10);
 	Horde arnold;
 	Horde rick;
 	ObjectManager megahead;
@@ -83,17 +83,28 @@ public class SketcHex extends JPanel implements ActionListener, KeyListener {
 	}
 
 	public void bulletfirel() {
-		System.out.println("pew pew left");
-		Bullet bullet = new Bullet(flynn.x, flynn.y + (flynn.height / 2), 8, 4, this);
-		bullet.leftorrightLEFTisZEROrightISone = 0;
-		megahead.addObject(bullet);
+		if (flynn.bulletAmmo > 0) {
+			flynn.bulletAmmo -= 1;
+			System.out.println("pew pew left");
+			Bullet bullet = new Bullet(flynn.x, flynn.y + (flynn.height / 2), 8, 4, this);
+			bullet.leftorrightLEFTisZEROrightISone = 0;
+			megahead.addObject(bullet);
+		} else {
+			JOptionPane.showMessageDialog(null, "Out Of Bullet Ammo");
+		}
+
 	}
 
 	public void bulletfirer() {
-		System.out.println("pew pew right");
-		Bullet bullet = new Bullet(flynn.x + flynn.width, flynn.y + (flynn.height / 2), 8, 4, this);
-		bullet.leftorrightLEFTisZEROrightISone = 1;
-		megahead.addObject(bullet);
+		if (flynn.bulletAmmo > 0) {
+			flynn.bulletAmmo -= 1;
+			System.out.println("pew pew right");
+			Bullet bullet = new Bullet(flynn.x + flynn.width, flynn.y + (flynn.height / 2), 8, 4, this);
+			bullet.leftorrightLEFTisZEROrightISone = 1;
+			megahead.addObject(bullet);
+		} else {
+			JOptionPane.showMessageDialog(null, "Out Of Bullet Ammo");
+		}
 	}
 
 	public void addToHorde(int a) {
@@ -133,7 +144,7 @@ public class SketcHex extends JPanel implements ActionListener, KeyListener {
 	}
 
 	void updateEndState() {
- 
+
 	}
 
 	void drawMenuState(Graphics a) {
@@ -155,7 +166,9 @@ public class SketcHex extends JPanel implements ActionListener, KeyListener {
 		c.setColor(Color.WHITE);
 		c.drawString("GAME OVER", 370, 300);
 		c.setColor(Color.BLACK);
-		c.drawString("You killed " + casualtyCount + " zombies.", 340, 400);
+		// c.drawString("You killed " + casualtyCount + " of the horde.", 340,
+		// 400);
+		c.drawString("You scored " + casualtyCount + "!", 340, 400);
 		c.setFont(funFont);
 		c.setColor(Color.WHITE);
 		c.drawString("press delete to restart", 355,
@@ -208,11 +221,12 @@ public class SketcHex extends JPanel implements ActionListener, KeyListener {
 			}
 			System.out.println("The current state is " + currentState + ".");
 		}
-		if ((e.getKeyCode() == 8) && (currentState >= END_STATE)) {
-			flynn.isAlive = true;
-			casualtyCount = 0;
-			currentState = MENU_STATE;
-		}
+		// if ((e.getKeyCode() == 8) && (currentState >= END_STATE)) {
+		// casualtyCount = 0;
+		// currentState = MENU_STATE;
+		// megahead.reset();
+		// startGame();
+		// }
 		if ((e.getKeyCode() == KeyEvent.VK_K) && (currentState == GAME_STATE)) {
 			String healthpane = JOptionPane.showInputDialog("Cheat Code Activated! Enter Flynn's desired health!");
 			int newhealth = Integer.parseInt(healthpane);
