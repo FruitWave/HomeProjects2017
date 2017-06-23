@@ -23,7 +23,7 @@ public class SketcHex extends JPanel implements ActionListener, KeyListener {
 	final int END_STATE = 2;
 	static int currentState = 0;
 	static int casualtyCount;
-	Hecker flynn = new Hecker(500, 500, 30, 60, 1000000000, 100);
+	Hecker flynn = new Hecker(500, 500, 30, 60, 20, 5);
 	Horde arnold;
 	Horde rick;
 	ObjectManager megahead;
@@ -210,9 +210,9 @@ public class SketcHex extends JPanel implements ActionListener, KeyListener {
 			flynn.transpex = 5;
 		} else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
 			flynn.transpey = 5;
-		} else if (e.getKeyCode() == KeyEvent.VK_SHIFT) {
+		} else if (e.getKeyCode() == KeyEvent.VK_Z) {
 			bulletfirel();
-		} else if (e.getKeyCode() == KeyEvent.VK_CONTROL) {
+		} else if (e.getKeyCode() == KeyEvent.VK_X) {
 			bulletfirer();
 		}
 		if (e.getKeyCode() == KeyEvent.VK_ENTER) {
@@ -235,6 +235,12 @@ public class SketcHex extends JPanel implements ActionListener, KeyListener {
 			String healthpane = JOptionPane.showInputDialog("Cheat Code Activated! Enter Flynn's desired health!");
 			int newhealth = Integer.parseInt(healthpane);
 			flynn.health = newhealth;
+
+		} else if ((e.getKeyCode() == KeyEvent.VK_J) && (currentState == GAME_STATE)) {
+			String bulletpane = JOptionPane
+					.showInputDialog("Cheat Code Activated! Enter Flynn's desired bullet ammo stock!");
+			int newammo = Integer.parseInt(bulletpane);
+			flynn.bulletAmmo = newammo;
 
 		}
 	}
