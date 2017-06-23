@@ -32,6 +32,7 @@ public class SketcHex extends JPanel implements ActionListener, KeyListener {
 	Font funFont;
 	public int roomsEntered = 0;
 	public int hordeAdder = 0;
+	public int roomnumber = 0;
 
 	public SketcHex() {
 		gameSpeed = new Timer(1000 / 120, this);
@@ -73,11 +74,11 @@ public class SketcHex extends JPanel implements ActionListener, KeyListener {
 
 	public void enteredNewRoom(boolean isGoingRight) {
 		roomsEntered++;
-		int xdisplacement = -999;
+		int xdisplacement = -1000;
 		if (isGoingRight) {
-			System.out.println("Going right! WHEEEEEEE!");
+			System.out.println("Moving to Room " + roomnumber);
 		} else {
-			xdisplacement = 999;
+			xdisplacement = 1000;
 		}
 		megahead.manageEnemies(xdisplacement);
 		addToHorde(hordeAdder);
@@ -86,7 +87,7 @@ public class SketcHex extends JPanel implements ActionListener, KeyListener {
 	public void bulletfirel() {
 		if (flynn.bulletAmmo > 0) {
 			flynn.bulletAmmo -= 1;
-			System.out.println("pew pew left");
+			System.out.println("Bullets: " + flynn.bulletAmmo);
 			Bullet bullet = new Bullet(flynn.x, flynn.y + (flynn.height / 2), 8, 4, this);
 			bullet.leftorrightLEFTisZEROrightISone = 0;
 			megahead.addObject(bullet);
@@ -99,7 +100,7 @@ public class SketcHex extends JPanel implements ActionListener, KeyListener {
 	public void bulletfirer() {
 		if (flynn.bulletAmmo > 0) {
 			flynn.bulletAmmo -= 1;
-			System.out.println("pew pew right");
+			System.out.println("Bullets: " + flynn.bulletAmmo);
 			Bullet bullet = new Bullet(flynn.x + flynn.width, flynn.y + (flynn.height / 2), 8, 4, this);
 			bullet.leftorrightLEFTisZEROrightISone = 1;
 			megahead.addObject(bullet);

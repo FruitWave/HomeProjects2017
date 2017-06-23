@@ -24,21 +24,21 @@ public class Room extends GameObject implements ActionListener {
 
 		// moving to the next room right
 		if (hex.flynn.x >= 1000) {
-			System.out.println(">= 1000 x 2nd");
 			hex.hordeAdder = 2;
-			hex.flynn.x -= 1000;
+			hex.flynn.x -= 999;
 			Color a = randomXColor();
 			hex.roomColor = a;
 			hex.enteredNewRoom(true);
+			hex.roomnumber++;
 		}
 		// moving to the next room left
 		if (hex.flynn.x <= 0) {
-			System.out.println("<= 0 x");
 			hex.hordeAdder = 2;
-			hex.flynn.x += 1000;
+			hex.flynn.x += 999;
 			Color a = randomXColor();
 			hex.roomColor = a;
 			hex.enteredNewRoom(false);
+			hex.roomnumber--;
 		}
 	}
 

@@ -9,7 +9,9 @@ public class ObjectManager {
 	ArrayList<GameObject> objects;
 	SketcHex hex;
 	HordeRunner ohgoddontcauseaglitch;
-
+	Color dark1 = new Color(100, 50, 50);
+	Color dark2 = new Color(200, 50, 80);
+	Color dark3 = new Color(250, 100, 10);
 	/**
 	 * the below showScore method/variable/code does not work. This message has
 	 * been printed below every instance where something related to it is
@@ -114,52 +116,37 @@ public class ObjectManager {
 						Horde zombietwo = (Horde) o2;
 						if ((zombie.color == Color.darkGray) && (zombietwo.color == Color.darkGray)) {
 							zombie.color = Color.magenta;
-							zombietwo.isAlive = false;
-							zombie.deathPotential *= 2;
-							zombie.width *= 2;
-							zombie.height *= 2;
-							zombie.speed += 1;
-							zombie.health += 1;
+							hordefunctionslowerlvl(zombie, zombietwo);
 							System.out.println("Minihorde!");
 						} else if ((zombie.color == Color.magenta) && (zombietwo.color == Color.magenta)) {
 							zombie.color = Color.green;
-							zombietwo.isAlive = false;
-							zombie.deathPotential *= 2;
-							zombie.width *= 2;
-							zombie.height *= 2;
-							zombie.speed += 1;
-							zombie.health += 1;
+							hordefunctionslowerlvl(zombie, zombietwo);
 							System.out.println("Horde!");
-						} else if ((zombietwo.color == Color.green) && (zombie.color == Color.green)) {
-							zombietwo.color = Color.blue;
-							zombie.isAlive = false;
-							zombie.deathPotential *= 2;
-							zombie.width *= 2;
-							zombie.height *= 2;
-							zombie.speed += 1;
-							zombie.health += 1;
+						} else if ((zombie.color == Color.green) && (zombietwo.color == Color.green)) {
+							zombie.color = Color.blue;
+							hordefunctionslowerlvl(zombie, zombietwo);
 							System.out.println("Megahorde!");
-						} else if ((zombietwo.color == Color.blue) && (zombie.color == Color.blue)) {
-							zombietwo.color = Color.red;
-							zombie.isAlive = false;
-							zombie.deathPotential *= 2;
-							zombie.width++;
-							zombie.height++;
-							zombie.speed += 1;
-							zombie.health += 1;
+						} else if ((zombie.color == Color.blue) && (zombietwo.color == Color.blue)) {
+							zombie.color = Color.red;
+							hordefunctionshigherlvl(zombie, zombietwo);
 							System.out.println("Ultrahorde!");
 						} else if ((zombie.color == Color.red) && (zombietwo.color == Color.red)) {
 							zombie.color = Color.yellow;
-							zombietwo.isAlive = false;
-							zombie.deathPotential *= 2;
-							zombie.width++;
-							zombie.height++;
-							zombie.speed += 1;
-							zombie.health += 1;
+							hordefunctionshigherlvl(zombie, zombietwo);
 							System.out.println("Hellhorde!");
+						} else if ((zombie.color == Color.yellow) && (zombietwo.color == Color.yellow)) {
+							zombie.color = dark1;
+							hordefunctionshigherlvl(zombie, zombietwo);
+							System.out.println("Deathhorde!");
+						} else if ((zombie.color == dark1) && (zombietwo.color == dark1)) {
+							zombie.color = dark2;
+							hordeFunctionsMaxedSizeAndSpeed(zombie, zombietwo);
+							System.out.println("Archpack!");
+						} else if ((zombie.color == dark2) && (zombietwo.color == dark2)) {
+							zombie.color = dark3;
+							hordeFunctionsMaxedSizeAndSpeed(zombie, zombietwo);
+							System.out.println("Darkpack!");
 						}
-						
-
 					}
 
 				}
@@ -169,5 +156,29 @@ public class ObjectManager {
 
 	public void reset() {
 		objects.clear();
+	}
+
+	public void hordefunctionslowerlvl(Horde one, Horde two) {
+		two.isAlive = false;
+		one.deathPotential *= 2;
+		one.width *= 2;
+		one.height *= 2;
+		one.speed += 1;
+		one.health += 1;
+	}
+
+	public void hordefunctionshigherlvl(Horde one, Horde two) {
+		two.isAlive = false;
+		one.deathPotential *= 2;
+		one.width++;
+		one.height++;
+		one.speed += 1;
+		one.health += 1;
+	}
+
+	public void hordeFunctionsMaxedSizeAndSpeed(Horde one, Horde two) {
+		two.isAlive = false;
+		one.deathPotential *= 2;
+		one.health += 1;
 	}
 }
