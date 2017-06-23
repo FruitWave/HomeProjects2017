@@ -17,12 +17,13 @@ import javax.swing.Timer;
 public class SketcHex extends JPanel implements ActionListener, KeyListener {
 	Color roomColor;
 	Timer gameSpeed;
+	Timer roomSwitcherGuard;
 	final int MENU_STATE = 0;
 	final int GAME_STATE = 1;
 	final int END_STATE = 2;
 	static int currentState = 0;
 	static int casualtyCount;
-	Hecker flynn = new Hecker(250, 700, 30, 60, 1000000, 100);
+	Hecker flynn = new Hecker(500, 500, 30, 60, 1000000000, 100);
 	Horde arnold;
 	Horde rick;
 	ObjectManager megahead;
@@ -72,11 +73,11 @@ public class SketcHex extends JPanel implements ActionListener, KeyListener {
 
 	public void enteredNewRoom(boolean isGoingRight) {
 		roomsEntered++;
-		int xdisplacement = -1000;
+		int xdisplacement = -999;
 		if (isGoingRight) {
 			System.out.println("Going right! WHEEEEEEE!");
 		} else {
-			xdisplacement = 1000;
+			xdisplacement = 999;
 		}
 		megahead.manageEnemies(xdisplacement);
 		addToHorde(hordeAdder);
@@ -123,12 +124,14 @@ public class SketcHex extends JPanel implements ActionListener, KeyListener {
 		arnold = new Horde(20, 500, 30, 60, this, Color.darkGray, 1);
 		rick = new Horde(20, 600, 30, 60, this, Color.darkGray, 1);
 		base = new Room(0, 0, 1000, 1000, this);
+		roomSwitcherGuard = new Timer(1000 / 4, base);
 		megahead = new ObjectManager(this);
 		megahead.addObject(flynn);
 		megahead.addObject(arnold);
 		megahead.addObject(rick);
 		megahead.addObject(base);
 		roomColor = Color.green;
+		roomSwitcherGuard.start();
 	}
 
 	void updateMenuState() {

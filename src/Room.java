@@ -1,18 +1,24 @@
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Random;
 
-public class Room extends GameObject {
+import javax.swing.Timer;
+
+public class Room extends GameObject implements ActionListener {
 	SketcHex hex;
+	int roomStuckTime = 0;
 
 	public Room(int x, int y, int width, int height, SketcHex hex) {
 		super(x, y, width, height);
 		this.hex = hex;
+
 	}
 
 	public void update() {
 		super.update();
-		// AS COMMENTED OUT BELOW, CHANGE THE CODE SO THAT THE PREVIOUS ROOM'S
+		// CHANGE THE CODE SO THAT THE PREVIOUS ROOM'S
 		// COLOR IS SAVED, AND WHEN FLYNN GOES BACK INTO THAT ROOM ITS COLOR IS
 		// THE SAME (MASSIVE EDIT)
 
@@ -21,7 +27,6 @@ public class Room extends GameObject {
 			System.out.println(">= 1000 x 2nd");
 			hex.hordeAdder = 2;
 			hex.flynn.x -= 1000;
-
 			Color a = randomXColor();
 			hex.roomColor = a;
 			hex.enteredNewRoom(true);
@@ -54,13 +59,26 @@ public class Room extends GameObject {
 			roomColorSetter = Color.red;
 		} else {
 			roomColorSetter = Color.yellow;
-			/* THIS ACTUALLY OCURRED FIGURE OUT WHY AND HOW TO FIX IT */
+
 		}
 		return roomColorSetter;
 	}
 
 	public void draw(Graphics g) {
 
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		if ((hex.flynn.x == 1000) || (hex.flynn.x == 0)) {
+			roomStuckTime++;
+			if (roomStuckTime == 2) {
+				roomStuckTime = 0;
+				hex.flynn.x += 200;
+			} else {
+				System.out.println("Moving in: " + (4 - roomStuckTime) + ".");
+			}
+		}
 	}
 
 }

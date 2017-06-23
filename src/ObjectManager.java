@@ -75,27 +75,16 @@ public class ObjectManager {
 
 				if (o1.collisionArea.intersects(o2.collisionArea)) {
 
-					if (o1 instanceof Horde && o2 instanceof Bullet) {
-						System.out.println("sniped");
-						Horde shotHorde = (Horde) o1;
+					if ((o1 instanceof Horde && o2 instanceof Bullet)
+							|| (o2 instanceof Horde && o1 instanceof Bullet)) {
+						Bullet bullet = (o1 instanceof Bullet) ? (Bullet) o1 : (Bullet) o2;
+						Horde shotHorde = (o1 instanceof Horde) ? (Horde) o1 : (Horde) o2;
 						shotHorde.health -= 1;
 						o2.isAlive = false;
 						if (shotHorde.health <= 0) {
 							shotHorde.isAlive = false;
-							SketcHex.casualtyCount++;
+							SketcHex.casualtyCount += shotHorde.deathPotential;
 
-						}
-					}
-					if (o2 instanceof Horde && o1 instanceof Bullet) {
-						System.out.println("sniped");
-						// SketcHex.casualtyCount++;
-						// System.out.println(SketcHex.casualtyCount);
-						Horde shotHorde = (Horde) o2;
-						shotHorde.health -= 1;
-						o1.isAlive = false;
-						if (shotHorde.health <= 0) {
-							shotHorde.isAlive = false;
-							SketcHex.casualtyCount++;
 						}
 					} else if ((o1 instanceof Horde && o2 instanceof Hecker)
 							|| (o2 instanceof Horde && o1 instanceof Hecker)) {
@@ -119,58 +108,57 @@ public class ObjectManager {
 							hordie.isAlive = false;
 						}
 					} else if (o1 instanceof Horde && o2 instanceof Horde) {
-						Horde zombieone = (Horde) o1;
-						// System.out.println("zombie one initial health is at "
-						// + zombieone.health);
+						Horde zombie = (Horde) o1;
+						// System.out.println("zombie initial health is at "
+						// + zombie.health);
 						Horde zombietwo = (Horde) o2;
-						if ((zombieone.color == Color.darkGray) && (zombietwo.color == Color.darkGray)) {
-							zombieone.color = Color.magenta;
+						if ((zombie.color == Color.darkGray) && (zombietwo.color == Color.darkGray)) {
+							zombie.color = Color.magenta;
 							zombietwo.isAlive = false;
-							zombieone.deathPotential *= 2;
-							zombieone.width *= 2;
-							zombieone.height *= 2;
-							zombieone.speed += 1;
-							zombieone.health += 1;
+							zombie.deathPotential *= 2;
+							zombie.width *= 2;
+							zombie.height *= 2;
+							zombie.speed += 1;
+							zombie.health += 1;
 							System.out.println("Minihorde!");
-						} else if ((zombieone.color == Color.magenta) && (zombietwo.color == Color.magenta)) {
-							zombieone.color = Color.green;
+						} else if ((zombie.color == Color.magenta) && (zombietwo.color == Color.magenta)) {
+							zombie.color = Color.green;
 							zombietwo.isAlive = false;
-							zombieone.deathPotential *= 2;
-							zombieone.width *= 2;
-							zombieone.height *= 2;
-							zombieone.speed += 1;
-							zombieone.health += 1;
+							zombie.deathPotential *= 2;
+							zombie.width *= 2;
+							zombie.height *= 2;
+							zombie.speed += 1;
+							zombie.health += 1;
 							System.out.println("Horde!");
-						} else if ((zombietwo.color == Color.green) && (zombieone.color == Color.green)) {
+						} else if ((zombietwo.color == Color.green) && (zombie.color == Color.green)) {
 							zombietwo.color = Color.blue;
-							zombieone.isAlive = false;
-							zombieone.deathPotential *= 2;
-							zombieone.width *= 2;
-							zombieone.height *= 2;
-							zombieone.speed += 1;
-							zombieone.health += 1;
+							zombie.isAlive = false;
+							zombie.deathPotential *= 2;
+							zombie.width *= 2;
+							zombie.height *= 2;
+							zombie.speed += 1;
+							zombie.health += 1;
 							System.out.println("Megahorde!");
-						} else if ((zombietwo.color == Color.blue) && (zombieone.color == Color.blue)) {
+						} else if ((zombietwo.color == Color.blue) && (zombie.color == Color.blue)) {
 							zombietwo.color = Color.red;
-							zombieone.isAlive = false;
-							zombieone.deathPotential *= 2;
-							zombieone.width++;
-							zombieone.height++;
-							zombieone.speed += 1;
-							zombieone.health += 1;
+							zombie.isAlive = false;
+							zombie.deathPotential *= 2;
+							zombie.width++;
+							zombie.height++;
+							zombie.speed += 1;
+							zombie.health += 1;
 							System.out.println("Ultrahorde!");
-						} else if ((zombieone.color == Color.red) && (zombietwo.color == Color.red)) {
-							zombieone.color = Color.yellow;
+						} else if ((zombie.color == Color.red) && (zombietwo.color == Color.red)) {
+							zombie.color = Color.yellow;
 							zombietwo.isAlive = false;
-							zombieone.deathPotential *= 2;
-							zombieone.width++;
-							zombieone.height++;
-							zombieone.speed += 1;
-							zombieone.health += 1;
+							zombie.deathPotential *= 2;
+							zombie.width++;
+							zombie.height++;
+							zombie.speed += 1;
+							zombie.health += 1;
 							System.out.println("Hellhorde!");
 						}
-						// System.out.println("Zombie health is " +
-						// zombieone.health);
+						
 
 					}
 

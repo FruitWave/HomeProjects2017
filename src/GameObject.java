@@ -23,7 +23,7 @@ public abstract class GameObject {
 		} else if (y > 800 - height) {
 			y = 800 - height;
 		}
-
+		// fix sinking into floor D:
 	}
 
 	public void draw(Graphics g) {
