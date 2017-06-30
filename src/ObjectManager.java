@@ -7,8 +7,8 @@ import java.util.Random;
 
 public class ObjectManager {
 	ArrayList<GameObject> objects;
+
 	SketcHex hex;
-	HordeRunner ohgoddontcauseaglitch;
 	Color dark1 = new Color(100, 50, 50);
 	Color dark2 = new Color(200, 50, 80);
 	Color dark3 = new Color(250, 100, 10);
@@ -54,12 +54,7 @@ public class ObjectManager {
 		}
 	}
 
-	public void manageEnemies(int xdisplacement) {
-		// if (System.currentTimeMillis() - enemyTimer >= enemySpawnTime) {
-		// addObject(new Horde(new Random().nextInt(HordeRunner.width), 0, 200,
-		// 200, hex));
-		// enemyTimer = System.currentTimeMillis();
-		// }
+	public void manageEnemiesAndRooms(int xdisplacement) {
 		for (int i = 0; i < objects.size(); i++) {
 			GameObject o1 = objects.get(i);
 			if (o1 instanceof Horde) {
@@ -101,8 +96,7 @@ public class ObjectManager {
 							hordie.x += 200;
 						}
 						omflynn.health -= hordie.deathPotential;
-						// SketcHex.casualtyCount++; // comment(out) this
-						System.out.println("Flynn's health is now " + omflynn.health + "! Be careful, and quick!");
+						System.out.println("Flynn's health is now " + omflynn.health + ".");
 
 						if (omflynn.health <= 0) {
 							omflynn.isAlive = false;

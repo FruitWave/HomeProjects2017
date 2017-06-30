@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Random;
 
 import javax.imageio.ImageIO;
@@ -16,6 +17,7 @@ import javax.swing.Timer;
 @SuppressWarnings("serial")
 public class SketcHex extends JPanel implements ActionListener, KeyListener {
 	Color roomColor;
+	ArrayList<Color> roomcolors;
 	Timer gameSpeed;
 	Timer roomSwitcherGuard;
 	final int MENU_STATE = 0;
@@ -24,15 +26,17 @@ public class SketcHex extends JPanel implements ActionListener, KeyListener {
 	static int currentState = 0;
 	static int casualtyCount;
 	Hecker flynn = new Hecker(500, 500, 30, 60, 20, 5);
-	Horde arnold;
-	Horde rick;
 	ObjectManager megahead;
 	Room base;
+	Room onScreenRoom;
 	Font font;
 	Font funFont;
-	public int roomsEntered = 0;
+	int numberOfTemporaryHorde = 0;
 	public int hordeAdder = 0;
-	public int roomnumber = 0;
+	public int flynnroomnumber = 0;
+	static int onetimedoublespawn = 0;
+	static int drawgamestateaddtohordenumber = 2;
+	static int numberOfNegativeRooms = 50;
 
 	public SketcHex() {
 		gameSpeed = new Timer(1000 / 120, this);
@@ -65,22 +69,31 @@ public class SketcHex extends JPanel implements ActionListener, KeyListener {
 
 	public void showcasualtyCount(Graphics g) {
 		g.setColor(Color.WHITE);
-		g.fillRect(800, 10, 75, 25);
+		g.fillRect(700, 10, 220, 25);
 		g.setColor(Color.BLACK);
 		g.setFont(funFont);
-		String rampage = "" + casualtyCount;
-		g.drawString(rampage, 805, 34);
+		String rampage = "Kill Count: " + casualtyCount;
+		g.drawString(rampage, 705, 34);
+	}
+
+	public void showRoomNum(Graphics g) {
+		g.setColor(Color.WHITE);
+		g.fillRect(200, 10, 150, 25);
+		g.setColor(Color.BLACK);
+		g.setFont(funFont);
+		String hotel = "Room " + flynnroomnumber;
+		g.drawString(hotel, 205, 34);
 	}
 
 	public void enteredNewRoom(boolean isGoingRight) {
-		roomsEntered++;
 		int xdisplacement = -1000;
 		if (isGoingRight) {
-			System.out.println("Moving to Room " + roomnumber);
+			System.out.println("Moving to Room " + flynnroomnumber);
 		} else {
 			xdisplacement = 1000;
+			System.out.println("Moving to Room " + flynnroomnumber);
 		}
-		megahead.manageEnemies(xdisplacement);
+		megahead.manageEnemiesAndRooms(xdisplacement);
 		addToHorde(hordeAdder);
 	}
 
@@ -109,31 +122,72 @@ public class SketcHex extends JPanel implements ActionListener, KeyListener {
 		}
 	}
 
+	// public void addToHorde(int a) {
+	// for (int i = 0; i < (a + 1); i++) {
+	// int randomxone = new Random().nextInt(600);
+	// int randomyone = new Random().nextInt(600);
+	// int randomxtwo = new Random().nextInt(600);
+	// int randomytwo = new Random().nextInt(600);
+	// Horde dissolvent = new Horde(randomxone + 200, randomyone + 200, 30, 60,
+	// this, Color.darkGray, 1);
+	// numberOfTemporaryHorde++;
+	// Horde dissolventtwo = new Horde(randomxtwo + 200, randomytwo + commented
+	// out
+	// 200, 30, 60, this, Color.darkGray, 1); commented out
+	// numberOfTemporaryHorde++; commented out
+	// megahead.addObject(dissolvent); /* this line is problematic. why? */
+	// megahead.addObject(dissolventtwo); commented out
+	// System.out.println("Zombie add count " + numberOfTemporaryHorde);
+	// if (numberOfTemporaryHorde > 2) {
+	// numberOfTemporaryHorde = 0;
+	// }
+	// }
+	//
+	// } /*
+	// * the below code works (besides for room 0). why does it work and not the
+	// * above code?
+	// */
 	public void addToHorde(int a) {
-		for (int i = 1; i < (a + 1); i++) {
-			int randomx = new Random().nextInt((700) + 200);
-			int randomy = new Random().nextInt((700) + 200);
-			Horde dissolvent = new Horde(randomx, randomy, 30, 60, this, Color.darkGray, 1);
+		for (int i = 0; i < (a); i++) {
+			int randomxone = new Random().nextInt(600);
+			int randomyone = new Random().nextInt(600);
+			Horde dissolvent = new Horde(randomxone + 200, randomyone + 200, 30, 60, this, Color.darkGray, 1);
 			megahead.addObject(dissolvent);
 			System.out.println("Zombie add count " + i);
+
 		}
 
 	}
 
 	public void startGame() {
 		gameSpeed.start();
-		arnold = new Horde(20, 500, 30, 60, this, Color.darkGray, 1);
-		rick = new Horde(20, 600, 30, 60, this, Color.darkGray, 1);
-		base = new Room(0, 0, 1000, 1000, this);
+		roomcolors = new ArrayList<Color>();
+		base = new Room(0, 0, 1000, 1000, 0, true, Color.blue, this);
 		roomSwitcherGuard = new Timer(1000 / 4, base);
 		megahead = new ObjectManager(this);
 		megahead.addObject(flynn);
-		megahead.addObject(arnold);
-		megahead.addObject(rick);
 		megahead.addObject(base);
-		roomColor = Color.green;
+		onScreenRoom = base;
+		roomColor = onScreenRoom.color;
 		roomSwitcherGuard.start();
+		// figure out what happens to roomSwitcherGuard when I have made a new
+		// Room object per "room panel", since one of its parameters is "base".
 	}
+
+	public void addRoomColor(Color c) {
+		roomcolors.add(c);
+	}
+
+	public Color getAnyRoomsColor(int roomsnumber) {
+		if (roomsnumber < 0) {
+			roomsnumber = numberOfNegativeRooms - (roomsnumber * (-1));
+		} else if (roomsnumber > 0) {
+			roomsnumber = numberOfNegativeRooms + roomsnumber;
+		}
+		Color returncolor = roomcolors.get(roomsnumber);
+		return returncolor;
+	}
+	/* help with above arraylist!!!!!! */
 
 	void updateMenuState() {
 
@@ -141,7 +195,6 @@ public class SketcHex extends JPanel implements ActionListener, KeyListener {
 
 	void updateGameState() {
 		megahead.update();
-
 		if (flynn.isAlive == false) {
 			currentState = END_STATE;
 		}
@@ -157,10 +210,16 @@ public class SketcHex extends JPanel implements ActionListener, KeyListener {
 	}
 
 	void drawGameState(Graphics b) {
-		b.setColor(roomColor);
+		b.setColor(onScreenRoom.color);
 		b.fillRect(0, 0, 1000, 1000);
+		if (onetimedoublespawn < drawgamestateaddtohordenumber) {
+			addToHorde(drawgamestateaddtohordenumber);
+			onetimedoublespawn += drawgamestateaddtohordenumber;
+		}
 		megahead.draw(b);
 		showcasualtyCount(b);
+		showRoomNum(b);
+
 	}
 
 	void drawEndState(Graphics c) {
@@ -170,8 +229,6 @@ public class SketcHex extends JPanel implements ActionListener, KeyListener {
 		c.setColor(Color.WHITE);
 		c.drawString("GAME OVER", 370, 300);
 		c.setColor(Color.BLACK);
-		// c.drawString("You killed " + casualtyCount + " of the horde.", 340,
-		// 400);
 		c.drawString("You scored " + casualtyCount + "!", 340, 400);
 		c.setFont(funFont);
 		c.setColor(Color.WHITE);

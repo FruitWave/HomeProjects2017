@@ -22,19 +22,6 @@ public class Bullet extends GameObject {
 		} else if (leftorrightLEFTisZEROrightISone == 1) {
 			x += speed;
 		}
-		// } //screwed up desperation mode below
-		// else if (Hecker.bulletAmmo < 25) {
-		// if (hex.flynn.transpex > 0) {
-		// x -= speed;
-		// } else if (hex.flynn.transpex < 0) {
-		// x += speed;
-		// }
-		// //// if (hex.flynn.transpey > 0) {
-		// //// y -= speed;
-		// //// } else if (hex.flynn.transpey < 0) {
-		// //// y += speed;
-		// //// }
-		// }
 
 	}
 
