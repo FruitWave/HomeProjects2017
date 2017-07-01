@@ -47,9 +47,6 @@ public class Room extends GameObject implements ActionListener {
 
 	public void update() {
 		super.update();
-		// CHANGE THE CODE SO THAT THE PREVIOUS ROOM'S
-		// COLOR IS SAVED, AND WHEN FLYNN GOES BACK INTO THAT ROOM ITS COLOR IS
-		// THE SAME (MASSIVE EDIT)
 
 		// moving to the next room right
 		if (hex.flynn.x >= 1000) {
@@ -76,9 +73,9 @@ public class Room extends GameObject implements ActionListener {
 			System.out.println("leveluppermultiplier is: " + leveluppermultiplier);
 			leveluppermultipliercounter = 0;
 		}
-		if ((levelupper >= 2) && (levelupper % 2 == 0)) {
+		if ((levelupper >= level) && (levelupper % 3 == 0)) {
 			int apoint = level;
-			level += levelupper / 2;
+			level += levelupper / 3;
 			int bpoint = level;
 			System.out.println("Level Upper is: " + levelupper);
 			if (apoint != bpoint) {
@@ -98,12 +95,17 @@ public class Room extends GameObject implements ActionListener {
 			}
 		} else {
 			r00m = hex.megahead.getRoom(hex.flynnroomnumber);
-			if (level >= 10) {
-				hex.hordeAdder = level;
-			}
+			// if (level >= 10) {
+			// hex.hordeAdder = level;
+			// }
 		}
 
 		hex.onScreenRoom = r00m;
+	}
+
+	public int levelShower() {
+		return level;
+
 	}
 
 	public Color randomColor() {

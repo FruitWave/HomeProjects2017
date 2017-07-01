@@ -38,7 +38,6 @@ public class SketcHex extends JPanel implements ActionListener, KeyListener {
 	static int drawgamestateaddtohordenumber = 2;
 	static int numberOfNegativeRooms = 50;
 
-
 	public SketcHex() {
 		gameSpeed = new Timer(1000 / 120, this);
 		// font = new Font("Arial", Font.PLAIN, 48);
@@ -70,11 +69,13 @@ public class SketcHex extends JPanel implements ActionListener, KeyListener {
 
 	public void showcasualtyCount(Graphics g) {
 		g.setColor(Color.WHITE);
-		g.fillRect(700, 10, 220, 25);
+		int sccrectwidth = 220;
+		int sccrectheight = 25;
+		g.fillRect(HordeRunner.width - sccrectwidth, 0, sccrectwidth, sccrectheight);
 		g.setColor(Color.BLACK);
 		g.setFont(funFont);
 		String rampage = "Kill Count: " + casualtyCount;
-		g.drawString(rampage, 705, 34);
+		g.drawString(rampage, HordeRunner.width - sccrectwidth, sccrectheight);
 	}
 
 	public void showRoomNum(Graphics g) {
@@ -144,6 +145,7 @@ public class SketcHex extends JPanel implements ActionListener, KeyListener {
 		megahead.addObject(base);
 		megahead.addRoom(base, false);
 		onScreenRoom = base;
+		addToHorde(hordeAdder);
 		roomColor = onScreenRoom.color;
 		roomSwitcherGuard.start();
 		// figure out what happens to roomSwitcherGuard when I have made a new
@@ -171,12 +173,12 @@ public class SketcHex extends JPanel implements ActionListener, KeyListener {
 
 	void updateGameState() {
 		megahead.update();
-	
+
 		if (flynn.isAlive == false) {
 			currentState = END_STATE;
 		}
-		
-		//megahead.showenemyLocation();
+
+		// megahead.showenemyLocation();
 	}
 
 	void updateEndState() {
@@ -202,10 +204,11 @@ public class SketcHex extends JPanel implements ActionListener, KeyListener {
 	void drawGameState(Graphics b) {
 		b.setColor(onScreenRoom.color);
 		b.fillRect(0, 0, 1000, 1000);
-		if (onetimedoublespawn < drawgamestateaddtohordenumber) {
-			addToHorde(drawgamestateaddtohordenumber);
-			onetimedoublespawn += drawgamestateaddtohordenumber;
-		}
+		// if (onetimedoublespawn < drawgamestateaddtohordenumber) {
+		// addToHorde(drawgamestateaddtohordenumber);
+		// onetimedoublespawn += drawgamestateaddtohordenumber;
+		// }
+		// figure out why I wanted this
 		megahead.draw(b);
 		showcasualtyCount(b);
 		showRoomNum(b);
@@ -277,13 +280,17 @@ public class SketcHex extends JPanel implements ActionListener, KeyListener {
 			String healthpane = JOptionPane.showInputDialog("Cheat Code Activated! Enter Flynn's desired health!");
 			int newhealth = Integer.parseInt(healthpane);
 			flynn.health = newhealth;
-
+			System.out.println("New Health: " + newhealth);
 		} else if ((e.getKeyCode() == KeyEvent.VK_J) && (currentState == GAME_STATE)) {
 			String bulletpane = JOptionPane
 					.showInputDialog("Cheat Code Activated! Enter Flynn's desired bullet ammo stock!");
 			int newammo = Integer.parseInt(bulletpane);
 			flynn.bulletAmmo = newammo;
+			System.out.println("New Bullet Ammo: " + newammo);
 
+		}
+		if ((e.getKeyCode() == KeyEvent.VK_L) && (currentState == GAME_STATE)) {
+			System.out.println("Level: " + onScreenRoom.levelShower());
 		}
 	}
 
