@@ -22,6 +22,7 @@ public class ObjectManager {
 
 	public ObjectManager(SketcHex hex) {
 		objects = new ArrayList<GameObject>();
+		rooms = new ArrayList<Room>();
 		this.hex = hex;
 	}
 
@@ -45,11 +46,23 @@ public class ObjectManager {
 		}
 	}
 
-	public void addRoom(Room r) {
-		// for (Room r : rooms) {
-		// rooms.add(r); .get*
-		// }
-		rooms.add(0, r);
+	public void addRoom(Room r, boolean isRight) {
+		if (isRight) {
+			rooms.add(r);
+			addObject(r);
+		} else {
+			rooms.add(0, r);
+			addObject(r);
+		}
+	}
+
+	public Room getRoom(int roomNumber) {
+		for (Room r : rooms) {
+			if (r.roomsroomnumber == roomNumber) {
+				return r;
+			}
+		}
+		return null;
 	}
 
 	private void purgeObjects() {
@@ -60,7 +73,7 @@ public class ObjectManager {
 		}
 	}
 
-	public void manageEnemiesAndRooms(int xdisplacement) {
+	public void manageEnemies(int xdisplacement) {
 		for (int i = 0; i < objects.size(); i++) {
 			GameObject o1 = objects.get(i);
 			if (o1 instanceof Horde) {

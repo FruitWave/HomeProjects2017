@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Random;
 
+import javax.swing.JOptionPane;
 import javax.swing.Timer;
 
 public class Room extends GameObject implements ActionListener {
@@ -60,8 +61,9 @@ public class Room extends GameObject implements ActionListener {
 		hex.roomcolors.add(color);
 		Color a = randomColor();
 		hex.roomColor = a;
-		Room r00m = new Room(0, 0, dimensionTeller.width, dimensionTeller.height, hex.flynnroomnumber, true, a,
-				hex);
+		Room r00m = hex.megahead.getRoom(hex.flynnroomnumber);
+		// new Room(0, 0, dimensionTeller.width, dimensionTeller.height,
+		// hex.flynnroomnumber, true, a, hex);
 		hex.onScreenRoom = r00m;
 	}
 
@@ -101,7 +103,7 @@ public class Room extends GameObject implements ActionListener {
 				roomStuckTime = 0;
 				hex.flynn.x += 200;
 			} else {
-				System.out.println("Moving in: " + (4 - roomStuckTime) + ".");
+				JOptionPane.showMessageDialog(null, "Moving in: " + (4 - roomStuckTime) + ".");
 			}
 		}
 	}

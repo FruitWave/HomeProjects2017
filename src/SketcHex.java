@@ -86,14 +86,9 @@ public class SketcHex extends JPanel implements ActionListener, KeyListener {
 	}
 
 	public void enteredNewRoom(boolean isGoingRight) {
-		int xdisplacement = -1000;
-		if (isGoingRight) {
-			System.out.println("Moving to Room " + flynnroomnumber);
-		} else {
-			xdisplacement = 1000;
-			System.out.println("Moving to Room " + flynnroomnumber);
-		}
-		megahead.manageEnemiesAndRooms(xdisplacement);
+		int xdisplacement = isGoingRight ? -1000 : 1000;
+		System.out.println("Moving to Room " + flynnroomnumber);
+		megahead.manageEnemies(xdisplacement);
 		addToHorde(hordeAdder);
 	}
 
@@ -138,10 +133,12 @@ public class SketcHex extends JPanel implements ActionListener, KeyListener {
 		gameSpeed.start();
 		roomcolors = new ArrayList<Color>();
 		base = new Room(0, 0, 1000, 1000, 0, true, Color.blue, this);
+		roomcolors.add(base.color);
 		roomSwitcherGuard = new Timer(1000 / 4, base);
 		megahead = new ObjectManager(this);
 		megahead.addObject(flynn);
 		megahead.addObject(base);
+		megahead.addRoom(base, false);
 		onScreenRoom = base;
 		roomColor = onScreenRoom.color;
 		roomSwitcherGuard.start();
