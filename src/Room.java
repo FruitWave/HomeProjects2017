@@ -45,42 +45,24 @@ public class Room extends GameObject implements ActionListener {
 
 		// moving to the next room right
 		if (hex.flynn.x >= 1000) {
-			hex.hordeAdder = 2;
-			hex.flynn.x -= 995;
-			hex.enteredNewRoom(true);
-			hex.flynnroomnumber++;
-			hex.roomcolors.add(color);
-			Color a = randomColor();
-			hex.roomColor = a;
-			int trroomnum = hex.flynnroomnumber;
-			Room tempRight = new Room(0, 0, dimensionTeller.width, dimensionTeller.height, trroomnum, true, a, hex);
-			hex.onScreenRoom = tempRight;
-		}
-		// moving to the next room left
-		if (hex.flynn.x <= 0) {
-			hex.hordeAdder = 2;
-			hex.flynn.x += 995;
-			hex.enteredNewRoom(false);
-			hex.flynnroomnumber--;
-			hex.roomcolors.add(color);
-			Color a = randomColor();
-			hex.roomColor = a;
-			int tlroomnum = hex.flynnroomnumber;
-			Room tempLeft = new Room(0, 0, dimensionTeller.width, dimensionTeller.height, tlroomnum, true, a, hex);
-			hex.onScreenRoom = tempLeft;
+			roomSwitch(true);
+		} else if (hex.flynn.x <= 0) {
+			roomSwitch(false);
 		}
 
-		// if (isOnScreen == false) {
-		// Color a = randomColor();
-		// newNonbaseRoom = new Room(0, 0, dimensionTeller.width,
-		// dimensionTeller.height, hex.flynnroomnumber, true, a,
-		// false, hex);
-		// hex.megahead.addObject(newNonbaseRoom);
-		// System.out.println("newNonbaseRoom created because flynn moved
-		// rooms");
-		// } else if (isOnScreen == true) {
-		// hex.roomColor = color;
-		// }
+	}
+
+	private void roomSwitch(boolean isRight) {
+		hex.hordeAdder = 2;
+		hex.flynn.x += isRight ? -995 : 995;
+		hex.enteredNewRoom(true);
+		hex.flynnroomnumber += isRight ? 1 : -1;
+		hex.roomcolors.add(color);
+		Color a = randomColor();
+		hex.roomColor = a;
+		Room r00m = new Room(0, 0, dimensionTeller.width, dimensionTeller.height, hex.flynnroomnumber, true, a,
+				hex);
+		hex.onScreenRoom = r00m;
 	}
 
 	public Color randomColor() {

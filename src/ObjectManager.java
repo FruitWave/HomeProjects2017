@@ -7,15 +7,14 @@ import java.util.Random;
 
 public class ObjectManager {
 	ArrayList<GameObject> objects;
-
+	ArrayList<Room> rooms;
 	SketcHex hex;
 	Color dark1 = new Color(100, 50, 50);
 	Color dark2 = new Color(200, 50, 80);
 	Color dark3 = new Color(250, 100, 10);
 	/**
-	 * the below showScore method/variable/code does not work. This message has
-	 * been printed below every instance where something related to it is
-	 * mentioned.
+	 * the below showScore method/variable/code does not work. This message has been
+	 * printed below every instance where something related to it is mentioned.
 	 */
 	// Font funFont;
 	long enemyTimer = 0;
@@ -44,6 +43,13 @@ public class ObjectManager {
 			GameObject o = objects.get(i);
 			o.draw(g);
 		}
+	}
+
+	public void addRoom(Room r) {
+		// for (Room r : rooms) {
+		// rooms.add(r); .get*
+		// }
+		rooms.add(0, r);
 	}
 
 	private void purgeObjects() {

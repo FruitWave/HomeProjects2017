@@ -122,38 +122,13 @@ public class SketcHex extends JPanel implements ActionListener, KeyListener {
 		}
 	}
 
-	// public void addToHorde(int a) {
-	// for (int i = 0; i < (a + 1); i++) {
-	// int randomxone = new Random().nextInt(600);
-	// int randomyone = new Random().nextInt(600);
-	// int randomxtwo = new Random().nextInt(600);
-	// int randomytwo = new Random().nextInt(600);
-	// Horde dissolvent = new Horde(randomxone + 200, randomyone + 200, 30, 60,
-	// this, Color.darkGray, 1);
-	// numberOfTemporaryHorde++;
-	// Horde dissolventtwo = new Horde(randomxtwo + 200, randomytwo + commented
-	// out
-	// 200, 30, 60, this, Color.darkGray, 1); commented out
-	// numberOfTemporaryHorde++; commented out
-	// megahead.addObject(dissolvent); /* this line is problematic. why? */
-	// megahead.addObject(dissolventtwo); commented out
-	// System.out.println("Zombie add count " + numberOfTemporaryHorde);
-	// if (numberOfTemporaryHorde > 2) {
-	// numberOfTemporaryHorde = 0;
-	// }
-	// }
-	//
-	// } /*
-	// * the below code works (besides for room 0). why does it work and not the
-	// * above code?
-	// */
 	public void addToHorde(int a) {
-		for (int i = 0; i < (a); i++) {
+		for (int i = 0; i < a; i++) {
 			int randomxone = new Random().nextInt(600);
 			int randomyone = new Random().nextInt(600);
 			Horde dissolvent = new Horde(randomxone + 200, randomyone + 200, 30, 60, this, Color.darkGray, 1);
 			megahead.addObject(dissolvent);
-			System.out.println("Zombie add count " + i);
+			System.out.println("Zombie add count " + (i + 1));
 
 		}
 
@@ -187,7 +162,6 @@ public class SketcHex extends JPanel implements ActionListener, KeyListener {
 		Color returncolor = roomcolors.get(roomsnumber);
 		return returncolor;
 	}
-	/* help with above arraylist!!!!!! */
 
 	void updateMenuState() {
 
@@ -234,9 +208,8 @@ public class SketcHex extends JPanel implements ActionListener, KeyListener {
 		c.setColor(Color.WHITE);
 		c.drawString("press delete to restart", 355,
 				500);/**
-						 * the below showScore method/variable/code does not
-						 * work. This message has been printed below every
-						 * instance where something related to it is mentioned.
+						 * the below showScore method/variable/code does not work. This message has been
+						 * printed below every instance where something related to it is mentioned.
 						 */
 		// megahead.showScore(c);
 	}
