@@ -28,6 +28,10 @@ public class Room extends GameObject implements ActionListener {
 	int randomfunint333 = new Random().nextInt(255);
 	Color randomfun3 = new Color(randomfunint111, randomfunint222, randomfunint333);
 	Room newNonbaseRoom;
+	int level = 2;
+	int levelupper = 0;
+	int leveluppermultiplier = 1;
+	int leveluppermultipliercounter = 0;
 
 	// save the rooms color, "if roomnumber is this then roomcolor is this",
 	// kill the room, create a new room
@@ -58,23 +62,45 @@ public class Room extends GameObject implements ActionListener {
 
 	private void roomSwitch(boolean isRight) {
 		Room r00m;
-		hex.hordeAdder = 2;
+
 		hex.flynn.x += isRight ? -995 : 995;
 		hex.enteredNewRoom(true);
 		hex.flynnroomnumber += isRight ? 1 : -1;
 		hex.roomcolors.add(color);
 		Color a = randomColor();
 		hex.roomColor = a;
+		levelupper++;
+		levelupper *= leveluppermultiplier;
+		if (leveluppermultipliercounter == 4) {
+			leveluppermultiplier++;
+			System.out.println("leveluppermultiplier is: " + leveluppermultiplier);
+			leveluppermultipliercounter = 0;
+		}
+		if ((levelupper >= 2) && (levelupper % 2 == 0)) {
+			int apoint = level;
+			level += levelupper / 2;
+			int bpoint = level;
+			System.out.println("Level Upper is: " + levelupper);
+			if (apoint != bpoint) {
+				JOptionPane.showMessageDialog(null, "Level Up! (Now Level " + level + "!");
+			}
+			levelupper = 0;
+		}
 		if (hex.megahead.getRoom(hex.flynnroomnumber) == null) {
 			r00m = new Room(0, 0, dimensionTeller.width, dimensionTeller.height, hex.flynnroomnumber, true, a, hex);
 			hex.megahead.addObject(r00m);
 			if (isRight) {
 				hex.megahead.addRoom(r00m, true);
+				hex.hordeAdder = level;
 			} else {
 				hex.megahead.addRoom(r00m, false);
+				hex.hordeAdder = level;
 			}
 		} else {
 			r00m = hex.megahead.getRoom(hex.flynnroomnumber);
+			if (level >= 10) {
+				hex.hordeAdder = level;
+			}
 		}
 
 		hex.onScreenRoom = r00m;

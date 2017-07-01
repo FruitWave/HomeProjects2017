@@ -38,6 +38,7 @@ public class SketcHex extends JPanel implements ActionListener, KeyListener {
 	static int drawgamestateaddtohordenumber = 2;
 	static int numberOfNegativeRooms = 50;
 
+
 	public SketcHex() {
 		gameSpeed = new Timer(1000 / 120, this);
 		// font = new Font("Arial", Font.PLAIN, 48);
@@ -161,6 +162,7 @@ public class SketcHex extends JPanel implements ActionListener, KeyListener {
 		}
 		Color returncolor = roomcolors.get(roomsnumber);
 		return returncolor;
+		// figure out this crap
 	}
 
 	void updateMenuState() {
@@ -169,9 +171,12 @@ public class SketcHex extends JPanel implements ActionListener, KeyListener {
 
 	void updateGameState() {
 		megahead.update();
+	
 		if (flynn.isAlive == false) {
 			currentState = END_STATE;
 		}
+		
+		//megahead.showenemyLocation();
 	}
 
 	void updateEndState() {

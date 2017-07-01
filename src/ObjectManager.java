@@ -83,6 +83,16 @@ public class ObjectManager {
 
 	}
 
+	// public void showenemyLocation() {
+	// for (int i = 0; i < objects.size(); i++) {
+	// GameObject o1 = objects.get(i);
+	// if (o1 instanceof Horde) {
+	// System.out.println("Enemy " + (i + 1) + "position: " + o1.x + ", " + o1.y +
+	// ".");
+	// }
+	// }
+	// }
+
 	public void checkCollision() {
 		for (int i = 0; i < objects.size(); i++) {
 			for (int j = i + 1; j < objects.size(); j++) {
