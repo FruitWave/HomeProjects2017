@@ -119,9 +119,12 @@ public class SketcHex extends JPanel implements ActionListener, KeyListener {
 
 	public void addToHorde(int a) {
 		for (int i = 0; i < a; i++) {
-			int randomxone = new Random().nextInt(600);
-			int randomyone = new Random().nextInt(600);
-			Horde dissolvent = new Horde(randomxone + 200, randomyone + 200, 30, 60, this, Color.darkGray, 1);
+			int dissolventwidth = 30;
+			int dissolventheight = 60;
+			int randomxone = new Random().nextInt(600 - dissolventwidth);
+			int randomyone = new Random().nextInt(600 - dissolventheight);
+			Horde dissolvent = new Horde(randomxone + 200, randomyone + 200, dissolventwidth, dissolventheight, this,
+					Color.darkGray, 1);
 			megahead.addObject(dissolvent);
 			System.out.println("Zombie add count " + (i + 1));
 
@@ -176,8 +179,19 @@ public class SketcHex extends JPanel implements ActionListener, KeyListener {
 	}
 
 	void drawMenuState(Graphics a) {
+		int startscript = HordeRunner.width / 3;
 		a.setColor(Color.blue);
 		a.fillRect(0, 0, 1000, 1000);
+
+		a.setFont(font);
+		a.setColor(Color.WHITE);
+		a.drawString("===HORDE RUNNER===", (startscript / 2) + 90, 300);
+		a.setColor(Color.BLACK);
+		a.drawString("Press 'I' for instructions.", (startscript / 2) + 90, 400);
+		a.setFont(funFont);
+		a.setColor(Color.WHITE);
+		a.drawString("Press Enter To Start", startscript, 500);
+
 	}
 
 	void drawGameState(Graphics b) {
@@ -203,12 +217,8 @@ public class SketcHex extends JPanel implements ActionListener, KeyListener {
 		c.drawString("You scored " + casualtyCount + "!", 340, 400);
 		c.setFont(funFont);
 		c.setColor(Color.WHITE);
-		c.drawString("press delete to restart", 355,
-				500);/**
-						 * the below showScore method/variable/code does not work. This message has been
-						 * printed below every instance where something related to it is mentioned.
-						 */
-		// megahead.showScore(c);
+		c.drawString("press delete to restart", 355, 500);
+
 	}
 
 	public void paintComponent(Graphics delta) {

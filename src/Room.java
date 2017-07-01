@@ -15,15 +15,18 @@ public class Room extends GameObject implements ActionListener {
 	boolean unspawnedhorde;
 	Color color;
 	Color darkdarkblue = new Color(0, 0, 50);
-	int randomfunint1 = new Random().nextInt(256);
-	int randomfunint2 = new Random().nextInt(256);
-	int randomfunint3 = new Random().nextInt(256);
+	int randomfunint1 = new Random().nextInt(255);
+	int randomfunint2 = new Random().nextInt(255);
+	int randomfunint3 = new Random().nextInt(255);
 	Color randomfun = new Color(randomfunint1, randomfunint2, randomfunint3);
-	int randomfunint11 = new Random().nextInt(256);
-	int randomfunint22 = new Random().nextInt(256);
-	int randomfunint33 = new Random().nextInt(256);
+	int randomfunint11 = new Random().nextInt(255);
+	int randomfunint22 = new Random().nextInt(255);
+	int randomfunint33 = new Random().nextInt(255);
 	Color randomfun2 = new Color(randomfunint11, randomfunint22, randomfunint33);
-
+	int randomfunint111 = new Random().nextInt(255);
+	int randomfunint222 = new Random().nextInt(255);
+	int randomfunint333 = new Random().nextInt(255);
+	Color randomfun3 = new Color(randomfunint111, randomfunint222, randomfunint333);
 	Room newNonbaseRoom;
 
 	// save the rooms color, "if roomnumber is this then roomcolor is this",
@@ -54,6 +57,7 @@ public class Room extends GameObject implements ActionListener {
 	}
 
 	private void roomSwitch(boolean isRight) {
+		Room r00m;
 		hex.hordeAdder = 2;
 		hex.flynn.x += isRight ? -995 : 995;
 		hex.enteredNewRoom(true);
@@ -61,17 +65,26 @@ public class Room extends GameObject implements ActionListener {
 		hex.roomcolors.add(color);
 		Color a = randomColor();
 		hex.roomColor = a;
-		Room r00m = hex.megahead.getRoom(hex.flynnroomnumber);
-		// new Room(0, 0, dimensionTeller.width, dimensionTeller.height,
-		// hex.flynnroomnumber, true, a, hex);
+		if (hex.megahead.getRoom(hex.flynnroomnumber) == null) {
+			r00m = new Room(0, 0, dimensionTeller.width, dimensionTeller.height, hex.flynnroomnumber, true, a, hex);
+			hex.megahead.addObject(r00m);
+			if (isRight) {
+				hex.megahead.addRoom(r00m, true);
+			} else {
+				hex.megahead.addRoom(r00m, false);
+			}
+		} else {
+			r00m = hex.megahead.getRoom(hex.flynnroomnumber);
+		}
+
 		hex.onScreenRoom = r00m;
 	}
 
 	public Color randomColor() {
 		Color roomColorSetter;
-		int randomNum = new Random().nextInt(7);
+		int randomNum = new Random().nextInt(8);
 		if (randomNum == 0) {
-			roomColorSetter = randomfun2;
+			roomColorSetter = randomfun;
 		} else if (randomNum == 1) {
 			roomColorSetter = Color.cyan;
 		} else if (randomNum == 2) {
@@ -83,7 +96,9 @@ public class Room extends GameObject implements ActionListener {
 		} else if (randomNum == 5) {
 			roomColorSetter = Color.red;
 		} else if (randomNum == 6) {
-			roomColorSetter = randomfun;
+			roomColorSetter = randomfun2;
+		} else if (randomNum == 7) {
+			roomColorSetter = randomfun3;
 		} else {
 			roomColorSetter = Color.yellow;
 
