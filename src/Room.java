@@ -98,9 +98,6 @@ public class Room extends GameObject implements ActionListener {
 		} else {
 			r00m = hex.megahead.getRoom(hex.flynnroomnumber);
 			hex.enteredNewRoom(isRight, false);
-			// if (level >= 10) {
-			// hex.hordeAdder = level;
-			// }
 		}
 
 		hex.onScreenRoom = r00m;

@@ -5,7 +5,7 @@ import java.util.Random;
 public class Bullet extends GameObject {
 	int speed;
 	SketcHex hex;
-	public int leftorrightLEFTisZEROrightISone = 0;
+	boolean isGoingRight = true;
 	Color darkred = new Color(148, 22, 10);
 
 	public Bullet(int x, int y, int width, int height, SketcHex hex) {
@@ -16,11 +16,10 @@ public class Bullet extends GameObject {
 
 	public void update() {
 		super.update();
-
-		if (leftorrightLEFTisZEROrightISone == 0) {
-			x -= speed;
-		} else if (leftorrightLEFTisZEROrightISone == 1) {
+		if (isGoingRight) {
 			x += speed;
+		} else if (isGoingRight == false) {
+			x -= speed;
 		}
 
 	}

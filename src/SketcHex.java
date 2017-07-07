@@ -25,18 +25,17 @@ public class SketcHex extends JPanel implements ActionListener, KeyListener {
 	final int END_STATE = 2;
 	static int currentState = 0;
 	static int casualtyCount;
-	Hecker flynn = new Hecker(500, 500, 30, 60, 20, 5);
+	Hecker flynn = new Hecker(500, 500, 30, 60, 20, 15);
 	ObjectManager megahead;
 	Room base;
 	Room onScreenRoom;
 	Font font;
 	Font funFont;
-	int numberOfTemporaryHorde = 0;
+	Font statsFont;
 	public int hordeAdder = 0;
 	public int flynnroomnumber = 0;
-	static int onetimedoublespawn = 0;
-	static int drawgamestateaddtohordenumber = 2;
-	static int numberOfNegativeRooms = 50;
+	public int statisticsrectwidth = HordeRunner.width;
+	public int statisticsrectheight = 50;
 
 	public SketcHex() {
 		gameSpeed = new Timer(1000 / 120, this);
@@ -45,7 +44,7 @@ public class SketcHex extends JPanel implements ActionListener, KeyListener {
 		casualtyCount = 0;
 		font = new Font("Arial", Font.PLAIN, 48);
 		funFont = new Font("Comic Sans MS", Font.CENTER_BASELINE, 30);
-
+		statsFont = new Font("Bank Gothic", Font.CENTER_BASELINE, 25);
 		// try {
 		// alienImg =
 		// ImageIO.read(this.getClass().getResourceAsStream("alien.png"));
@@ -67,24 +66,25 @@ public class SketcHex extends JPanel implements ActionListener, KeyListener {
 		casualtyCount = s;
 	}
 
-	public void showcasualtyCount(Graphics g) {
+	public void showStatistics(Graphics g) {
 		g.setColor(Color.WHITE);
-		int sccrectwidth = 220;
-		int sccrectheight = 25;
-		g.fillRect(HordeRunner.width - sccrectwidth, 0, sccrectwidth, sccrectheight);
+		g.setFont(statsFont);
+		g.fillRect(HordeRunner.width - statisticsrectwidth, 0, statisticsrectwidth, statisticsrectheight);
+		showcasualtyCount(g);
+		showRoomNum(g);
+	}
+
+	public void showcasualtyCount(Graphics g) {
 		g.setColor(Color.BLACK);
-		g.setFont(funFont);
+		g.setFont(statsFont);
 		String rampage = "Kill Count: " + casualtyCount;
-		g.drawString(rampage, HordeRunner.width - sccrectwidth, sccrectheight);
+		g.drawString(rampage, 0, statisticsrectheight / 2);
 	}
 
 	public void showRoomNum(Graphics g) {
-		g.setColor(Color.WHITE);
-		g.fillRect(200, 10, 150, 25);
 		g.setColor(Color.BLACK);
-		g.setFont(funFont);
 		String hotel = "Room " + flynnroomnumber;
-		g.drawString(hotel, 205, 34);
+		g.drawString(hotel, 0, statisticsrectheight);
 	}
 
 	public void enteredNewRoom(boolean isGoingRight, boolean newRoom) {
@@ -96,29 +96,19 @@ public class SketcHex extends JPanel implements ActionListener, KeyListener {
 		}
 	}
 
-	public void bulletfirel() {
+	@SuppressWarnings("static-access")
+	public void bulletfired(boolean isDirectedRight) {
 		if (flynn.bulletAmmo > 0) {
 			flynn.bulletAmmo -= 1;
 			System.out.println("Bullets: " + flynn.bulletAmmo);
-			Bullet bullet = new Bullet(flynn.x, flynn.y + (flynn.height / 2), 8, 4, this);
-			bullet.leftorrightLEFTisZEROrightISone = 0;
+			int bulletx = isDirectedRight ? flynn.x + flynn.width : flynn.x;
+			Bullet bullet = new Bullet(bulletx, flynn.y + (flynn.height / 2), 8, 4, this);
+			bullet.isGoingRight = isDirectedRight ? true : false;
 			megahead.addObject(bullet);
 		} else {
-			JOptionPane.showMessageDialog(null, "Out Of Bullet Ammo");
+			JOptionPane.showMessageDialog(null, "You've Run Out Of Bullet Ammo");
 		}
 
-	}
-
-	public void bulletfirer() {
-		if (flynn.bulletAmmo > 0) {
-			flynn.bulletAmmo -= 1;
-			System.out.println("Bullets: " + flynn.bulletAmmo);
-			Bullet bullet = new Bullet(flynn.x + flynn.width, flynn.y + (flynn.height / 2), 8, 4, this);
-			bullet.leftorrightLEFTisZEROrightISone = 1;
-			megahead.addObject(bullet);
-		} else {
-			JOptionPane.showMessageDialog(null, "Out Of Bullet Ammo");
-		}
 	}
 
 	public void addToHorde(int a) {
@@ -159,11 +149,6 @@ public class SketcHex extends JPanel implements ActionListener, KeyListener {
 	}
 
 	public Color getAnyRoomsColor(int roomsnumber) {
-		if (roomsnumber < 0) {
-			roomsnumber = numberOfNegativeRooms - (roomsnumber * (-1));
-		} else if (roomsnumber > 0) {
-			roomsnumber = numberOfNegativeRooms + roomsnumber;
-		}
 		Color returncolor = roomcolors.get(roomsnumber);
 		return returncolor;
 		// figure out this crap
@@ -180,8 +165,9 @@ public class SketcHex extends JPanel implements ActionListener, KeyListener {
 			currentState = END_STATE;
 		}
 
-		// megahead.showenemyLocation();
 	}
+
+	// megahead.showenemyLocation();
 
 	void updateEndState() {
 
@@ -206,14 +192,8 @@ public class SketcHex extends JPanel implements ActionListener, KeyListener {
 	void drawGameState(Graphics b) {
 		b.setColor(onScreenRoom.color);
 		b.fillRect(0, 0, 1000, 1000);
-		// if (onetimedoublespawn < drawgamestateaddtohordenumber) {
-		// addToHorde(drawgamestateaddtohordenumber);
-		// onetimedoublespawn += drawgamestateaddtohordenumber;
-		// }
-		// figure out why I wanted this
 		megahead.draw(b);
-		showcasualtyCount(b);
-		showRoomNum(b);
+		showStatistics(b);
 
 	}
 
@@ -246,6 +226,7 @@ public class SketcHex extends JPanel implements ActionListener, KeyListener {
 	public void keyTyped(KeyEvent e) {
 	}
 
+	@SuppressWarnings("static-access")
 	@Override
 	public void keyPressed(KeyEvent e) {
 		// System.out.println(e.getKeyCode());
@@ -258,26 +239,79 @@ public class SketcHex extends JPanel implements ActionListener, KeyListener {
 		} else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
 			flynn.transpey = 5;
 		} else if (e.getKeyCode() == KeyEvent.VK_Z) {
-			bulletfirel();
+			bulletfired(false);
 		} else if (e.getKeyCode() == KeyEvent.VK_X) {
-			bulletfirer();
+			bulletfired(true);
 		}
 		if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 			if (currentState == MENU_STATE) {
 				currentState = GAME_STATE;
 			} else if (currentState == GAME_STATE) {
 				currentState = END_STATE;
-			} else if (currentState == END_STATE) {
-				currentState = MENU_STATE;
 			}
 			System.out.println("The current state is " + currentState + ".");
 		}
-		// if ((e.getKeyCode() == 8) && (currentState >= END_STATE)) {
-		// casualtyCount = 0;
-		// currentState = MENU_STATE;
-		// megahead.reset();
-		// startGame();
-		// }
+
+		if (e.getKeyCode() == KeyEvent.VK_PERIOD) {
+			if (flynn.transpex < 0) {
+				flynn.transpex -= 50;
+			} else if (flynn.transpex > 0) {
+				flynn.transpex += 50;
+			}
+			if (flynn.transpey < 0) {
+				flynn.transpey -= 50;
+			} else if (flynn.transpey > 0) {
+				flynn.transpey += 50;
+			}
+		}
+		if (e.getKeyCode() == KeyEvent.VK_N) {
+			for (int i = 0; i < megahead.objects.size(); i++) {
+				GameObject o1 = megahead.objects.get(i);
+				if (o1 instanceof Horde) {
+					Horde ohOne = (Horde) o1;
+					ohOne.isAlive = false;
+					casualtyCount += ohOne.deathPotential;
+				}
+			}
+		}
+		if (e.getKeyCode() == KeyEvent.VK_COMMA) {
+			flynn.health += 50000;
+			flynn.bulletAmmo += 50000;
+		}
+		if ((e.getKeyCode() == KeyEvent.VK_I) && (currentState == MENU_STATE)) {
+			JOptionPane.showMessageDialog(null,
+					"BASIC KNOWLEDGE: To Go Into next room, simply run into the wall. One may move rooms horizontally, but not vertically. CONTROLS: Arrow Keys To Move. CHEATS: Come up to me and whisper into my ear, 'You would not believe your eyes\n"
+							+ "If ten million fireflies\n" + "Lit up the world as I fell asleep\n" + "\n"
+							+ "'Cause they fill the open air\n" + "And leave teardrops everywhere\n"
+							+ "You'd think me rude but I would just stand and stare\n" + "\n"
+							+ "I'd like to make myself believe that planet earth turns slowly\n"
+							+ "It's hard to say that I'd rather stay awake when I'm asleep\n"
+							+ "'Cause everything is never as it seems\n" + "\n" + "'Cause I'd get a thousand hugs\n"
+							+ "From ten thousand lightning bugs\n" + "As they tried to teach me how to dance\n" + "\n"
+							+ "A foxtrot above my head\n" + "A sock hop beneath my bed\n"
+							+ "A disco ball is just hanging by a thread (thread, thread)\n" + "\n"
+							+ "I'd like to make myself believe that planet earth turns slowly\n"
+							+ "It's hard to say that I'd rather stay awake when I'm asleep\n"
+							+ "'Cause everything is never as it seems (when I fall asleep)\n" + "\n"
+							+ "Leave my door open just a crack\n" + "Please take me away from here\n"
+							+ "'Cause I feel like such an insomniac\n" + "Please take me away from here\n"
+							+ "Why do I tire of counting sheep\n" + "Please take me away from here\n"
+							+ "When I'm far too tired to fall asleep\n" + "\n" + "To ten million fireflies\n"
+							+ "I'm weird cause I hate goodbyes\n"
+							+ "I got misty eyes as they said farewell (said farewell)\n" + "\n"
+							+ "But I'll know where several are\n" + "If my dreams get real bizarre\n"
+							+ "'Cause I saved a few and I keep them in a jar (jar, jar)\n" + "\n"
+							+ "I'd like to make myself believe that planet earth turns slowly\n"
+							+ "It's hard to say that I'd rather stay awake when I'm asleep\n"
+							+ "'Cause everything is never as it seems (when I fall asleep)\n" + "\n"
+							+ "I'd like to make myself believe that planet earth turns slowly\n"
+							+ "It's hard to say that I'd rather stay awake when I'm asleep\n"
+							+ "'Cause everything is never as it seems (when I fall asleep)'. If you do this, I may consider lending you a cheat code or two.");
+
+		}
+		if (e.getKeyCode() == KeyEvent.VK_BACK_SPACE) {
+			fullRestart();
+		}
 		if ((e.getKeyCode() == KeyEvent.VK_K) && (currentState == GAME_STATE)) {
 			String healthpane = JOptionPane.showInputDialog("Cheat Code Activated! Enter Flynn's desired health!");
 			int newhealth = Integer.parseInt(healthpane);
@@ -294,6 +328,22 @@ public class SketcHex extends JPanel implements ActionListener, KeyListener {
 		if ((e.getKeyCode() == KeyEvent.VK_L) && (currentState == GAME_STATE)) {
 			System.out.println("Level: " + onScreenRoom.levelShower());
 		}
+	}
+
+	private void fullRestart() {
+		currentState = MENU_STATE;
+		casualtyCount = 0;
+		roomSwitcherGuard.stop();
+		gameSpeed.stop();
+
+		base.level = 2;
+		base.levelupper = 0;
+		base.leveluppermultiplier = 1;
+		base.leveluppermultipliercounter = 0;
+		megahead.reset();
+		roomcolors.clear();
+		flynn.isAlive = true;
+		startGame();
 	}
 
 	@Override

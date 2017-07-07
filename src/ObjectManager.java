@@ -96,6 +96,7 @@ public class ObjectManager {
 	public void checkCollision() {
 		for (int i = 0; i < objects.size(); i++) {
 			for (int j = i + 1; j < objects.size(); j++) {
+				// what is the purpose of the 'i' for loop enclosing the 'j' for loop?
 				GameObject o1 = objects.get(i);
 				GameObject o2 = objects.get(j);
 
