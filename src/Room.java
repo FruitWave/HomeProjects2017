@@ -59,20 +59,20 @@ public class Room extends GameObject implements ActionListener {
 
 	private void roomSwitch(boolean isRight) {
 		Room r00m;
-
 		hex.flynn.x += isRight ? -995 : 995;
-		hex.enteredNewRoom(true);
+
 		hex.flynnroomnumber += isRight ? 1 : -1;
 		hex.roomcolors.add(color);
 		Color a = randomColor();
 		hex.roomColor = a;
 		levelupper++;
-		levelupper *= leveluppermultiplier;
-		if (leveluppermultipliercounter == 4) {
-			leveluppermultiplier++;
-			System.out.println("leveluppermultiplier is: " + leveluppermultiplier);
-			leveluppermultipliercounter = 0;
-		}
+		// levelupper *= leveluppermultiplier;
+		// if (leveluppermultipliercounter == 4) {
+		// leveluppermultiplier++;
+		// System.out.println("leveluppermultiplier is: " +
+		// leveluppermultiplier);
+		// leveluppermultipliercounter = 0;
+		// }
 		if ((levelupper >= level) && (levelupper % 3 == 0)) {
 			int apoint = level;
 			level += levelupper / 3;
@@ -81,6 +81,7 @@ public class Room extends GameObject implements ActionListener {
 			if (apoint != bpoint) {
 				JOptionPane.showMessageDialog(null, "Level Up! (Now Level " + level + "!");
 			}
+
 			levelupper = 0;
 		}
 		if (hex.megahead.getRoom(hex.flynnroomnumber) == null) {
@@ -93,8 +94,10 @@ public class Room extends GameObject implements ActionListener {
 				hex.megahead.addRoom(r00m, false);
 				hex.hordeAdder = level;
 			}
+			hex.enteredNewRoom(isRight, true);
 		} else {
 			r00m = hex.megahead.getRoom(hex.flynnroomnumber);
+			hex.enteredNewRoom(isRight, false);
 			// if (level >= 10) {
 			// hex.hordeAdder = level;
 			// }

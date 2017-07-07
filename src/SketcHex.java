@@ -87,11 +87,13 @@ public class SketcHex extends JPanel implements ActionListener, KeyListener {
 		g.drawString(hotel, 205, 34);
 	}
 
-	public void enteredNewRoom(boolean isGoingRight) {
+	public void enteredNewRoom(boolean isGoingRight, boolean newRoom) {
 		int xdisplacement = isGoingRight ? -1000 : 1000;
 		System.out.println("Moving to Room " + flynnroomnumber);
 		megahead.manageEnemies(xdisplacement);
-		addToHorde(hordeAdder);
+		if (newRoom) {
+			addToHorde(hordeAdder);
+		}
 	}
 
 	public void bulletfirel() {
