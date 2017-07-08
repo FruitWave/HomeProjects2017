@@ -10,42 +10,48 @@ public class SpawningItem extends GameObject {
 	String type2 = "Healthpack";
 	String type3pt1 = "Nuke";
 	String type3pt2 = "Nuka-Cola Suit";
-	String type;
+	String type0 = "Nothing";
 	Color colortype;
 	Color bcolor = Color.BLACK;
 	Color hcolor = Color.RED;
 	Color ncolor = Color.GREEN;
 	Color scolor = Color.WHITE;
-	boolean isDetonated = false;
 	SketcHex hex;
 
-	public SpawningItem(int x, int y, int width, int height, String typeparameter, SketcHex hex) {
+	public SpawningItem(int x, int y, int width, int height, String typeparameto, SketcHex hex) {
 		super(x, y, width, height);
-		this.typeparameter = typeparameter;
+		typeparameter = typeparameto;
 		this.hex = hex;
-		typeSetter();
+		typeparameter = typeSetter();
 	}
 
 	public void update() {
 		super.update();
-
+		if (typeparameter.equals(type0)) {
+			isAlive = false;
+		}
+		System.out.println("typeparameter is: " + typeparameter);
 	}
 
-	public void typeSetter() {
+	public String typeSetter() {
 		int rannum = randomNumber();
 		String typeset = parseRandomNumber(rannum);
 		if (typeset.equals(null)) {
 			JOptionPane.showMessageDialog(null, "Something went wrong. Typset is null.");
 		}
-		typeparameter.equals(typeset);
+		// typeparameter.equals(typeset);
+		// the above line doesn't seem to work with any temporary string for xeno in the
+		// room class, such as "type unset", so i made this method have a return type to
+		// give a new item its type in the constructor.
 		System.out.println("Item is a " + typeset + ".");
+		return typeset;
 
 	}
 
 	public String parseRandomNumber(int randomNumber) {
 		System.out.println("Random number is " + randomNumber + ".");
 		if (randomNumber < 9) {
-			return null;
+			return type0;
 		} else if ((randomNumber >= 9) && (randomNumber < 12)) {
 			return type1;
 		} else if ((randomNumber >= 12) && (randomNumber < 14)) {
@@ -73,8 +79,13 @@ public class SpawningItem extends GameObject {
 			colortype = ncolor;
 		} else if (typeparameter.equals(type3pt2)) {
 			colortype = scolor;
+		} else if (typeparameter.equals(type0)) {
+			colortype = Color.red;
 		}
+		System.out.println("before setcolor " + colortype);
 		quantummarshmallowcake.setColor(colortype);
+		System.out.println("after setcolor " + colortype);
 		quantummarshmallowcake.fillRect(x, y, width, height);
+		System.out.println("stats: " + x + " " + y + " " + width + " " + height);
 	}
 }

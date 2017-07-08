@@ -83,16 +83,6 @@ public class ObjectManager {
 
 	}
 
-	// public void showenemyLocation() {
-	// for (int i = 0; i < objects.size(); i++) {
-	// GameObject o1 = objects.get(i);
-	// if (o1 instanceof Horde) {
-	// System.out.println("Enemy " + (i + 1) + "position: " + o1.x + ", " + o1.y +
-	// ".");
-	// }
-	// }
-	// }
-
 	public void checkCollision() {
 		for (int i = 0; i < objects.size(); i++) {
 			for (int j = i + 1; j < objects.size(); j++) {
@@ -142,12 +132,22 @@ public class ObjectManager {
 						// System.out.println("Flynn's health is now " + imflynnity.health + ".");
 						if (item.typeparameter.equals(item.type1)) {
 							imflynnity.bulletAmmo += 10;
+							System.out.println("Stats up code reached (" + item.typeparameter + ").");
 						} else if (item.typeparameter.equals(item.type2)) {
 							imflynnity.health += 15;
+							System.out.println("New Health: " + imflynnity.health);
+							System.out.println("Stats up code reached (" + item.typeparameter + ").");
+
 						} else if (item.typeparameter.equals(item.type3pt1)) {
 							imflynnity.nukeCount += 1;
+							System.out.println("New Nuke Count: " + imflynnity.nukeCount);
+							System.out.println("Stats up code reached (" + item.typeparameter + ").");
+
 						} else if (item.typeparameter.equals(item.type3pt2)) {
 							imflynnity.nukeSuitCount += 1;
+							System.out.println("New Nuke Count: " + imflynnity.nukeSuitCount);
+							System.out.println("Stats up code reached (" + item.typeparameter + ").");
+
 						}
 						System.out.println("Item " + item.typeparameter + " picked up!");
 						item.isAlive = false;

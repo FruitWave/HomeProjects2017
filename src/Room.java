@@ -33,6 +33,7 @@ public class Room extends GameObject implements ActionListener {
 	int leveluppermultiplier = 1;
 	int leveluppermultipliercounter = 0;
 	SpawningItem xenomorpheousSubstance;
+	SpawningItem usedtogivexenoitstypeparameter;
 
 	// save the rooms color, "if roomnumber is this then roomcolor is this",
 	// kill the room, create a new room
@@ -98,7 +99,8 @@ public class Room extends GameObject implements ActionListener {
 			}
 			hex.enteredNewRoom(isRight, true);
 			xenomorpheousSubstance = new SpawningItem(randomItemX + 200, randomItemY + 200, itemwidth, itemheight,
-					"no type set", hex);
+					"type unset", hex);
+			hex.megahead.addObject(xenomorpheousSubstance);
 		} else {
 			r00m = hex.megahead.getRoom(hex.flynnroomnumber);
 			hex.enteredNewRoom(isRight, false);

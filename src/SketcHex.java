@@ -277,6 +277,7 @@ public class SketcHex extends JPanel implements ActionListener, KeyListener {
 				}
 				if (flynn.nukeSuitEquipped) {
 					flynn.nukeSuitCount--;
+					flynn.nukeSuitEquipped = false;
 				} else if (flynn.nukeSuitEquipped == false) {
 					flynn.isAlive = false;
 				}
