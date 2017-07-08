@@ -12,6 +12,7 @@ public class ObjectManager {
 	Color dark1 = new Color(100, 50, 50);
 	Color dark2 = new Color(200, 50, 80);
 	Color dark3 = new Color(250, 100, 10);
+	Color dark4 = new Color(49, 0, 26);
 	/**
 	 * the below showScore method/variable/code does not work. This message has been
 	 * printed below every instance where something related to it is mentioned.
@@ -181,6 +182,10 @@ public class ObjectManager {
 							zombie.color = dark3;
 							hordeFunctionsMaxedSizeAndSpeed(zombie, zombietwo);
 							System.out.println("Darkpack!");
+						} else if ((zombie.color == dark3) && (zombietwo.color == dark3)) {
+							zombie.color = dark4;
+							hordeFunctionsMaxedSizeAndSpeed(zombie, zombietwo);
+							System.out.println("Eternitypack!");
 						}
 					}
 
@@ -208,12 +213,12 @@ public class ObjectManager {
 		one.width++;
 		one.height++;
 		one.speed += 1;
-		one.health += 1;
+		one.health *= 2;
 	}
 
 	public void hordeFunctionsMaxedSizeAndSpeed(Horde one, Horde two) {
 		two.isAlive = false;
 		one.deathPotential *= 2;
-		one.health += 1;
+		one.health *= 2;
 	}
 }

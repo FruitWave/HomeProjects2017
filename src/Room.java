@@ -28,7 +28,7 @@ public class Room extends GameObject implements ActionListener {
 	int randomfunint333 = new Random().nextInt(255);
 	Color randomfun3 = new Color(randomfunint111, randomfunint222, randomfunint333);
 	Room newNonbaseRoom;
-	int level = 2;
+	int level = 1;
 	int levelupper = 0;
 	int leveluppermultiplier = 1;
 	int leveluppermultipliercounter = 0;
@@ -76,9 +76,9 @@ public class Room extends GameObject implements ActionListener {
 		 * leveluppermultiplier++; System.out.println("leveluppermultiplier is: " +
 		 * leveluppermultiplier); leveluppermultipliercounter = 0; }
 		 */
-		if ((levelupper >= level) && (levelupper % 3 == 0)) {
+		if ((levelupper >= level) && (levelupper % 2 == 0)) {
 			int apoint = level;
-			level += levelupper / 3;
+			level += levelupper / 2;
 			int bpoint = level;
 			System.out.println("Level Upper is: " + levelupper);
 			if (apoint != bpoint) {

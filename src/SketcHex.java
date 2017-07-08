@@ -25,7 +25,7 @@ public class SketcHex extends JPanel implements ActionListener, KeyListener {
 	final int END_STATE = 2;
 	static int currentState = 0;
 	static int casualtyCount;
-	Hecker flynn = new Hecker(500, 500, 30, 60, 20, 15);
+	Hecker flynn;
 	ObjectManager megahead;
 	Room base;
 	Room onScreenRoom;
@@ -133,6 +133,7 @@ public class SketcHex extends JPanel implements ActionListener, KeyListener {
 		roomcolors.add(base.color);
 		roomSwitcherGuard = new Timer(1000 / 4, base);
 		megahead = new ObjectManager(this);
+		flynn = new Hecker(500, 500, 30, 60, 20, 15);
 		megahead.addObject(flynn);
 		megahead.addObject(base);
 		megahead.addRoom(base, false);
@@ -387,7 +388,9 @@ public class SketcHex extends JPanel implements ActionListener, KeyListener {
 		gameSpeed.stop();
 		megahead.reset();
 		roomcolors.clear();
-		onScreenRoom.level = 2;
+		hordeAdder = 0;
+		onScreenRoom = base;
+		onScreenRoom.level = 1;
 		onScreenRoom.levelupper = 0;
 		onScreenRoom.leveluppermultiplier = 1;
 		onScreenRoom.leveluppermultipliercounter = 0;
