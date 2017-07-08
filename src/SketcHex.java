@@ -296,34 +296,49 @@ public class SketcHex extends JPanel implements ActionListener, KeyListener {
 			flynn.bulletAmmo += 50000;
 		}
 		if ((e.getKeyCode() == KeyEvent.VK_I) && (currentState == MENU_STATE)) {
-			JOptionPane.showMessageDialog(null,
-					"BASIC KNOWLEDGE: To Go Into next room, simply run into the wall. One may move rooms horizontally, but not vertically. CONTROLS: Arrow Keys To Move. CHEATS: Come up to me and whisper into my ear, 'You would not believe your eyes\n"
-							+ "If ten million fireflies\n" + "Lit up the world as I fell asleep\n" + "\n"
-							+ "'Cause they fill the open air\n" + "And leave teardrops everywhere\n"
-							+ "You'd think me rude but I would just stand and stare\n" + "\n"
-							+ "I'd like to make myself believe that planet earth turns slowly\n"
-							+ "It's hard to say that I'd rather stay awake when I'm asleep\n"
-							+ "'Cause everything is never as it seems\n" + "\n" + "'Cause I'd get a thousand hugs\n"
-							+ "From ten thousand lightning bugs\n" + "As they tried to teach me how to dance\n" + "\n"
-							+ "A foxtrot above my head\n" + "A sock hop beneath my bed\n"
-							+ "A disco ball is just hanging by a thread (thread, thread)\n" + "\n"
-							+ "I'd like to make myself believe that planet earth turns slowly\n"
-							+ "It's hard to say that I'd rather stay awake when I'm asleep\n"
-							+ "'Cause everything is never as it seems (when I fall asleep)\n" + "\n"
-							+ "Leave my door open just a crack\n" + "Please take me away from here\n"
-							+ "'Cause I feel like such an insomniac\n" + "Please take me away from here\n"
-							+ "Why do I tire of counting sheep\n" + "Please take me away from here\n"
-							+ "When I'm far too tired to fall asleep\n" + "\n" + "To ten million fireflies\n"
-							+ "I'm weird cause I hate goodbyes\n"
-							+ "I got misty eyes as they said farewell (said farewell)\n" + "\n"
-							+ "But I'll know where several are\n" + "If my dreams get real bizarre\n"
-							+ "'Cause I saved a few and I keep them in a jar (jar, jar)\n" + "\n"
-							+ "I'd like to make myself believe that planet earth turns slowly\n"
-							+ "It's hard to say that I'd rather stay awake when I'm asleep\n"
-							+ "'Cause everything is never as it seems (when I fall asleep)\n" + "\n"
-							+ "I'd like to make myself believe that planet earth turns slowly\n"
-							+ "It's hard to say that I'd rather stay awake when I'm asleep\n"
-							+ "'Cause everything is never as it seems (when I fall asleep)'. If you do this, I may consider lending you a cheat code or two. ;)");
+			String wat = JOptionPane.showInputDialog(
+					"For BASIC PLAYING KNOWLEDGE, press 1. For CONTROLS, press 2. For CHEATS, press 3.");
+			if (wat.equals("1")) {
+				JOptionPane.showMessageDialog(null,
+						"To Go Into next room, simply run into the wall. One may move rooms horizontally, but not vertically. "
+								+ "Basic statistics such as health, bullet ammunition, and your kill count are displayed on the top of the screen.");
+			}
+			// JOptionPane.showMessageDialog(null,
+			// "BASIC KNOWLEDGE: To Go Into next room, simply run into the wall. One may
+			// move rooms horizontally, but not vertically. CONTROLS: Arrow Keys To Move.
+			// CHEATS: Come up to me and whisper into my ear, 'You would not believe your
+			// eyes\n"
+			// + "If ten million fireflies\n" + "Lit up the world as I fell asleep\n" + "\n"
+			// + "'Cause they fill the open air\n" + "And leave teardrops everywhere\n"
+			// + "You'd think me rude but I would just stand and stare\n" + "\n"
+			// + "I'd like to make myself believe that planet earth turns slowly\n"
+			// + "It's hard to say that I'd rather stay awake when I'm asleep\n"
+			// + "'Cause everything is never as it seems\n" + "\n" + "'Cause I'd get a
+			// thousand hugs\n"
+			// + "From ten thousand lightning bugs\n" + "As they tried to teach me how to
+			// dance\n" + "\n"
+			// + "A foxtrot above my head\n" + "A sock hop beneath my bed\n"
+			// + "A disco ball is just hanging by a thread (thread, thread)\n" + "\n"
+			// + "I'd like to make myself believe that planet earth turns slowly\n"
+			// + "It's hard to say that I'd rather stay awake when I'm asleep\n"
+			// + "'Cause everything is never as it seems (when I fall asleep)\n" + "\n"
+			// + "Leave my door open just a crack\n" + "Please take me away from here\n"
+			// + "'Cause I feel like such an insomniac\n" + "Please take me away from
+			// here\n"
+			// + "Why do I tire of counting sheep\n" + "Please take me away from here\n"
+			// + "When I'm far too tired to fall asleep\n" + "\n" + "To ten million
+			// fireflies\n"
+			// + "I'm weird cause I hate goodbyes\n"
+			// + "I got misty eyes as they said farewell (said farewell)\n" + "\n"
+			// + "But I'll know where several are\n" + "If my dreams get real bizarre\n"
+			// + "'Cause I saved a few and I keep them in a jar (jar, jar)\n" + "\n"
+			// + "I'd like to make myself believe that planet earth turns slowly\n"
+			// + "It's hard to say that I'd rather stay awake when I'm asleep\n"
+			// + "'Cause everything is never as it seems (when I fall asleep)\n" + "\n"
+			// + "I'd like to make myself believe that planet earth turns slowly\n"
+			// + "It's hard to say that I'd rather stay awake when I'm asleep\n"
+			// + "'Cause everything is never as it seems (when I fall asleep)'. If you do
+			// this, I may consider lending you a cheat code or two. ;)");
 
 		}
 		if (e.getKeyCode() == KeyEvent.VK_BACK_SPACE) {
@@ -346,22 +361,38 @@ public class SketcHex extends JPanel implements ActionListener, KeyListener {
 
 		}
 		if ((e.getKeyCode() == KeyEvent.VK_L) && (currentState == GAME_STATE)) {
-			System.out.println("Level: " + onScreenRoom.levelShower());
+			String lcheats = JOptionPane.showInputDialog("Type 1 to show level. Type 2 to show item locations.");
+			if (lcheats.equals("1")) {
+				System.out.println("Level: " + onScreenRoom.levelShower());
+			} else if (lcheats.equals("2")) {
+				int numberOfItems = 0;
+				System.out.println("Spawned Item Locations:");
+				for (int i = 0; i < megahead.objects.size(); i++) {
+					GameObject o1 = megahead.objects.get(i);
+					if (o1 instanceof SpawningItem) {
+						SpawningItem s = (SpawningItem) o1;
+						numberOfItems++;
+						System.out.println(
+								"Item " + numberOfItems + ": TYPE: " + s.typeparameter + " X: " + s.x + " Y: " + s.y);
+					}
+				}
+			}
 		}
 	}
 
 	private void fullRestart() {
-		currentState = MENU_STATE;
+		currentState = GAME_STATE;
 		casualtyCount = 0;
 		roomSwitcherGuard.stop();
 		gameSpeed.stop();
-		base.level = 2;
-		base.levelupper = 0;
-		base.leveluppermultiplier = 1;
-		base.leveluppermultipliercounter = 0;
 		megahead.reset();
 		roomcolors.clear();
+		onScreenRoom.level = 2;
+		onScreenRoom.levelupper = 0;
+		onScreenRoom.leveluppermultiplier = 1;
+		onScreenRoom.leveluppermultipliercounter = 0;
 		flynn.isAlive = true;
+		flynnroomnumber = 0;
 		startGame();
 	}
 

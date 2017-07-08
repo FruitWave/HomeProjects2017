@@ -33,7 +33,6 @@ public class Room extends GameObject implements ActionListener {
 	int leveluppermultiplier = 1;
 	int leveluppermultipliercounter = 0;
 	SpawningItem xenomorpheousSubstance;
-	SpawningItem usedtogivexenoitstypeparameter;
 
 	// save the rooms color, "if roomnumber is this then roomcolor is this",
 	// kill the room, create a new room

@@ -132,22 +132,15 @@ public class ObjectManager {
 						// System.out.println("Flynn's health is now " + imflynnity.health + ".");
 						if (item.typeparameter.equals(item.type1)) {
 							imflynnity.bulletAmmo += 10;
-							System.out.println("Stats up code reached (" + item.typeparameter + ").");
 						} else if (item.typeparameter.equals(item.type2)) {
 							imflynnity.health += 15;
 							System.out.println("New Health: " + imflynnity.health);
-							System.out.println("Stats up code reached (" + item.typeparameter + ").");
-
 						} else if (item.typeparameter.equals(item.type3pt1)) {
 							imflynnity.nukeCount += 1;
 							System.out.println("New Nuke Count: " + imflynnity.nukeCount);
-							System.out.println("Stats up code reached (" + item.typeparameter + ").");
-
 						} else if (item.typeparameter.equals(item.type3pt2)) {
 							imflynnity.nukeSuitCount += 1;
-							System.out.println("New Nuke Count: " + imflynnity.nukeSuitCount);
-							System.out.println("Stats up code reached (" + item.typeparameter + ").");
-
+							System.out.println("New Nuka-Cola Suit Count: " + imflynnity.nukeSuitCount);
 						}
 						System.out.println("Item " + item.typeparameter + " picked up!");
 						item.isAlive = false;

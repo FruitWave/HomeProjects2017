@@ -30,7 +30,7 @@ public class SpawningItem extends GameObject {
 		if (typeparameter.equals(type0)) {
 			isAlive = false;
 		}
-		System.out.println("typeparameter is: " + typeparameter);
+		// System.out.println("typeparameter is: " + typeparameter);
 	}
 
 	public String typeSetter() {
@@ -82,10 +82,9 @@ public class SpawningItem extends GameObject {
 		} else if (typeparameter.equals(type0)) {
 			colortype = Color.red;
 		}
-		System.out.println("before setcolor " + colortype);
+		// System.out.println("Colortype: " + colortype);
 		quantummarshmallowcake.setColor(colortype);
-		System.out.println("after setcolor " + colortype);
 		quantummarshmallowcake.fillRect(x, y, width, height);
-		System.out.println("stats: " + x + " " + y + " " + width + " " + height);
+		// System.out.println("stats: " + x + " " + y + " " + width + " " + height);
 	}
 }
