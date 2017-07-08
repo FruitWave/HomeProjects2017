@@ -73,10 +73,10 @@ public class ObjectManager {
 		}
 	}
 
-	public void manageEnemies(int xdisplacement) {
+	public void manageEnemiesAndItems(int xdisplacement) {
 		for (int i = 0; i < objects.size(); i++) {
 			GameObject o1 = objects.get(i);
-			if (o1 instanceof Horde) {
+			if ((o1 instanceof Horde) || (o1 instanceof SpawningItem)) {
 				o1.x += xdisplacement;
 			}
 		}
@@ -133,6 +133,24 @@ public class ObjectManager {
 						} else if (hordie.health <= 0) {
 							hordie.isAlive = false;
 						}
+					} else if ((o1 instanceof SpawningItem && o2 instanceof Hecker)
+							|| (o2 instanceof SpawningItem && o1 instanceof Hecker)) {
+
+						SpawningItem item = o1 instanceof SpawningItem ? (SpawningItem) o1 : (SpawningItem) o2;
+						Hecker imflynnity = o1 instanceof Hecker ? (Hecker) o1 : (Hecker) o2;
+
+						// System.out.println("Flynn's health is now " + imflynnity.health + ".");
+						if (item.typeparameter.equals(item.type1)) {
+							imflynnity.bulletAmmo += 10;
+						} else if (item.typeparameter.equals(item.type2)) {
+							imflynnity.health += 15;
+						} else if (item.typeparameter.equals(item.type3pt1)) {
+							imflynnity.nukeCount += 1;
+						} else if (item.typeparameter.equals(item.type3pt2)) {
+							imflynnity.nukeSuitCount += 1;
+						}
+						System.out.println("Item " + item.typeparameter + " picked up!");
+						item.isAlive = false;
 					} else if (o1 instanceof Horde && o2 instanceof Horde) {
 						Horde zombie = (Horde) o1;
 						// System.out.println("zombie initial health is at "

@@ -5,6 +5,9 @@ public class Hecker extends GameObject {
 	int transpex;
 	int transpey;
 	int health;
+	public int nukeCount;
+	public int nukeSuitCount;
+	public boolean nukeSuitEquipped;
 	static int bulletAmmo;
 
 	public Hecker(int x, int y, int width, int height, int flynnhealth, int bulletAmmo) {

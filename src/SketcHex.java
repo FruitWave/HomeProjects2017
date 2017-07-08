@@ -90,7 +90,7 @@ public class SketcHex extends JPanel implements ActionListener, KeyListener {
 	public void enteredNewRoom(boolean isGoingRight, boolean newRoom) {
 		int xdisplacement = isGoingRight ? -1000 : 1000;
 		System.out.println("Moving to Room " + flynnroomnumber);
-		megahead.manageEnemies(xdisplacement);
+		megahead.manageEnemiesAndItems(xdisplacement);
 		if (newRoom) {
 			addToHorde(hordeAdder);
 		}
@@ -265,13 +265,29 @@ public class SketcHex extends JPanel implements ActionListener, KeyListener {
 			}
 		}
 		if (e.getKeyCode() == KeyEvent.VK_N) {
-			for (int i = 0; i < megahead.objects.size(); i++) {
-				GameObject o1 = megahead.objects.get(i);
-				if (o1 instanceof Horde) {
-					Horde ohOne = (Horde) o1;
-					ohOne.isAlive = false;
-					casualtyCount += ohOne.deathPotential;
+			if (flynn.nukeCount > 0) {
+				flynn.nukeCount--;
+				for (int i = 0; i < megahead.objects.size(); i++) {
+					GameObject o1 = megahead.objects.get(i);
+					if (o1 instanceof Horde) {
+						Horde ohOne = (Horde) o1;
+						ohOne.isAlive = false;
+						casualtyCount += ohOne.deathPotential;
+					}
 				}
+				if (flynn.nukeSuitEquipped) {
+					flynn.nukeSuitCount--;
+				} else if (flynn.nukeSuitEquipped == false) {
+					flynn.isAlive = false;
+				}
+			} else {
+				if (flynn.nukeSuitEquipped == false) {
+					JOptionPane.showMessageDialog(null,
+							"Out Of Nuclear Warheads. You'll Have To Commit Suicide Some Other Way. Sorry, Chump");
+				} else {
+					JOptionPane.showMessageDialog(null, "Out Of Nuclear Warheads.");
+				}
+
 			}
 		}
 		if (e.getKeyCode() == KeyEvent.VK_COMMA) {
@@ -306,11 +322,14 @@ public class SketcHex extends JPanel implements ActionListener, KeyListener {
 							+ "'Cause everything is never as it seems (when I fall asleep)\n" + "\n"
 							+ "I'd like to make myself believe that planet earth turns slowly\n"
 							+ "It's hard to say that I'd rather stay awake when I'm asleep\n"
-							+ "'Cause everything is never as it seems (when I fall asleep)'. If you do this, I may consider lending you a cheat code or two.");
+							+ "'Cause everything is never as it seems (when I fall asleep)'. If you do this, I may consider lending you a cheat code or two. ;)");
 
 		}
 		if (e.getKeyCode() == KeyEvent.VK_BACK_SPACE) {
 			fullRestart();
+		}
+		if (e.getKeyCode() == KeyEvent.VK_M) {
+			flynn.nukeSuitEquipped = true;
 		}
 		if ((e.getKeyCode() == KeyEvent.VK_K) && (currentState == GAME_STATE)) {
 			String healthpane = JOptionPane.showInputDialog("Cheat Code Activated! Enter Flynn's desired health!");
@@ -335,7 +354,6 @@ public class SketcHex extends JPanel implements ActionListener, KeyListener {
 		casualtyCount = 0;
 		roomSwitcherGuard.stop();
 		gameSpeed.stop();
-
 		base.level = 2;
 		base.levelupper = 0;
 		base.leveluppermultiplier = 1;
