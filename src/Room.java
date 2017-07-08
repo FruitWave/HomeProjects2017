@@ -32,6 +32,7 @@ public class Room extends GameObject implements ActionListener {
 	int levelupper = 0;
 	int leveluppermultiplier = 1;
 	int leveluppermultipliercounter = 0;
+	SpawningItem xenomorpheousSubstance;
 
 	// save the rooms color, "if roomnumber is this then roomcolor is this",
 	// kill the room, create a new room
@@ -57,22 +58,24 @@ public class Room extends GameObject implements ActionListener {
 
 	}
 
+	@SuppressWarnings("static-access")
 	private void roomSwitch(boolean isRight) {
 		Room r00m;
+		int itemwidth = 20;
+		int itemheight = 20;
+		int randomItemX = new Random().nextInt(800 - itemwidth);
+		int randomItemY = new Random().nextInt(800 - itemheight);
 		hex.flynn.x += isRight ? -995 : 995;
-
 		hex.flynnroomnumber += isRight ? 1 : -1;
 		hex.roomcolors.add(color);
 		Color a = randomColor();
 		hex.roomColor = a;
 		levelupper++;
-		// levelupper *= leveluppermultiplier;
-		// if (leveluppermultipliercounter == 4) {
-		// leveluppermultiplier++;
-		// System.out.println("leveluppermultiplier is: " +
-		// leveluppermultiplier);
-		// leveluppermultipliercounter = 0;
-		// }
+		/*
+		 * levelupper *= leveluppermultiplier; if (leveluppermultipliercounter == 4) {
+		 * leveluppermultiplier++; System.out.println("leveluppermultiplier is: " +
+		 * leveluppermultiplier); leveluppermultipliercounter = 0; }
+		 */
 		if ((levelupper >= level) && (levelupper % 3 == 0)) {
 			int apoint = level;
 			level += levelupper / 3;
@@ -81,7 +84,6 @@ public class Room extends GameObject implements ActionListener {
 			if (apoint != bpoint) {
 				JOptionPane.showMessageDialog(null, "Level Up! (Now Level " + level + "!");
 			}
-
 			levelupper = 0;
 		}
 		if (hex.megahead.getRoom(hex.flynnroomnumber) == null) {
@@ -95,6 +97,8 @@ public class Room extends GameObject implements ActionListener {
 				hex.hordeAdder = level;
 			}
 			hex.enteredNewRoom(isRight, true);
+			xenomorpheousSubstance = new SpawningItem(randomItemX + 200, randomItemY + 200, itemwidth, itemheight,
+					"no type set", hex);
 		} else {
 			r00m = hex.megahead.getRoom(hex.flynnroomnumber);
 			hex.enteredNewRoom(isRight, false);

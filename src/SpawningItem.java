@@ -2,6 +2,8 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.util.Random;
 
+import javax.swing.JOptionPane;
+
 public class SpawningItem extends GameObject {
 	String typeparameter;
 	String type1 = "Bullet Cartridge";
@@ -21,26 +23,20 @@ public class SpawningItem extends GameObject {
 		super(x, y, width, height);
 		this.typeparameter = typeparameter;
 		this.hex = hex;
+		typeSetter();
 	}
 
 	public void update() {
 		super.update();
-		if ((typeparameter.equals(type3pt1)) && (isDetonated == true)) {
-			isAlive = false;
-			hex.flynn.nukeCount--;
-			if (hex.flynn.nukeSuitEquipped) {
-				hex.flynn.nukeSuitCount--;
-				hex.flynn.nukeSuitEquipped = false;
-			} else {
-				hex.flynn.isAlive = false;
-			}
 
-		}
 	}
 
 	public void typeSetter() {
 		int rannum = randomNumber();
 		String typeset = parseRandomNumber(rannum);
+		if (typeset.equals(null)) {
+			JOptionPane.showMessageDialog(null, "Something went wrong. Typset is null.");
+		}
 		typeparameter.equals(typeset);
 		System.out.println("Item is a " + typeset + ".");
 
@@ -56,7 +52,7 @@ public class SpawningItem extends GameObject {
 			return type2;
 		} else if ((randomNumber >= 14) && (randomNumber < 16)) {
 			return type3pt1;
-		} else if (randomNumber == 4) {
+		} else if (randomNumber == 16) {
 			return type3pt2;
 		} else {
 			return "Random type generator sequence failed.";
