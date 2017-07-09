@@ -186,8 +186,8 @@ public class SketcHex extends JPanel implements ActionListener, KeyListener {
 		a.drawString("Press 'I' for instructions.", (startscript / 2) + 90, 400);
 		a.setFont(funFont);
 		a.setColor(Color.WHITE);
-		a.drawString("Press Enter To Start", startscript, 500);
-
+		a.drawString("Press Enter To Start Survival", startscript, 500);
+		a.drawString("Press C For Invincible", startscript, 530);
 	}
 
 	void drawGameState(Graphics b) {
@@ -243,17 +243,21 @@ public class SketcHex extends JPanel implements ActionListener, KeyListener {
 			bulletfired(false);
 		} else if (e.getKeyCode() == KeyEvent.VK_X) {
 			bulletfired(true);
-		}
-		if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+		} else if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 			if (currentState == MENU_STATE) {
 				currentState = GAME_STATE;
 			} else if (currentState == GAME_STATE) {
 				currentState = END_STATE;
 			}
 			System.out.println("The current state is " + currentState + ".");
-		}
-
-		if (e.getKeyCode() == KeyEvent.VK_PERIOD) {
+		} else if ((e.getKeyCode() == KeyEvent.VK_C) && (currentState == MENU_STATE)) {
+			currentState = GAME_STATE;
+			flynn.health = 2000000000;
+			flynn.bulletAmmo = 2000000000;
+			flynn.nukeCount = 2000000000;
+			flynn.nukeSuitCount = 2000000000;
+			System.out.println("The current state is " + currentState + ".");
+		} else if (e.getKeyCode() == KeyEvent.VK_PERIOD) {
 			if (flynn.transpex < 0) {
 				flynn.transpex -= 50;
 			} else if (flynn.transpex > 0) {
@@ -264,8 +268,15 @@ public class SketcHex extends JPanel implements ActionListener, KeyListener {
 			} else if (flynn.transpey > 0) {
 				flynn.transpey += 50;
 			}
-		}
-		if (e.getKeyCode() == KeyEvent.VK_N) {
+		} else if (e.getKeyCode() == KeyEvent.VK_S) {
+			String hordelevel = JOptionPane.showInputDialog(
+					"What level horde do you want to spawn? Use the number keys, or the numpad. Press a number 1, 9, or any one inbetween. One is the lowest level, and nine is the highest.");
+			String hordesize = JOptionPane
+					.showInputDialog("How many shall this new Horde compose? Use the number keys, or the numpad.");
+			int type1to9sketchex = Integer.parseInt(hordelevel);
+			int numberToSpawnsketchex = Integer.parseInt(hordesize);
+			megahead.spawnHorde(type1to9sketchex, numberToSpawnsketchex);
+		} else if (e.getKeyCode() == KeyEvent.VK_N) {
 			if (flynn.nukeCount > 0) {
 				flynn.nukeCount--;
 				for (int i = 0; i < megahead.objects.size(); i++) {
@@ -291,12 +302,10 @@ public class SketcHex extends JPanel implements ActionListener, KeyListener {
 				}
 
 			}
-		}
-		if (e.getKeyCode() == KeyEvent.VK_COMMA) {
+		} else if (e.getKeyCode() == KeyEvent.VK_COMMA) {
 			flynn.health += 50000;
 			flynn.bulletAmmo += 50000;
-		}
-		if ((e.getKeyCode() == KeyEvent.VK_I) && (currentState == MENU_STATE)) {
+		} else if ((e.getKeyCode() == KeyEvent.VK_I) && (currentState == MENU_STATE)) {
 			String wat = JOptionPane.showInputDialog(
 					"For BASIC PLAYING KNOWLEDGE, press 1. For CONTROLS, press 2. For CHEATS, press 3.");
 			if (wat.equals("1")) {
@@ -304,42 +313,34 @@ public class SketcHex extends JPanel implements ActionListener, KeyListener {
 						"To Go Into next room, simply run into the wall. One may move rooms horizontally, but not vertically. "
 								+ "Basic statistics such as health, bullet ammunition, and your kill count are displayed on the top of the screen.");
 			}
-			// JOptionPane.showMessageDialog(null,
-			// "BASIC KNOWLEDGE: To Go Into next room, simply run into the wall. One may
-			// move rooms horizontally, but not vertically. CONTROLS: Arrow Keys To Move.
-			// CHEATS: Come up to me and whisper into my ear, 'You would not believe your
-			// eyes\n"
-			// + "If ten million fireflies\n" + "Lit up the world as I fell asleep\n" + "\n"
-			// + "'Cause they fill the open air\n" + "And leave teardrops everywhere\n"
-			// + "You'd think me rude but I would just stand and stare\n" + "\n"
-			// + "I'd like to make myself believe that planet earth turns slowly\n"
-			// + "It's hard to say that I'd rather stay awake when I'm asleep\n"
-			// + "'Cause everything is never as it seems\n" + "\n" + "'Cause I'd get a
-			// thousand hugs\n"
-			// + "From ten thousand lightning bugs\n" + "As they tried to teach me how to
-			// dance\n" + "\n"
-			// + "A foxtrot above my head\n" + "A sock hop beneath my bed\n"
-			// + "A disco ball is just hanging by a thread (thread, thread)\n" + "\n"
-			// + "I'd like to make myself believe that planet earth turns slowly\n"
-			// + "It's hard to say that I'd rather stay awake when I'm asleep\n"
-			// + "'Cause everything is never as it seems (when I fall asleep)\n" + "\n"
-			// + "Leave my door open just a crack\n" + "Please take me away from here\n"
-			// + "'Cause I feel like such an insomniac\n" + "Please take me away from
-			// here\n"
-			// + "Why do I tire of counting sheep\n" + "Please take me away from here\n"
-			// + "When I'm far too tired to fall asleep\n" + "\n" + "To ten million
-			// fireflies\n"
-			// + "I'm weird cause I hate goodbyes\n"
-			// + "I got misty eyes as they said farewell (said farewell)\n" + "\n"
-			// + "But I'll know where several are\n" + "If my dreams get real bizarre\n"
-			// + "'Cause I saved a few and I keep them in a jar (jar, jar)\n" + "\n"
-			// + "I'd like to make myself believe that planet earth turns slowly\n"
-			// + "It's hard to say that I'd rather stay awake when I'm asleep\n"
-			// + "'Cause everything is never as it seems (when I fall asleep)\n" + "\n"
-			// + "I'd like to make myself believe that planet earth turns slowly\n"
-			// + "It's hard to say that I'd rather stay awake when I'm asleep\n"
-			// + "'Cause everything is never as it seems (when I fall asleep)'. If you do
-			// this, I may consider lending you a cheat code or two. ;)");
+			JOptionPane.showMessageDialog(null,
+					"BASIC KNOWLEDGE: To Go Into next room, simply run into the wall. One may move rooms horizontally, but not vertically. CONTROLS: Arrow Keys To Move. CHEATS: Come up to me and whisper into my ear, 'You would not believe your  eyes\n"
+							+ "If ten million fireflies\n" + "Lit up the world as I fell asleep\n" + "\n"
+							+ "'Cause they fill the open air\n" + "And leave teardrops everywhere\n"
+							+ "You'd think me rude but I would just stand and stare\n" + "\n"
+							+ "I'd like to make myself believe that planet earth turns slowly\n"
+							+ "It's hard to say that I'd rather stay awake when I'm asleep\n"
+							+ "'Cause everything is never as it seems\n" + "\n" + "'Cause I'd get a thousand hugs\n"
+							+ "From ten thousand lightning bugs\n" + "As they tried to teach me how to dance\n" + "\n"
+							+ "A foxtrot above my head\n" + "A sock hop beneath my bed\n"
+							+ "A disco ball is just hanging by a thread (thread, thread)\n" + "\n"
+							+ "I'd like to make myself believe that planet earth turns slowly\n"
+							+ "It's hard to say that I'd rather stay awake when I'm asleep\n"
+							+ "'Cause everything is never as it seems (when I fall asleep)\n" + "\n"
+							+ "Leave my door open just a crack\n" + "Please take me away from here\n"
+							+ "'Cause I feel like such an insomniac\n" + "Please take me away from here\n"
+							+ "Why do I tire of counting sheep\n" + "Please take me away from here\n"
+							+ "When I'm far too tired to fall asleep\n" + "\n" + "To ten million fireflies\n"
+							+ "I'm weird cause I hate goodbyes\n"
+							+ "I got misty eyes as they said farewell (said farewell)\n" + "\n"
+							+ "But I'll know where several are\n" + "If my dreams get real bizarre\n"
+							+ "'Cause I saved a few and I keep them in a jar (jar, jar)\n" + "\n"
+							+ "I'd like to make myself believe that planet earth turns slowly\n"
+							+ "It's hard to say that I'd rather stay awake when I'm asleep\n"
+							+ "'Cause everything is never as it seems (when I fall asleep)\n" + "\n"
+							+ "I'd like to make myself believe that planet earth turns slowly\n"
+							+ "It's hard to say that I'd rather stay awake when I'm asleep\n"
+							+ "'Cause everything is never as it seems (when I fall asleep)'. If you do this, I may consider lending you a cheat code or two. ");
 
 		}
 		if (e.getKeyCode() == KeyEvent.VK_BACK_SPACE) {
@@ -382,7 +383,7 @@ public class SketcHex extends JPanel implements ActionListener, KeyListener {
 	}
 
 	private void fullRestart() {
-		currentState = GAME_STATE;
+		currentState = MENU_STATE;
 		casualtyCount = 0;
 		roomSwitcherGuard.stop();
 		gameSpeed.stop();

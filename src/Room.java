@@ -82,7 +82,7 @@ public class Room extends GameObject implements ActionListener {
 			int bpoint = level;
 			System.out.println("Level Upper is: " + levelupper);
 			if (apoint != bpoint) {
-				JOptionPane.showMessageDialog(null, "Level Up! (Now Level " + level + "!");
+				System.out.println("Level Up! (Now Level " + level + "!)");
 			}
 			levelupper = 0;
 		}
