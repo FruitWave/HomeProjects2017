@@ -35,7 +35,7 @@ public class SketcHex extends JPanel implements ActionListener, KeyListener {
 	public int hordeAdder = 0;
 	public int flynnroomnumber = 0;
 	public int statisticsrectwidth = HordeRunner.width;
-	public int statisticsrectheight = 50;
+	public int statisticsrectheight = 75;
 
 	public SketcHex() {
 		gameSpeed = new Timer(1000 / 120, this);
@@ -70,21 +70,54 @@ public class SketcHex extends JPanel implements ActionListener, KeyListener {
 		g.setColor(Color.WHITE);
 		g.setFont(statsFont);
 		g.fillRect(HordeRunner.width - statisticsrectwidth, 0, statisticsrectwidth, statisticsrectheight);
-		showcasualtyCount(g);
+		showcasualtyAndHordeCount(g);
 		showRoomNum(g);
+		showHealthAndBullets(g);
+		showNukeStats(g);
 	}
 
-	public void showcasualtyCount(Graphics g) {
+	public void showcasualtyAndHordeCount(Graphics g) {
+		int hordecount = 0;
+		for (int i = 0; i < megahead.objects.size(); i++) {
+			GameObject o1 = megahead.objects.get(i);
+			if (o1 instanceof Horde) {
+				hordecount++;
+			}
+		}
 		g.setColor(Color.BLACK);
 		g.setFont(statsFont);
 		String rampage = "Kill Count: " + casualtyCount;
-		g.drawString(rampage, 0, statisticsrectheight / 2);
+		String rampagers = "Horde Count: " + hordecount;
+		g.drawString(rampage, 0, statisticsrectheight / 3);
+		g.drawString(rampagers, 0, statisticsrectheight);
 	}
 
 	public void showRoomNum(Graphics g) {
 		g.setColor(Color.BLACK);
+		g.setFont(statsFont);
 		String hotel = "Room " + flynnroomnumber;
-		g.drawString(hotel, 0, statisticsrectheight);
+		g.drawString(hotel, 0, (statisticsrectheight / 3) * 2);
+	}
+
+	public void showHealthAndBullets(Graphics g) {
+		g.setColor(Color.BLACK);
+		g.setFont(statsFont);
+		String health = "Health: " + flynn.health;
+		String bullets = "Bullets: " + flynn.bulletAmmo;
+		g.drawString(health, statisticsrectwidth / 4, statisticsrectheight / 3);
+		g.drawString(bullets, statisticsrectwidth / 4, (statisticsrectheight / 3) * 2);
+	}
+
+	public void showNukeStats(Graphics g) {
+		Color evergreen = new Color(89, 229, 10);
+		g.setColor(evergreen);
+		g.setFont(statsFont);
+		String nuks = "Nuclear Warheads: " + flynn.nukeCount;
+		String nuksootz = "Nuka-Cola Suits: " + flynn.nukeSuitCount;
+		String nuksootekwippt = "Nuka-Cola Suit Equipped: " + flynn.nukeSuitEquipped;
+		g.drawString(nuks, (statisticsrectwidth / 2) + 50, statisticsrectheight / 3);
+		g.drawString(nuksootz, (statisticsrectwidth / 2) + 50, (statisticsrectheight / 3) * 2);
+		g.drawString(nuksootekwippt, statisticsrectwidth / 4, statisticsrectheight);
 	}
 
 	public void enteredNewRoom(boolean isGoingRight, boolean newRoom) {
