@@ -33,6 +33,7 @@ public class ObjectManager {
 	}
 
 	public void update() {
+
 		for (int i = 0; i < objects.size(); i++) {
 			GameObject o = objects.get(i);
 			o.update();

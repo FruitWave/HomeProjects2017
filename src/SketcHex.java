@@ -36,6 +36,7 @@ public class SketcHex extends JPanel implements ActionListener, KeyListener {
 	public int flynnroomnumber = 0;
 	public int statisticsrectwidth = HordeRunner.width;
 	public int statisticsrectheight = 75;
+	boolean paused = false;
 
 	public SketcHex() {
 		gameSpeed = new Timer(1000 / 120, this);
@@ -245,6 +246,16 @@ public class SketcHex extends JPanel implements ActionListener, KeyListener {
 
 	}
 
+	public void pause() {
+		gameSpeed.stop();
+		roomSwitcherGuard.stop();
+	}
+
+	public void unpause() {
+		gameSpeed.start();
+		roomSwitcherGuard.start();
+	}
+
 	public void paintComponent(Graphics delta) {
 		if (currentState == MENU_STATE) {
 			drawMenuState(delta);
@@ -380,7 +391,13 @@ public class SketcHex extends JPanel implements ActionListener, KeyListener {
 			fullRestart();
 		}
 		if (e.getKeyCode() == KeyEvent.VK_M) {
-			flynn.nukeSuitEquipped = true;
+			if (flynn.nukeSuitCount > 0) {
+				flynn.nukeSuitEquipped = true;
+				flynn.nukeSuitCount--;
+			} else {
+				JOptionPane.showMessageDialog(null, "No Nuka-Cola Suit Available For Use");
+			}
+
 		}
 		if ((e.getKeyCode() == KeyEvent.VK_K) && (currentState == GAME_STATE)) {
 			String healthpane = JOptionPane.showInputDialog("Cheat Code Activated! Enter Flynn's desired health!");
@@ -395,6 +412,14 @@ public class SketcHex extends JPanel implements ActionListener, KeyListener {
 			System.out.println("New Bullet Ammo: " + newammo);
 
 		}
+		if ((e.getKeyCode() == KeyEvent.VK_P) && (paused == false)) {
+			pause();
+		}
+		// if ((e.getKeyCode() == KeyEvent.VK_P) && (paused == true)) {
+		// unpause();
+		// paused = false;
+		// }
+		// for some reason unpause doesnt work (haven't looked into it yet)
 		if ((e.getKeyCode() == KeyEvent.VK_L) && (currentState == GAME_STATE)) {
 			String lcheats = JOptionPane.showInputDialog("Type 1 to show level. Type 2 to show item locations.");
 			if (lcheats.equals("1")) {
@@ -429,6 +454,7 @@ public class SketcHex extends JPanel implements ActionListener, KeyListener {
 		onScreenRoom.leveluppermultiplier = 1;
 		onScreenRoom.leveluppermultipliercounter = 0;
 		flynn.isAlive = true;
+		paused = false;
 		flynnroomnumber = 0;
 		startGame();
 	}
