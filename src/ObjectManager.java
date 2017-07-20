@@ -21,6 +21,7 @@ public class ObjectManager {
 	// Font funFont;
 	long enemyTimer = 0;
 	int enemySpawnTime = 1;
+	int flynnbulletdamage = 1;
 
 	public ObjectManager(SketcHex hex) {
 		objects = new ArrayList<GameObject>();
@@ -99,6 +100,10 @@ public class ObjectManager {
 							|| (o2 instanceof Horde && o1 instanceof Bullet)) {
 						Bullet bullet = (o1 instanceof Bullet) ? (Bullet) o1 : (Bullet) o2;
 						Horde shotHorde = (o1 instanceof Horde) ? (Horde) o1 : (Horde) o2;
+						// if (hex.onScreenRoom.level % 5 == 0) {
+						// flynnbulletdamage = hex.onScreenRoom.level / 5;
+						// }
+						// shotHorde.health -= flynnbulletdamage;
 						shotHorde.health -= 1;
 						o2.isAlive = false;
 						if (shotHorde.health <= 0) {

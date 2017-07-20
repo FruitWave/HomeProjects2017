@@ -44,6 +44,7 @@ public class SpawningItem extends GameObject {
 		// room class, such as "type unset", so i made this method have a return type to
 		// give a new item its type in the constructor.
 		System.out.println("Item is a " + typeset + ".");
+		System.out.println("Item is at " + x + ", " + y + ".");
 		return typeset;
 
 	}
