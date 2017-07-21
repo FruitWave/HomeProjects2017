@@ -14,9 +14,12 @@ public class ObjectManager {
 	Color dark2 = new Color(200, 50, 80);
 	Color dark3 = new Color(250, 100, 10);
 	Color dark4 = new Color(49, 0, 26);
+
+	// *
 	/**
-	 * the below showScore method/variable/code does not work. This message has been
-	 * printed below every instance where something related to it is mentioned.
+	 * the below showScore method/variable/code does not work. This message has
+	 * been printed below every instance where something related to it is
+	 * mentioned.
 	 */
 	// Font funFont;
 	long enemyTimer = 0;
@@ -90,7 +93,8 @@ public class ObjectManager {
 	public void checkCollision() {
 		for (int i = 0; i < objects.size(); i++) {
 			for (int j = i + 1; j < objects.size(); j++) {
-				// what is the purpose of the 'i' for loop enclosing the 'j' for loop?
+				// what is the purpose of the 'i' for loop enclosing the 'j' for
+				// loop?
 				GameObject o1 = objects.get(i);
 				GameObject o2 = objects.get(j);
 
@@ -137,7 +141,8 @@ public class ObjectManager {
 						SpawningItem item = o1 instanceof SpawningItem ? (SpawningItem) o1 : (SpawningItem) o2;
 						Hecker imflynnity = o1 instanceof Hecker ? (Hecker) o1 : (Hecker) o2;
 
-						// System.out.println("Flynn's health is now " + imflynnity.health + ".");
+						// System.out.println("Flynn's health is now " +
+						// imflynnity.health + ".");
 						if (item.typeparameter.equals(item.type1)) {
 							imflynnity.bulletAmmo += 10;
 						} else if (item.typeparameter.equals(item.type2)) {
@@ -185,6 +190,8 @@ public class ObjectManager {
 							eternalhellicates(zombie, zombietwo);
 							System.out.println("Eternitypack!");
 						}
+
+						// *
 					}
 
 				}
@@ -228,6 +235,8 @@ public class ObjectManager {
 			int randomyone = new Random().nextInt(600 - dissolventheight);
 			Horde basiclisantratimortis = new Horde(randomxone + 200, randomyone + 200, dissolventwidth,
 					dissolventheight, hex, Color.darkGray, 1);
+
+			// *
 			addObject(basiclisantratimortis);
 			return basiclisantratimortis;
 		} else {
@@ -245,6 +254,7 @@ public class ObjectManager {
 			int randomyone = new Random().nextInt(600 - dissolventheight);
 			Horde russel = new Horde(randomxone + 200, randomyone + 200, dissolventwidth, dissolventheight, hex,
 					Color.magenta, 2);
+			// *
 			russel.deathPotential = 2;
 			russel.speed = 2;
 			addObject(russel);
@@ -258,6 +268,7 @@ public class ObjectManager {
 			russel.deathPotential = 2;
 			russel.health = 2;
 			russel.color = Color.magenta;
+			// *
 			return russel;
 		}
 
@@ -270,6 +281,7 @@ public class ObjectManager {
 			int randomxone = new Random().nextInt(600 - packwidth);
 			int randomyone = new Random().nextInt(600 - packheight);
 			Horde pack = new Horde(randomxone + 200, randomyone + 200, packwidth, packheight, hex, Color.green, 3);
+			// *
 			pack.deathPotential = 4;
 			pack.speed = 3;
 			addObject(pack);
@@ -285,6 +297,7 @@ public class ObjectManager {
 			pack.deathPotential = 4;
 			pack.health = 3;
 			pack.color = Color.green;
+			// *
 			return pack;
 		}
 
@@ -297,6 +310,7 @@ public class ObjectManager {
 			int randomxone = new Random().nextInt(600 - packwidth);
 			int randomyone = new Random().nextInt(600 - packheight);
 			Horde deathcrowd = new Horde(randomxone + 200, randomyone + 200, packwidth, packheight, hex, Color.blue, 4);
+			// *
 			deathcrowd.deathPotential = 8;
 			deathcrowd.speed = 4;
 			addObject(deathcrowd);
@@ -312,6 +326,7 @@ public class ObjectManager {
 			deathpack.deathPotential = 8;
 			deathpack.health = 4;
 			deathpack.color = Color.blue;
+			// *
 			return deathpack;
 		}
 
@@ -326,6 +341,7 @@ public class ObjectManager {
 			int randomyone = new Random().nextInt(600 - packheight);
 			Horde ultroidcapacitor = new Horde(randomxone + 200, randomyone + 200, packwidth, packheight, hex,
 					Color.red, 8);
+			// *
 			ultroidcapacitor.deathPotential = 16;
 			ultroidcapacitor.speed = 5;
 			addObject(ultroidcapacitor);
@@ -342,6 +358,7 @@ public class ObjectManager {
 			ultroidcapacitor.deathPotential = 16;
 			ultroidcapacitor.health = 8;
 			ultroidcapacitor.color = Color.red;
+			// *
 			return ultroidcapacitor;
 		}
 
@@ -399,6 +416,7 @@ public class ObjectManager {
 			hellsGreeters.color = dark1;
 			return hellsGreeters;
 		}
+		// *
 
 	}
 
@@ -427,6 +445,7 @@ public class ObjectManager {
 			return archies;
 		}
 
+		// *
 	}
 
 	public Horde darkhorde(Horde alreadyExistent, Horde alreadyExistentDiedInCombination) {
@@ -480,6 +499,7 @@ public class ObjectManager {
 			eternityswhim.color = dark4;
 			return eternityswhim;
 		}
+		// *
 
 	}
 

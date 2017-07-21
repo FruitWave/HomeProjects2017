@@ -28,7 +28,17 @@ public class Hecker extends GameObject {
 	}
 
 	public void draw(Graphics pvd) {
-		pvd.setColor(Color.BLACK);
-		pvd.fillRect(x, y, width, height);
+		// pvd.setColor(Color.BLACK);
+		//
+		// //*
+		// pvd.fillRect(x, y, width, height);
+		if (transpex > 0) {
+			pvd.drawImage(SketcHex.spectreright, x, y, null);
+		} else if (transpex < 0) {
+			pvd.drawImage(SketcHex.spectreleft, x, y, null);
+		} else {
+			pvd.drawImage(SketcHex.reaper, x, y, null);
+
+		}
 	}
 }

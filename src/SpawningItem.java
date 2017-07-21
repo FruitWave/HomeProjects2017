@@ -12,10 +12,13 @@ public class SpawningItem extends GameObject {
 	String type3pt2 = "Nuka-Cola Suit";
 	String type0 = "Nothing";
 	Color colortype;
+	// *
 	Color bcolor = Color.BLACK;
 	Color hcolor = Color.RED;
 	Color ncolor = Color.GREEN;
 	Color scolor = Color.WHITE;
+
+	// *
 	SketcHex hex;
 
 	public SpawningItem(int x, int y, int width, int height, String typeparameto, SketcHex hex) {
@@ -40,8 +43,10 @@ public class SpawningItem extends GameObject {
 			JOptionPane.showMessageDialog(null, "Something went wrong. Typset is null.");
 		}
 		// typeparameter.equals(typeset);
-		// the above line doesn't seem to work with any temporary string for xeno in the
-		// room class, such as "type unset", so i made this method have a return type to
+		// the above line doesn't seem to work with any temporary string for
+		// xeno in the
+		// room class, such as "type unset", so i made this method have a return
+		// type to
 		// give a new item its type in the constructor.
 		System.out.println("Item is a " + typeset + ".");
 		System.out.println("Item is at " + x + ", " + y + ".");
@@ -83,9 +88,14 @@ public class SpawningItem extends GameObject {
 		} else if (typeparameter.equals(type0)) {
 			colortype = Color.red;
 		}
+
+		// *
 		// System.out.println("Colortype: " + colortype);
 		quantummarshmallowcake.setColor(colortype);
+
+		// *
 		quantummarshmallowcake.fillRect(x, y, width, height);
-		// System.out.println("stats: " + x + " " + y + " " + width + " " + height);
+		// System.out.println("stats: " + x + " " + y + " " + width + " " +
+		// height);
 	}
 }

@@ -27,6 +27,8 @@ public class Room extends GameObject implements ActionListener {
 	int randomfunint222 = new Random().nextInt(255);
 	int randomfunint333 = new Random().nextInt(255);
 	Color randomfun3 = new Color(randomfunint111, randomfunint222, randomfunint333);
+
+	// *
 	Room newNonbaseRoom;
 	int level = 1;
 	int levelupper = 0;
@@ -34,8 +36,6 @@ public class Room extends GameObject implements ActionListener {
 	int leveluppermultipliercounter = 0;
 	SpawningItem xenomorpheousSubstance;
 
-	// save the rooms color, "if roomnumber is this then roomcolor is this",
-	// kill the room, create a new room
 	public Room(int x, int y, int width, int height, int roomsroomnumber, boolean unspawnedhorde, Color color,
 			SketcHex hex) {
 		super(x, y, width, height);
@@ -69,13 +69,11 @@ public class Room extends GameObject implements ActionListener {
 		hex.flynnroomnumber += isRight ? 1 : -1;
 		hex.roomcolors.add(color);
 		Color a = randomColor();
+
+		// *
 		hex.roomColor = a;
 		levelupper++;
-		/*
-		 * levelupper *= leveluppermultiplier; if (leveluppermultipliercounter == 4) {
-		 * leveluppermultiplier++; System.out.println("leveluppermultiplier is: " +
-		 * leveluppermultiplier); leveluppermultipliercounter = 0; }
-		 */
+
 		if ((levelupper >= level) && (levelupper % 2 == 0)) {
 			int apoint = level;
 			level += levelupper / 2;
@@ -139,6 +137,7 @@ public class Room extends GameObject implements ActionListener {
 		return roomColorSetter;
 	}
 
+	// *
 	public void draw(Graphics g) {
 
 	}

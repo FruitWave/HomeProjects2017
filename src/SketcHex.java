@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
@@ -17,7 +18,11 @@ import javax.swing.Timer;
 @SuppressWarnings("serial")
 public class SketcHex extends JPanel implements ActionListener, KeyListener {
 	Color roomColor;
+
+	// *
 	ArrayList<Color> roomcolors;
+
+	// *
 	Timer gameSpeed;
 	Timer roomSwitcherGuard;
 	final int MENU_STATE = 0;
@@ -37,6 +42,10 @@ public class SketcHex extends JPanel implements ActionListener, KeyListener {
 	public int statisticsrectwidth = HordeRunner.width;
 	public int statisticsrectheight = 75;
 	boolean paused = false;
+	static BufferedImage spectreright;
+	static BufferedImage spectreleft;
+	static BufferedImage menuImg;
+	static BufferedImage reaper;
 
 	public SketcHex() {
 		gameSpeed = new Timer(1000 / 120, this);
@@ -46,16 +55,16 @@ public class SketcHex extends JPanel implements ActionListener, KeyListener {
 		font = new Font("Arial", Font.PLAIN, 48);
 		funFont = new Font("Comic Sans MS", Font.CENTER_BASELINE, 30);
 		statsFont = new Font("Bank Gothic", Font.CENTER_BASELINE, 25);
-		// try {
-		// alienImg =
-		// ImageIO.read(this.getClass().getResourceAsStream("alien.png"));
-		// rocketImg =
-		// ImageIO.read(this.getClass().getResourceAsStream("rocket.png"));
-		// bulletImg =
-		// ImageIO.read(this.getClass().getResourceAsStream("bullet.png"));
-		// } catch (IOException e) {
-		// e.printStackTrace();
-		// }
+		try {
+			spectreleft = ImageIO.read(this.getClass().getResourceAsStream("spectreleft.png"));
+			spectreright = ImageIO.read(this.getClass().getResourceAsStream("spectreright.png"));
+			reaper = ImageIO.read(this.getClass().getResourceAsStream("reaper.png"));
+			menuImg = ImageIO.read(this.getClass().getResourceAsStream("menuImg.jpg"));
+			// bulletImg =
+			// ImageIO.read(this.getClass().getResourceAsStream("bullet.png"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 
 	}
 
@@ -69,6 +78,8 @@ public class SketcHex extends JPanel implements ActionListener, KeyListener {
 
 	public void showStatistics(Graphics g) {
 		g.setColor(Color.WHITE);
+
+		// *
 		g.setFont(statsFont);
 		g.fillRect(HordeRunner.width - statisticsrectwidth, 0, statisticsrectwidth, statisticsrectheight);
 		showcasualtyAndHordeCount(g);
@@ -86,6 +97,8 @@ public class SketcHex extends JPanel implements ActionListener, KeyListener {
 			}
 		}
 		g.setColor(Color.BLACK);
+
+		// *
 		g.setFont(statsFont);
 		String rampage = "Kill Count: " + casualtyCount;
 		String rampagers = "Horde Count: " + hordecount;
@@ -95,6 +108,8 @@ public class SketcHex extends JPanel implements ActionListener, KeyListener {
 
 	public void showRoomNum(Graphics g) {
 		g.setColor(Color.BLACK);
+
+		// *
 		g.setFont(statsFont);
 		String hotel = "Room " + flynnroomnumber;
 		g.drawString(hotel, 0, (statisticsrectheight / 3) * 2);
@@ -102,6 +117,8 @@ public class SketcHex extends JPanel implements ActionListener, KeyListener {
 
 	public void showHealthAndBullets(Graphics g) {
 		g.setColor(Color.BLACK);
+
+		// *
 		g.setFont(statsFont);
 		String health = "Health: " + flynn.health;
 		String bullets = "Bullets: " + flynn.bulletAmmo;
@@ -112,6 +129,8 @@ public class SketcHex extends JPanel implements ActionListener, KeyListener {
 	public void showNukeStats(Graphics g) {
 		Color evergreen = new Color(89, 229, 10);
 		g.setColor(evergreen);
+
+		// *
 		g.setFont(statsFont);
 		String nuks = "Nuclear Warheads: " + flynn.nukeCount;
 		String nuksootz = "Nuka-Cola Suits: " + flynn.nukeSuitCount;
@@ -136,9 +155,10 @@ public class SketcHex extends JPanel implements ActionListener, KeyListener {
 			flynn.bulletAmmo -= 1;
 			System.out.println("Bullets: " + flynn.bulletAmmo);
 			int bulletx = isDirectedRight ? flynn.x + flynn.width : flynn.x;
-			Bullet bullet = new Bullet(bulletx, flynn.y + (flynn.height / 2), 8, 4, this);
+			Bullet bullet = new Bullet(bulletx, flynn.y + flynn.width / 2 + (flynn.height / 2), 8, 4, this);
 			bullet.isGoingRight = isDirectedRight ? true : false;
 			megahead.addObject(bullet);
+			flynn.transpex = isDirectedRight ? 1 : -1;
 		} else {
 			JOptionPane.showMessageDialog(null, "You've Run Out Of Bullet Ammo");
 		}
@@ -153,6 +173,7 @@ public class SketcHex extends JPanel implements ActionListener, KeyListener {
 			int randomyone = new Random().nextInt(600 - dissolventheight);
 			Horde dissolvent = new Horde(randomxone + 200, randomyone + 200, dissolventwidth, dissolventheight, this,
 					Color.darkGray, 1);
+			// *
 			megahead.addObject(dissolvent);
 			System.out.println("Zombie add count " + (i + 1));
 
@@ -163,6 +184,7 @@ public class SketcHex extends JPanel implements ActionListener, KeyListener {
 	public void startGame() {
 		gameSpeed.start();
 		roomcolors = new ArrayList<Color>();
+		// *
 		base = new Room(0, 0, 1000, 1000, 0, true, Color.blue, this);
 		roomcolors.add(base.color);
 		roomSwitcherGuard = new Timer(1000 / 4, base);
@@ -174,6 +196,7 @@ public class SketcHex extends JPanel implements ActionListener, KeyListener {
 		onScreenRoom = base;
 		addToHorde(hordeAdder);
 		roomColor = onScreenRoom.color;
+		// *
 		roomSwitcherGuard.start();
 		// figure out what happens to roomSwitcherGuard when I have made a new
 		// Room object per "room panel", since one of its parameters is "base".
@@ -181,12 +204,14 @@ public class SketcHex extends JPanel implements ActionListener, KeyListener {
 
 	public void addRoomColor(Color c) {
 		roomcolors.add(c);
+		// *
 	}
 
 	public Color getAnyRoomsColor(int roomsnumber) {
 		Color returncolor = roomcolors.get(roomsnumber);
 		return returncolor;
-		// figure out this crap
+		// *
+
 	}
 
 	void updateMenuState() {
@@ -210,22 +235,26 @@ public class SketcHex extends JPanel implements ActionListener, KeyListener {
 
 	void drawMenuState(Graphics a) {
 		int startscript = HordeRunner.width / 3;
-		a.setColor(Color.blue);
-		a.fillRect(0, 0, 1000, 1000);
+		// a.setColor(Color.blue);
+		a.drawImage(menuImg, 0, 0, null);
+		// a.fillRect(0, 0, 1000, 1000);
 
 		a.setFont(font);
 		a.setColor(Color.WHITE);
+
 		a.drawString("===HORDE RUNNER===", (startscript / 2) + 90, 300);
-		a.setColor(Color.BLACK);
+		a.setColor(Color.GREEN);
 		a.drawString("Press 'I' for instructions.", (startscript / 2) + 90, 400);
 		a.setFont(funFont);
-		a.setColor(Color.WHITE);
+		a.setColor(Color.RED);
 		a.drawString("Press Enter To Start Survival", startscript, 500);
 		a.drawString("Press C For Invincible", startscript, 530);
+		// *
 	}
 
 	void drawGameState(Graphics b) {
 		b.setColor(onScreenRoom.color);
+		// *
 		b.fillRect(0, 0, 1000, 1000);
 		megahead.draw(b);
 		showStatistics(b);
@@ -244,6 +273,7 @@ public class SketcHex extends JPanel implements ActionListener, KeyListener {
 		c.setColor(Color.WHITE);
 		c.drawString("press delete to restart", 355, 500);
 
+		// *
 	}
 
 	public void pause() {
@@ -447,6 +477,7 @@ public class SketcHex extends JPanel implements ActionListener, KeyListener {
 		gameSpeed.stop();
 		megahead.reset();
 		roomcolors.clear();
+		// *
 		hordeAdder = 0;
 		onScreenRoom = base;
 		onScreenRoom.level = 1;

@@ -26,6 +26,7 @@ public class Bullet extends GameObject {
 
 	public void draw(Graphics pvd) {
 		pvd.setColor(darkred);
+		//*
 		pvd.fillRect(x, y, width, height);
 	}
 }

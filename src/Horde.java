@@ -6,11 +6,15 @@ public class Horde extends GameObject {
 	int transpex;
 	int transpey;
 	Color color;
+
+	//*
 	int speed;
 	int deathPotential;
 	int health;
 
 	public Horde(int x, int y, int width, int height, SketcHex hex, Color color, int health) {
+
+		//*
 		super(x, y, width, height);
 		transpex = 0;
 		transpey = 0;
@@ -47,6 +51,8 @@ public class Horde extends GameObject {
 		// pvd.drawImage(SketcHex.alienImg, x, y, width, height,
 		// null);
 		pvd.setColor(color);
+
+		//*
 		pvd.fillRect(x, y, width, height);
 	}
 
