@@ -25,6 +25,7 @@ public class SketcHex extends JPanel implements ActionListener, KeyListener {
 	// *
 	Timer gameSpeed;
 	Timer roomSwitcherGuard;
+	Timer fireTimer;
 	final int MENU_STATE = 0;
 	final int GAME_STATE = 1;
 	final int END_STATE = 2;
@@ -46,6 +47,8 @@ public class SketcHex extends JPanel implements ActionListener, KeyListener {
 	static BufferedImage spectreleft;
 	static BufferedImage menuImg;
 	static BufferedImage reaper;
+	static BufferedImage leftbulletImg;
+	static BufferedImage rightbulletImg;
 
 	public SketcHex() {
 		gameSpeed = new Timer(1000 / 120, this);
@@ -58,6 +61,8 @@ public class SketcHex extends JPanel implements ActionListener, KeyListener {
 		try {
 			spectreleft = ImageIO.read(this.getClass().getResourceAsStream("spectreleft.png"));
 			spectreright = ImageIO.read(this.getClass().getResourceAsStream("spectreright.png"));
+			leftbulletImg = ImageIO.read(this.getClass().getResourceAsStream("bulletleft.png"));
+			rightbulletImg = ImageIO.read(this.getClass().getResourceAsStream("bulletright.png"));
 			reaper = ImageIO.read(this.getClass().getResourceAsStream("reaper.png"));
 			menuImg = ImageIO.read(this.getClass().getResourceAsStream("menuImg.jpg"));
 			// bulletImg =
@@ -313,7 +318,8 @@ public class SketcHex extends JPanel implements ActionListener, KeyListener {
 			flynn.transpex = 5;
 		} else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
 			flynn.transpey = 5;
-		} else if (e.getKeyCode() == KeyEvent.VK_Z) {
+		}
+		if (e.getKeyCode() == KeyEvent.VK_Z) {
 			bulletfired(false);
 		} else if (e.getKeyCode() == KeyEvent.VK_X) {
 			bulletfired(true);
@@ -498,8 +504,9 @@ public class SketcHex extends JPanel implements ActionListener, KeyListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		// if (e.getSource() == gameSpeed) {
 		repaint();
-		// System.out.println("action performed");
+		System.out.println("action performed");
 		if (currentState == MENU_STATE) {
 			updateMenuState();
 		} else if (currentState == GAME_STATE) {
@@ -508,6 +515,27 @@ public class SketcHex extends JPanel implements ActionListener, KeyListener {
 			updateEndState();
 		}
 
-	}
+		// if (e.getSource() == fireTimer) {
+		// System.out.println("fireTimer action reached");
+		// boolean isDirectedRight;
+		// if (bulletDirection == 1) {
+		// isDirectedRight = false;
+		// } else if (bulletDirection == 2) {
+		// isDirectedRight = true;
+		// } else {
+		// JOptionPane.showMessageDialog(null, "BULLET DIRECTION ERROR");
+		// isDirectedRight = true;
+		// }
+		// flynn.bulletAmmo -= 1;
+		// System.out.println("Bullets: " + flynn.bulletAmmo);
+		// int bulletx = isDirectedRight ? flynn.x + flynn.width : flynn.x;
+		// Bullet bullet = new Bullet(bulletx, flynn.y + flynn.width / 2 + (flynn.height
+		// / 2), 8, 4, this);
+		// bullet.isGoingRight = isDirectedRight ? true : false;
+		// megahead.addObject(bullet);
+		// flynn.transpex = isDirectedRight ? 1 : -1;
+		// }
+		// why doesnt this create rapidfire?
 
+	}
 }

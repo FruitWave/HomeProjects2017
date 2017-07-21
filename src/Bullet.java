@@ -7,6 +7,7 @@ public class Bullet extends GameObject {
 	SketcHex hex;
 	boolean isGoingRight = true;
 	Color darkred = new Color(148, 22, 10);
+	int flyspeed;
 
 	public Bullet(int x, int y, int width, int height, SketcHex hex) {
 		super(x, y, width, height);
@@ -17,16 +18,22 @@ public class Bullet extends GameObject {
 	public void update() {
 		super.update();
 		if (isGoingRight) {
-			x += speed;
+			flyspeed = speed;
+			x += flyspeed;
 		} else if (isGoingRight == false) {
-			x -= speed;
+			flyspeed = -speed;
+			x += flyspeed;
 		}
 
 	}
 
 	public void draw(Graphics pvd) {
-		pvd.setColor(darkred);
-		//*
-		pvd.fillRect(x, y, width, height);
+
+		if (flyspeed > 0) {
+			pvd.drawImage(SketcHex.rightbulletImg, x, y, null);
+		} else if (flyspeed < 0) {
+			pvd.drawImage(SketcHex.leftbulletImg, x, y, null);
+		}
+
 	}
 }
