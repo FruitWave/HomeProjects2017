@@ -1,12 +1,16 @@
 package RiseOfPoke;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
@@ -20,26 +24,51 @@ public class Inscriptor extends JPanel implements ActionListener, KeyListener {
 	final int MENU_STATE = 0;
 	final int GAME_STATE = 1;
 	final int END_STATE = 2;
-	static int currentState = 1;
+	static int currentState = 0;
+	static BufferedImage menubackround;
+	static BufferedImage endbackround;
+	static BufferedImage gamebackround;
+	Font calisto;
 
 	public Inscriptor() {
 		gameSpeed = new Timer(1000 / 120, this);
+		calisto = new Font("Calisto MT", Font.CENTER_BASELINE, 25);
+		try {
+			menubackround = ImageIO.read(this.getClass().getResourceAsStream("menuimage.jpg"));
+			endbackround = ImageIO.read(this.getClass().getResourceAsStream("endimage.jpg"));
+			gamebackround = ImageIO.read(this.getClass().getResourceAsStream("gameimage.jpg"));
+			// bulletImg =
+			// ImageIO.read(this.getClass().getResourceAsStream("bullet.png"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
-	public void paintComponent(Graphics danna) {
-		// if (currentState == MENU_STATE) {
-		// drawMenuState(delta);
-		// } else if (currentState == GAME_STATE) {
-		// drawGameState(delta);
-		// } else if (currentState == END_STATE) {
-		// drawEndState(delta);
-		// }
-		drawGameState(danna);
+	public void paintComponent(Graphics darkflood) {
+		if (currentState == MENU_STATE) {
+			drawMenuState(darkflood);
+		} else if (currentState == GAME_STATE) {
+			drawGameState(darkflood);
+		} else if (currentState == END_STATE) {
+			drawEndState(darkflood);
+		}
+		// drawGameState(darkflood);
+	}
+
+	private void drawEndState(Graphics i) {
+		// TODO Auto-generated method stub
+		i.drawImage(endbackround, 0, 0, null);
+	}
+
+	private void drawMenuState(Graphics darkflood) {
+		// TODO Auto-generated method stub
+		darkflood.drawImage(menubackround, 0, 0, null);
 	}
 
 	void drawGameState(Graphics b) {
-		b.setColor(Color.darkGray);
-		b.fillRect(0, 0, 1000, 1000);
+		// b.setColor(Color.darkGray);
+		// b.fillRect(0, 0, 1000, 1000);
+		b.drawImage(gamebackround, 0, 0, null);
 		book.draw(b);
 		// show score code
 	}
@@ -53,7 +82,27 @@ public class Inscriptor extends JPanel implements ActionListener, KeyListener {
 	@Override
 	public void keyPressed(KeyEvent e) {
 		// TODO Auto-generated method stub
+		if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+			if (currentState == MENU_STATE) {
+				currentState = GAME_STATE;
+			} else if (currentState == GAME_STATE) {
+				currentState = END_STATE;
+			}
+			System.out.println("The current state is " + currentState + ".");
+		} else if (e.getKeyCode() == KeyEvent.VK_BACK_SPACE) {
+			fullRestart();
+		}
+	}
 
+	private void fullRestart() {
+		currentState = MENU_STATE;
+		book.score = 0;
+		gameSpeed.restart();
+		book.reset();
+		// hordeAdder = 0;
+		lord.isAlive = true;
+		// paused = false;
+		startGame();
 	}
 
 	@Override
@@ -85,6 +134,12 @@ public class Inscriptor extends JPanel implements ActionListener, KeyListener {
 	void updateGameState() {
 		// TODO Auto-generated method stub
 		book.update();
+		if ((lord.health <= 0) || (book.score <= 0)) {
+			lord.isAlive = false;
+		}
+		if (lord.isAlive == false) {
+			currentState = END_STATE;
+		}
 	}
 
 	void updateEndState() {
@@ -94,6 +149,7 @@ public class Inscriptor extends JPanel implements ActionListener, KeyListener {
 
 	public void startGame() {
 		gameSpeed.start();
+		book = new ObjectManager(this);
 		book.addObject(lord);
 	}
 

@@ -203,8 +203,7 @@ public class SketcHex extends JPanel implements ActionListener, KeyListener {
 		roomColor = onScreenRoom.color;
 		// *
 		roomSwitcherGuard.start();
-		// figure out what happens to roomSwitcherGuard when I have made a new
-		// Room object per "room panel", since one of its parameters is "base".
+
 	}
 
 	public void addRoomColor(Color c) {
@@ -506,7 +505,7 @@ public class SketcHex extends JPanel implements ActionListener, KeyListener {
 	public void actionPerformed(ActionEvent e) {
 		// if (e.getSource() == gameSpeed) {
 		repaint();
-		System.out.println("action performed");
+		//System.out.println("action performed");
 		if (currentState == MENU_STATE) {
 			updateMenuState();
 		} else if (currentState == GAME_STATE) {

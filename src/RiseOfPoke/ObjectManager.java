@@ -7,7 +7,7 @@ import java.util.Random;
 public class ObjectManager {
 	ArrayList<GameObject> objects;
 	Inscriptor illuminator;
-	private int score = 0;
+	public int score = 0;
 
 	long enemyTimer = 0;
 	int enemySpawnTime = 1;
@@ -68,25 +68,19 @@ public class ObjectManager {
 
 				if (o1.collisionArea.intersects(o2.collisionArea)) {
 
-					if (o1 instanceof Pokables && o2 instanceof Projectile) {
-						o1.isAlive = false;
-						o2.isAlive = false;
-					}
-					if (o2 instanceof Pokables && o1 instanceof Projectile) {
-						o2.isAlive = false;
-						o1.isAlive = false;
-					} else if (o1 instanceof Pokables && o2 instanceof Poker) {
-						o1.isAlive = false;
-						o2.isAlive = true;
-						Poker pokenought = (Poker) o1;
-						pokenought.health -= 1;
-						score--;
-					} else if (o2 instanceof Pokables && o1 instanceof Poker) {
-						o2.isAlive = false;
-						o1.isAlive = true;
-						Poker pokenought = (Poker) o1;
-						pokenought.health -= 1;
-						score--;
+					if ((o1 instanceof Pokables && o2 instanceof Projectile)
+							|| (o2 instanceof Pokables && o1 instanceof Projectile)) {
+						Pokables thePokedOne = (o1 instanceof Pokables) ? (Pokables) o1 : (Pokables) o2;
+						Projectile thePokingOne = (o1 instanceof Projectile) ? (Projectile) o1 : (Projectile) o2;
+						thePokedOne.isAlive = false;
+						thePokingOne.isAlive = false;
+					} else if ((o1 instanceof Poker && o2 instanceof Pokables)
+							|| (o2 instanceof Pokables && o1 instanceof Pokables)) {
+						Pokables thePokingOne = (o1 instanceof Pokables) ? (Pokables) o1 : (Pokables) o2;
+						Poker theOne = (o1 instanceof Poker) ? (Poker) o1 : (Poker) o2;
+						thePokingOne.isAlive = false;
+						theOne.health -= 1;
+						score -= 2;
 					}
 
 				}

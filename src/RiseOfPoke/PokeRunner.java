@@ -4,8 +4,8 @@ import javax.swing.JFrame;
 
 public class PokeRunner {
 	JFrame frame;
-	static final int width = 1000;
-	static final int height = 1000;
+	static final int width = 1665;
+	static final int height = 1040;
 	Inscriptor sand;
 
 	// constructor
