@@ -17,10 +17,19 @@ import javax.swing.Timer;
 @SuppressWarnings("serial")
 public class Inscriptor extends JPanel implements ActionListener, KeyListener {
 	Timer gameSpeed;
+	Timer levelUp;
 	ObjectManager book;
-	int lordwidth = 100;
-	int lordheight = 100;
-	Poker lord = new Poker(500 - lordwidth, 500 - lordheight, lordwidth, lordheight, 5 /* health */);
+	int lordwidth = 250;
+	int lordheight = 250;
+	public int level = 1;
+	Poker lord = new Poker((PokeRunner.width / 2) - (lordwidth / 2), (PokeRunner.height / 2) - (lordheight / 2),
+			lordwidth, lordheight, /* level */200 /* book.level */ /* health */);
+	// for some reason, it doesn't like book.level as a parameter for health. It
+	// says that there is a Null Pointer Exception--but everything seems to be in
+	// order. With a raw integer put in, such as 1 or 2 or 3 or 5, the program runs
+	// fine--so this is definitely the problem.
+	// I shifted 'level' over to Inscriptor but leave, commented out, any
+	// references to the prior 'level' there, for I hope to learn from this.
 	final int MENU_STATE = 0;
 	final int GAME_STATE = 1;
 	final int END_STATE = 2;
@@ -34,6 +43,7 @@ public class Inscriptor extends JPanel implements ActionListener, KeyListener {
 
 	public Inscriptor() {
 		gameSpeed = new Timer(1000 / 120, this);
+		levelUp = new Timer(10000, this);
 		calisto = new Font("Calisto MT", Font.CENTER_BASELINE, 25);
 		try {
 			menubackround = ImageIO.read(this.getClass().getResourceAsStream("menuimage.jpg"));
@@ -107,15 +117,21 @@ public class Inscriptor extends JPanel implements ActionListener, KeyListener {
 			}
 			System.out.println(statevar);
 		}
+		if (e.getKeyCode() == KeyEvent.VK_T) {
+			System.out.println("Life: " + lord.health);
+			System.out.println(System.currentTimeMillis());
+		}
 	}
 
 	private void fullRestart() {
 		currentState = MENU_STATE;
 		book.score = 0;
+		scorestarted = false;
 		gameSpeed.restart();
 		book.reset();
 		// hordeAdder = 0;
 		lord.isAlive = true;
+		lord.health = level;
 		// paused = false;
 		startGame();
 	}
@@ -137,8 +153,7 @@ public class Inscriptor extends JPanel implements ActionListener, KeyListener {
 		if ((book.score > 0) && (scorestarted == false)) {
 			scorestarted = true;
 		}
-
-		if ((lord.health <= 0) || ((book.score <= 0) && (scorestarted == true))) {
+		if (((lord.health <= 0) || (book.score <= 0)) && (scorestarted == true)) {
 			lord.isAlive = false;
 		}
 		if (lord.isAlive == false) {
@@ -159,15 +174,21 @@ public class Inscriptor extends JPanel implements ActionListener, KeyListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
-		repaint();
-		// System.out.println("action performed");
-		if (currentState == MENU_STATE) {
-			updateMenuState();
-		} else if (currentState == GAME_STATE) {
-			updateGameState();
-		} else if (currentState == END_STATE) {
-			updateEndState();
+		if (e.getSource() == gameSpeed) {
+			repaint();
+			// System.out.println("action performed");
+			if (currentState == MENU_STATE) {
+				updateMenuState();
+			} else if (currentState == GAME_STATE) {
+				updateGameState();
+			} else if (currentState == END_STATE) {
+				updateEndState();
+			}
+			book.manageEnemies();
+		}
+
+		if (e.getSource() == levelUp) {
+			level++;
 		}
 
 	}

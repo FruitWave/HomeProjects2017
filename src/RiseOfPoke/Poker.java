@@ -2,7 +2,6 @@ package RiseOfPoke;
 
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.Polygon;
 
 public class Poker extends GameObject {
 
@@ -27,6 +26,6 @@ public class Poker extends GameObject {
 	public void draw(Graphics g) {
 		// TODO Auto-generated method stub
 		g.setColor(color);
-		g.drawOval(x, y, width, height);
+		g.fillOval(x, y, width, height);
 	}
 }
