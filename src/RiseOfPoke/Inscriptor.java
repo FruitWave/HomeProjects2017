@@ -29,6 +29,8 @@ public class Inscriptor extends JPanel implements ActionListener, KeyListener {
 	static BufferedImage endbackround;
 	static BufferedImage gamebackround;
 	Font calisto;
+	String statevar;
+	boolean scorestarted = false;
 
 	public Inscriptor() {
 		gameSpeed = new Timer(1000 / 120, this);
@@ -82,15 +84,28 @@ public class Inscriptor extends JPanel implements ActionListener, KeyListener {
 	@Override
 	public void keyPressed(KeyEvent e) {
 		// TODO Auto-generated method stub
-		if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-			if (currentState == MENU_STATE) {
-				currentState = GAME_STATE;
-			} else if (currentState == GAME_STATE) {
-				currentState = END_STATE;
-			}
+		if ((e.getKeyCode() == KeyEvent.VK_ENTER) && (currentState < 2)) {
+			// if (currentState < 2) {
+			// currentState++;
+			// }
+			currentState++;
 			System.out.println("The current state is " + currentState + ".");
-		} else if (e.getKeyCode() == KeyEvent.VK_BACK_SPACE) {
+		}
+		if (e.getKeyCode() == KeyEvent.VK_BACK_SPACE) {
 			fullRestart();
+			System.out.println("Restart. The current state is " + currentState + ".");
+		}
+		if (e.getKeyCode() == KeyEvent.VK_L) {
+			if (currentState == MENU_STATE) {
+				statevar = "menu";
+			} else if (currentState == GAME_STATE) {
+				statevar = "game";
+			} else if (currentState == END_STATE) {
+				statevar = "end";
+			} else {
+				statevar = "unknown";
+			}
+			System.out.println(statevar);
 		}
 	}
 
@@ -111,21 +126,6 @@ public class Inscriptor extends JPanel implements ActionListener, KeyListener {
 
 	}
 
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
-		repaint();
-		System.out.println("action performed");
-		if (currentState == MENU_STATE) {
-			updateMenuState();
-		} else if (currentState == GAME_STATE) {
-			updateGameState();
-		} else if (currentState == END_STATE) {
-			updateEndState();
-		}
-
-	}
-
 	void updateMenuState() {
 		// TODO Auto-generated method stub
 
@@ -134,7 +134,11 @@ public class Inscriptor extends JPanel implements ActionListener, KeyListener {
 	void updateGameState() {
 		// TODO Auto-generated method stub
 		book.update();
-		if ((lord.health <= 0) || (book.score <= 0)) {
+		if ((book.score > 0) && (scorestarted == false)) {
+			scorestarted = true;
+		}
+
+		if ((lord.health <= 0) || ((book.score <= 0) && (scorestarted == true))) {
 			lord.isAlive = false;
 		}
 		if (lord.isAlive == false) {
@@ -153,4 +157,18 @@ public class Inscriptor extends JPanel implements ActionListener, KeyListener {
 		book.addObject(lord);
 	}
 
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		repaint();
+		// System.out.println("action performed");
+		if (currentState == MENU_STATE) {
+			updateMenuState();
+		} else if (currentState == GAME_STATE) {
+			updateGameState();
+		} else if (currentState == END_STATE) {
+			updateEndState();
+		}
+
+	}
 }
