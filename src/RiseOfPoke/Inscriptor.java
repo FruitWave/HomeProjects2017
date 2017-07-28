@@ -177,6 +177,7 @@ public class Inscriptor extends JPanel implements ActionListener, KeyListener {
 		if (e.getSource() == gameSpeed) {
 			repaint();
 			// System.out.println("action performed");
+			
 			if (currentState == MENU_STATE) {
 				updateMenuState();
 			} else if (currentState == GAME_STATE) {
@@ -184,7 +185,7 @@ public class Inscriptor extends JPanel implements ActionListener, KeyListener {
 			} else if (currentState == END_STATE) {
 				updateEndState();
 			}
-			book.manageEnemies();
+			
 		}
 
 		if (e.getSource() == levelUp) {

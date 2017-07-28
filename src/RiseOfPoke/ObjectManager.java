@@ -35,6 +35,7 @@ public class ObjectManager {
 			GameObject o = objects.get(i);
 			o.update();
 		}
+		manageEnemies();
 		checkCollision();
 		purgeObjects();
 	}
@@ -119,8 +120,17 @@ public class ObjectManager {
 							|| (o2 instanceof Poker && o1 instanceof Pokables)) {
 
 						Pokables thePokingOne = (o1 instanceof Pokables) ? (Pokables) o1 : (Pokables) o2;
+
+						System.out.println("Spawn Guard: " + thePokingOne.peasantSpawnGuardOn);
+
 						if (thePokingOne.peasantSpawnGuardOn == false) {
 							Poker theOne = (o1 instanceof Poker) ? (Poker) o1 : (Poker) o2;
+
+							// if (o1 instanceof Poker) {
+							// theOne = (Poker) o1;
+							// } else {
+							// theOne = (Poker) o2;
+							// }
 							thePokingOne.isAlive = false;
 							// theOne.health -= 1;
 							score -= 2;
