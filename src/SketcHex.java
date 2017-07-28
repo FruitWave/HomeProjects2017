@@ -442,7 +442,7 @@ public class SketcHex extends JPanel implements ActionListener, KeyListener {
 			System.out.println("New Bullet Ammo: " + newammo);
 
 		}
-		}
+		// if ((e.getKeyCode() == KeyEvent.VK_P) && (paused == false)) {
 		// pause();
 		// }
 		// if ((e.getKeyCode() == KeyEvent.VK_P) && (paused == true)) {
