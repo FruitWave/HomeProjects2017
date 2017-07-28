@@ -172,14 +172,8 @@ public class SketcHex extends JPanel implements ActionListener, KeyListener {
 
 	public void addToHorde(int a) {
 		for (int i = 0; i < a; i++) {
-			int dissolventwidth = 30;
-			int dissolventheight = 60;
-			int randomxone = new Random().nextInt(600 - dissolventwidth);
-			int randomyone = new Random().nextInt(600 - dissolventheight);
-			Horde dissolvent = new Horde(randomxone + 200, randomyone + 200, dissolventwidth, dissolventheight, this,
-					Color.darkGray, 1);
+			megahead.singlehorde(null);
 			// *
-			megahead.addObject(dissolvent);
 			System.out.println("Zombie add count " + (i + 1));
 
 		}
@@ -505,7 +499,7 @@ public class SketcHex extends JPanel implements ActionListener, KeyListener {
 	public void actionPerformed(ActionEvent e) {
 		// if (e.getSource() == gameSpeed) {
 		repaint();
-		//System.out.println("action performed");
+		// System.out.println("action performed");
 		if (currentState == MENU_STATE) {
 			updateMenuState();
 		} else if (currentState == GAME_STATE) {
@@ -528,7 +522,8 @@ public class SketcHex extends JPanel implements ActionListener, KeyListener {
 		// flynn.bulletAmmo -= 1;
 		// System.out.println("Bullets: " + flynn.bulletAmmo);
 		// int bulletx = isDirectedRight ? flynn.x + flynn.width : flynn.x;
-		// Bullet bullet = new Bullet(bulletx, flynn.y + flynn.width / 2 + (flynn.height
+		// Bullet bullet = new Bullet(bulletx, flynn.y + flynn.width / 2 +
+		// (flynn.height
 		// / 2), 8, 4, this);
 		// bullet.isGoingRight = isDirectedRight ? true : false;
 		// megahead.addObject(bullet);

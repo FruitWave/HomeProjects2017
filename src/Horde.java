@@ -1,28 +1,30 @@
-import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.image.BufferedImage;
 
 public class Horde extends GameObject {
 	SketcHex hex;
 	int transpex;
 	int transpey;
-	Color color;
+	BufferedImage imagex;
 
-	//*
+	// *
 	int speed;
 	int deathPotential;
 	int health;
+	int level;
 
-	public Horde(int x, int y, int width, int height, SketcHex hex, Color color, int health) {
+	public Horde(int x, int y, int width, int height, SketcHex hex, int health, BufferedImage imagex) {
 
-		//*
+		// *
 		super(x, y, width, height);
 		transpex = 0;
 		transpey = 0;
 		this.hex = hex;
-		this.color = color;
+		this.imagex = imagex;
 		this.speed = 1;
 		deathPotential = 1;
 		this.health = health;
+		level = 1;
 	}
 
 	public void update() {
@@ -48,12 +50,11 @@ public class Horde extends GameObject {
 	}
 
 	public void draw(Graphics pvd) {
-		// pvd.drawImage(SketcHex.alienImg, x, y, width, height,
-		// null);
-		pvd.setColor(color);
+		pvd.drawImage(imagex, x, y, width, height, null);
+		// pvd.setColor(color);
 
-		//*
-		pvd.fillRect(x, y, width, height);
+		// *
+		// pvd.fillRect(x, y, width, height);
 	}
 
 }
