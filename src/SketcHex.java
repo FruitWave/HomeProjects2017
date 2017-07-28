@@ -66,7 +66,7 @@ public class SketcHex extends JPanel implements ActionListener, KeyListener {
 			rightbulletImg = ImageIO.read(this.getClass().getResourceAsStream("bulletright.png"));
 			reaper = ImageIO.read(this.getClass().getResourceAsStream("reaper.png"));
 			menuImg = ImageIO.read(this.getClass().getResourceAsStream("menuImg.jpg"));
-			horde1 = ImageIO.read(this.getClass().getResourceAsStream("Zombie1.jpg"));
+			horde1 = ImageIO.read(this.getClass().getResourceAsStream("Zombie1.png"));
 			// bulletImg =
 			// ImageIO.read(this.getClass().getResourceAsStream("bullet.png"));
 		} catch (IOException e) {
