@@ -49,6 +49,7 @@ public class SketcHex extends JPanel implements ActionListener, KeyListener {
 	static BufferedImage reaper;
 	static BufferedImage leftbulletImg;
 	static BufferedImage rightbulletImg;
+	static BufferedImage horde1;
 
 	public SketcHex() {
 		gameSpeed = new Timer(1000 / 120, this);
@@ -65,6 +66,7 @@ public class SketcHex extends JPanel implements ActionListener, KeyListener {
 			rightbulletImg = ImageIO.read(this.getClass().getResourceAsStream("bulletright.png"));
 			reaper = ImageIO.read(this.getClass().getResourceAsStream("reaper.png"));
 			menuImg = ImageIO.read(this.getClass().getResourceAsStream("menuImg.jpg"));
+			horde1 = ImageIO.read(this.getClass().getResourceAsStream("Zombie1.jpg"));
 			// bulletImg =
 			// ImageIO.read(this.getClass().getResourceAsStream("bullet.png"));
 		} catch (IOException e) {
