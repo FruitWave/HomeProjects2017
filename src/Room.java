@@ -9,7 +9,7 @@ import javax.swing.Timer;
 
 public class Room extends GameObject implements ActionListener {
 	SketcHex hex;
-	HordeRunner dimensionTeller;
+
 	int roomStuckTime = 0;
 	int roomsroomnumber;
 	boolean unspawnedhorde;
@@ -63,29 +63,35 @@ public class Room extends GameObject implements ActionListener {
 		Room r00m;
 		int itemwidth = 20;
 		int itemheight = 20;
-		int randomItemX = new Random().nextInt(800 - itemwidth);
-		int randomItemY = new Random().nextInt(800 - itemheight);
-		hex.flynn.x += isRight ? -995 : 995;
+		int randomItemX = new Random().nextInt(HordeRunner.width - (HordeRunner.width / 5) - itemwidth);
+		int randomItemY = new Random().nextInt(HordeRunner.height - (HordeRunner.height / 5) - itemheight);
+		hex.flynn.x += isRight ? -HordeRunner.width + 5 : HordeRunner.width - 5;
 		hex.flynnroomnumber += isRight ? 1 : -1;
 		hex.roomcolors.add(color);
 		Color a = randomColor();
 
 		// *
 		hex.roomColor = a;
-		levelupper++;
 
-		if ((levelupper >= level) && (levelupper % 2 == 0)) {
-			int apoint = level;
-			level += levelupper / 2;
-			int bpoint = level;
-			System.out.println("Level Upper is: " + levelupper);
-			if (apoint != bpoint) {
-				System.out.println("Level Up! (Now Level " + level + "!)");
-			}
-			levelupper = 0;
-		}
 		if (hex.megahead.getRoom(hex.flynnroomnumber) == null) {
-			r00m = new Room(0, 0, dimensionTeller.width, dimensionTeller.height, hex.flynnroomnumber, true, a, hex);
+			levelupper++;
+			if ((levelupper >= level) && (levelupper % 2 == 0)) {
+				int apoint = level;
+				level += levelupper / 2;
+				int bpoint = level;
+				System.out.println("Level Upper is: " + levelupper);
+				if (apoint != bpoint) {
+					// System.out.println(
+					// "Level Up! (Now Level " + level + "!). Health is up too! Now at " +
+					// hex.flynn.health + ".");
+					hex.flynn.health += (5 * level);
+					JOptionPane.showMessageDialog(null,
+							"Level Up! (Now Level " + level + "!). Health is up too! Now at " + hex.flynn.health + ".");
+
+				}
+				levelupper = 0;
+			}
+			r00m = new Room(0, 0, HordeRunner.width, HordeRunner.height, hex.flynnroomnumber, true, a, hex);
 			hex.megahead.addObject(r00m);
 			if (isRight) {
 				hex.megahead.addRoom(r00m, true);
@@ -95,8 +101,18 @@ public class Room extends GameObject implements ActionListener {
 				hex.hordeAdder = level;
 			}
 			hex.enteredNewRoom(isRight, true);
-			xenomorpheousSubstance = new SpawningItem(randomItemX + 200, randomItemY + 200, itemwidth, itemheight,
-					"type unset", hex);
+			xenomorpheousSubstance = new SpawningItem(randomItemX, randomItemY, itemwidth, itemheight, "type unset",
+					hex);
+			if (xenomorpheousSubstance.x < HordeRunner.width / 5) {
+				xenomorpheousSubstance.x += HordeRunner.width / 5;
+			} else if (xenomorpheousSubstance.x > HordeRunner.width - (HordeRunner.width / 5)) {
+				xenomorpheousSubstance.x -= HordeRunner.width - (HordeRunner.width / 5);
+			}
+			if (xenomorpheousSubstance.y < HordeRunner.width / 5) {
+				xenomorpheousSubstance.y += HordeRunner.width / 5;
+			} else if (xenomorpheousSubstance.y > HordeRunner.height - (HordeRunner.height / 5)) {
+				xenomorpheousSubstance.y -= HordeRunner.height - (HordeRunner.height / 5);
+			}
 			hex.megahead.addObject(xenomorpheousSubstance);
 		} else {
 			r00m = hex.megahead.getRoom(hex.flynnroomnumber);
@@ -144,11 +160,11 @@ public class Room extends GameObject implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if ((hex.flynn.x == 1000) || (hex.flynn.x == 0)) {
+		if ((hex.flynn.x == HordeRunner.width) || (hex.flynn.x == 0)) {
 			roomStuckTime++;
 			if (roomStuckTime == 2) {
 				roomStuckTime = 0;
-				hex.flynn.x += 200;
+				hex.flynn.x += HordeRunner.width / 5;
 			} else {
 				JOptionPane.showMessageDialog(null, "Moving in: " + (4 - roomStuckTime) + ".");
 			}

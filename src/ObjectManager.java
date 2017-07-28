@@ -17,9 +17,8 @@ public class ObjectManager {
 
 	// *
 	/**
-	 * the below showScore method/variable/code does not work. This message has
-	 * been printed below every instance where something related to it is
-	 * mentioned.
+	 * the below showScore method/variable/code does not work. This message has been
+	 * printed below every instance where something related to it is mentioned.
 	 */
 	// Font funFont;
 	long enemyTimer = 0;
@@ -145,6 +144,7 @@ public class ObjectManager {
 						// imflynnity.health + ".");
 						if (item.typeparameter.equals(item.type1)) {
 							imflynnity.bulletAmmo += 10;
+							System.out.println("New Bullets: " + imflynnity.bulletAmmo);
 						} else if (item.typeparameter.equals(item.type2)) {
 							imflynnity.health += 15;
 							System.out.println("New Health: " + imflynnity.health);
@@ -536,10 +536,9 @@ public class ObjectManager {
 		case 1:
 			h.imagex = SketcHex.horde1;
 			break;
-			//do this for all 10 cases (9 more). make sure u make the images in sketcHex first.
-			
-			
-			
+		// do this for all 10 cases (9 more). make sure u make the images in sketcHex
+		// first.
+
 		// case 2:
 		// h.imagex = SketcHex.horde2;
 		// break;

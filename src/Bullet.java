@@ -4,15 +4,15 @@ import java.util.Random;
 
 public class Bullet extends GameObject {
 	int speed;
-	SketcHex hex;
+	
 	boolean isGoingRight = true;
 	Color darkred = new Color(148, 22, 10);
 	int flyspeed;
 
-	public Bullet(int x, int y, int width, int height, SketcHex hex) {
+	public Bullet(int x, int y, int width, int height) {
 		super(x, y, width, height);
 		speed = 7;
-		this.hex = hex;
+		
 	}
 
 	public void update() {

@@ -40,8 +40,8 @@ public class SketcHex extends JPanel implements ActionListener, KeyListener {
 	Font statsFont;
 	public int hordeAdder = 0;
 	public int flynnroomnumber = 0;
-	public int statisticsrectwidth = HordeRunner.width;
-	public int statisticsrectheight = 75;
+	static public int statisticsrectwidth = HordeRunner.width;
+	static public int statisticsrectheight = 75;
 	boolean paused = false;
 	static BufferedImage spectreright;
 	static BufferedImage spectreleft;
@@ -85,7 +85,6 @@ public class SketcHex extends JPanel implements ActionListener, KeyListener {
 
 	public void showStatistics(Graphics g) {
 		g.setColor(Color.WHITE);
-
 		// *
 		g.setFont(statsFont);
 		g.fillRect(HordeRunner.width - statisticsrectwidth, 0, statisticsrectwidth, statisticsrectheight);
@@ -162,7 +161,7 @@ public class SketcHex extends JPanel implements ActionListener, KeyListener {
 			flynn.bulletAmmo -= 1;
 			System.out.println("Bullets: " + flynn.bulletAmmo);
 			int bulletx = isDirectedRight ? flynn.x + flynn.width : flynn.x;
-			Bullet bullet = new Bullet(bulletx, flynn.y + flynn.width / 2 + (flynn.height / 2), 8, 4, this);
+			Bullet bullet = new Bullet(bulletx, flynn.y + (flynn.height / 2), 8, 4);
 			bullet.isGoingRight = isDirectedRight ? true : false;
 			megahead.addObject(bullet);
 			flynn.transpex = isDirectedRight ? 1 : -1;
@@ -443,9 +442,9 @@ public class SketcHex extends JPanel implements ActionListener, KeyListener {
 			System.out.println("New Bullet Ammo: " + newammo);
 
 		}
-		if ((e.getKeyCode() == KeyEvent.VK_P) && (paused == false)) {
-			pause();
 		}
+		// pause();
+		// }
 		// if ((e.getKeyCode() == KeyEvent.VK_P) && (paused == true)) {
 		// unpause();
 		// paused = false;

@@ -18,10 +18,10 @@ public abstract class GameObject {
 
 	public void update() {
 		collisionArea.setBounds(x, y, width, height);
-		if (y < (0)) {
-			y = 0;
-		} else if (y > 800 - height) {
-			y = 800 - height;
+		if (y < SketcHex.statisticsrectheight) {
+			y = SketcHex.statisticsrectheight;
+		} else if (y > HordeRunner.height - height) {
+			y = HordeRunner.height - height;
 		}
 		// fix sinking into floor D:
 	}

@@ -30,18 +30,14 @@ public class Horde extends GameObject {
 	public void update() {
 		super.update();
 		if (hex.flynn.x > x) {
-			transpex = 0;
-			transpex += speed;
+			transpex = speed;
 		} else if (hex.flynn.x < x) {
-			transpex = 0;
-			transpex -= speed;
+			transpex = -speed;
 		}
 		if (hex.flynn.y > y) {
-			transpey = 0;
-			transpey += speed;
+			transpey = speed;
 		} else if (hex.flynn.y < y) {
-			transpey = 0;
-			transpey -= speed;
+			transpey = -speed;
 		}
 		x += transpex;
 		y += transpey;
