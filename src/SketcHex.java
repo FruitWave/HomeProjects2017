@@ -50,6 +50,15 @@ public class SketcHex extends JPanel implements ActionListener, KeyListener {
 	static BufferedImage leftbulletImg;
 	static BufferedImage rightbulletImg;
 	static BufferedImage horde1;
+	static BufferedImage horde2;
+	static BufferedImage horde3;
+	static BufferedImage horde4;
+	static BufferedImage horde5;
+	static BufferedImage horde6;
+	static BufferedImage horde7;
+	static BufferedImage horde8;
+	static BufferedImage horde9;
+	static BufferedImage horde10;
 
 	public SketcHex() {
 		gameSpeed = new Timer(1000 / 120, this);
@@ -67,7 +76,17 @@ public class SketcHex extends JPanel implements ActionListener, KeyListener {
 			reaper = ImageIO.read(this.getClass().getResourceAsStream("reaper.png"));
 			menuImg = ImageIO.read(this.getClass().getResourceAsStream("menuImg.jpg"));
 			horde1 = ImageIO.read(this.getClass().getResourceAsStream("Zombie1.png"));
-			// bulletImg =
+			horde2 = ImageIO.read(this.getClass().getResourceAsStream("Zombie2.png"));
+			horde3 = ImageIO.read(this.getClass().getResourceAsStream("Zombie3.png"));
+			horde4 = ImageIO.read(this.getClass().getResourceAsStream("Zombie4.png"));
+			horde5 = ImageIO.read(this.getClass().getResourceAsStream("Zombie5.jpg"));
+			horde6 = ImageIO.read(this.getClass().getResourceAsStream("Zombie6.png"));
+			horde7 = ImageIO.read(this.getClass().getResourceAsStream("Zombie7.png"));
+			horde8 = ImageIO.read(this.getClass().getResourceAsStream("Zombie8.png"));
+			horde9 = ImageIO.read(this.getClass().getResourceAsStream("Zombie9.png"));
+			horde10 = ImageIO.read(this.getClass().getResourceAsStream("Zombie10.png"));
+
+			// buletImg =
 			// ImageIO.read(this.getClass().getResourceAsStream("bullet.png"));
 		} catch (IOException e) {
 			e.printStackTrace();

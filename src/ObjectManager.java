@@ -164,31 +164,31 @@ public class ObjectManager {
 						Horde zombietwo = (Horde) o2;
 						if ((zombie.level == 1) && (zombietwo.level == 1)) {
 							minihorde(zombie, zombietwo);
-							System.out.println("Minihorde!");
+
 						} else if ((zombie.level == 2) && (zombietwo.level == 2)) {
 							horde(zombie, zombietwo);
-							System.out.println("Horde!");
+
 						} else if ((zombie.level == 3) && (zombietwo.level == 3)) {
 							megahorde(zombie, zombietwo);
-							System.out.println("Megahorde!");
+
 						} else if ((zombie.level == 4) && (zombietwo.level == 4)) {
 							ultrahorde(zombie, zombietwo);
-							System.out.println("Ultrahorde!");
+
 						} else if ((zombie.level == 5) && (zombietwo.level == 5)) {
 							hellhorde(zombie, zombietwo);
-							System.out.println("Hellhorde!");
+
 						} else if ((zombie.level == 6) && (zombietwo.level == 6)) {
 							deathhorde(zombie, zombietwo);
-							System.out.println("Deathhorde!");
+
 						} else if ((zombie.level == 7) && (zombietwo.level == 7)) {
 							archhorde(zombie, zombietwo);
-							System.out.println("Archpack!");
+
 						} else if ((zombie.level == 8) && (zombietwo.level == 8)) {
 							darkhorde(zombie, zombietwo);
-							System.out.println("Darkhorde!");
+
 						} else if ((zombie.level == 9) && (zombietwo.level == 9)) {
 							eternalhellicates(zombie, zombietwo);
-							System.out.println("Eternitypack!");
+
 						}
 
 						// *
@@ -262,6 +262,8 @@ public class ObjectManager {
 			russel.deathPotential = 2;
 			russel.speed = 2;
 			addObject(russel);
+			System.out.println("Minihorde!");
+
 			return russel;
 		} else {
 			alreadyExistentDiedInCombination.isAlive = false;
@@ -275,6 +277,7 @@ public class ObjectManager {
 			russel.health = 2;
 			// russel.color = Color.magenta;
 			// *
+			System.out.println("Minihorde!");
 			return russel;
 		}
 
@@ -289,9 +292,11 @@ public class ObjectManager {
 			Horde pack = new Horde(randomxone + 200, randomyone + 200, packwidth, packheight, hex, 3, null);
 			// *
 			pack.level = 3;
+			hordeImageUp(pack);
 			pack.deathPotential = 4;
 			pack.speed = 3;
 			addObject(pack);
+			System.out.println("Horde!");
 			return pack;
 		} else {
 			if (alreadyExistentDiedInCombination != null) {
@@ -307,6 +312,7 @@ public class ObjectManager {
 			pack.health = 3;
 			// pack.color = Color.green;
 			// *
+			System.out.println("Horde!");
 			return pack;
 		}
 
@@ -321,9 +327,11 @@ public class ObjectManager {
 			Horde deathcrowd = new Horde(randomxone + 200, randomyone + 200, packwidth, packheight, hex, 4, null);
 			// *
 			deathcrowd.level = 4;
+			hordeImageUp(deathcrowd);
 			deathcrowd.deathPotential = 8;
 			deathcrowd.speed = 4;
 			addObject(deathcrowd);
+			System.out.println("Megahorde!");
 			return deathcrowd;
 		} else {
 			if (alreadyExistentDiedInCombination != null) {
@@ -339,6 +347,7 @@ public class ObjectManager {
 			deathpack.health = 4;
 			// deathpack.color = Color.blue;
 			// *
+			System.out.println("Megahorde!");
 			return deathpack;
 		}
 
@@ -354,9 +363,11 @@ public class ObjectManager {
 			Horde ultroidcapacitor = new Horde(randomxone + 200, randomyone + 200, packwidth, packheight, hex, 8, null);
 			// *
 			ultroidcapacitor.level = 5;
+			hordeImageUp(ultroidcapacitor);
 			ultroidcapacitor.deathPotential = 16;
 			ultroidcapacitor.speed = 5;
 			addObject(ultroidcapacitor);
+			System.out.println("Ultrahorde!");
 			return ultroidcapacitor;
 		} else {
 
@@ -373,6 +384,7 @@ public class ObjectManager {
 			ultroidcapacitor.health = 8;
 			// ultroidcapacitor.color = Color.red;
 			// *
+			System.out.println("Ultrahorde!");
 			return ultroidcapacitor;
 		}
 
@@ -386,9 +398,11 @@ public class ObjectManager {
 			int randomyone = new Random().nextInt(600 - packheight);
 			Horde hellsGreeters = new Horde(randomxone + 200, randomyone + 200, packwidth, packheight, hex, 16, null);
 			hellsGreeters.level = 6;
+			hordeImageUp(hellsGreeters);
 			hellsGreeters.deathPotential = 32;
 			hellsGreeters.speed = 6;
 			addObject(hellsGreeters);
+			System.out.println("Hellhorde!");
 			return hellsGreeters;
 		} else {
 			if (alreadyExistentDiedInCombination != null) {
@@ -403,6 +417,7 @@ public class ObjectManager {
 			hellsGreeters.deathPotential = 32;
 			hellsGreeters.health = 16;
 			// hellsGreeters.color = Color.yellow;
+			System.out.println("Hellhorde!");
 			return hellsGreeters;
 		}
 
@@ -416,9 +431,11 @@ public class ObjectManager {
 			int randomyone = new Random().nextInt(600 - packheight);
 			Horde hellsGreeters = new Horde(randomxone + 200, randomyone + 200, packwidth, packheight, hex, 32, null);
 			hellsGreeters.level = 7;
+			hordeImageUp(hellsGreeters);
 			hellsGreeters.deathPotential = 64;
 			hellsGreeters.speed = 7;
 			addObject(hellsGreeters);
+			System.out.println("Deathhorde!");
 			return hellsGreeters;
 		} else {
 			if (alreadyExistentDiedInCombination != null) {
@@ -433,6 +450,7 @@ public class ObjectManager {
 			hellsGreeters.deathPotential = 64;
 			hellsGreeters.health = 32;
 			// hellsGreeters.color = dark1;
+			System.out.println("Deathhorde!");
 			return hellsGreeters;
 		}
 		// *
@@ -447,9 +465,11 @@ public class ObjectManager {
 			int randomyone = new Random().nextInt(600 - packheight);
 			Horde archies = new Horde(randomxone + 200, randomyone + 200, packwidth, packheight, hex, 64, null);
 			archies.level = 8;
+			hordeImageUp(archies);
 			archies.deathPotential = 128;
 			archies.speed = 7;
 			addObject(archies);
+			System.out.println("Archpack!");
 			return archies;
 		} else {
 			if (alreadyExistentDiedInCombination != null) {
@@ -464,6 +484,7 @@ public class ObjectManager {
 			archies.deathPotential = 128;
 			archies.health = 64;
 			// archies.color = dark2;
+			System.out.println("Archpack!");
 			return archies;
 		}
 
@@ -478,6 +499,7 @@ public class ObjectManager {
 			int randomyone = new Random().nextInt(600 - packheight);
 			Horde darknyssez = new Horde(randomxone + 200, randomyone + 200, packwidth, packheight, hex, 128, null);
 			darknyssez.level = 9;
+			hordeImageUp(darknyssez);
 			darknyssez.deathPotential = 256;
 			darknyssez.speed = 7;
 			addObject(darknyssez);
@@ -508,9 +530,11 @@ public class ObjectManager {
 			int randomyone = new Random().nextInt(600 - packheight);
 			Horde eternityswhim = new Horde(randomxone + 200, randomyone + 200, packwidth, packheight, hex, 256, null);
 			eternityswhim.level = 10;
+			hordeImageUp(eternityswhim);
 			eternityswhim.deathPotential = 512;
 			eternityswhim.speed = 7;
 			addObject(eternityswhim);
+			System.out.println("Eternitypack!");
 			return eternityswhim;
 		} else {
 			if (alreadyExistentDiedInCombination != null) {
@@ -525,6 +549,7 @@ public class ObjectManager {
 			eternityswhim.deathPotential = 512;
 			eternityswhim.health = 256;
 			// eternityswhim.color = dark4;
+			System.out.println("Eternitypack!");
 			return eternityswhim;
 		}
 		// *
@@ -533,15 +558,38 @@ public class ObjectManager {
 
 	public void hordeImageUp(Horde h) {
 		switch (h.level) {
+		// do this for all 10 cases (9 more). make sure u make the images in sketcHex
+		// first.
 		case 1:
 			h.imagex = SketcHex.horde1;
 			break;
-		// do this for all 10 cases (9 more). make sure u make the images in sketcHex
-		// first.
-
-		// case 2:
-		// h.imagex = SketcHex.horde2;
-		// break;
+		case 2:
+			h.imagex = SketcHex.horde2;
+			break;
+		case 3:
+			h.imagex = SketcHex.horde3;
+			break;
+		case 4:
+			h.imagex = SketcHex.horde4;
+			break;
+		case 5:
+			h.imagex = SketcHex.horde5;
+			break;
+		case 6:
+			h.imagex = SketcHex.horde6;
+			break;
+		case 7:
+			h.imagex = SketcHex.horde7;
+			break;
+		case 8:
+			h.imagex = SketcHex.horde8;
+			break;
+		case 9:
+			h.imagex = SketcHex.horde9;
+			break;
+		case 10:
+			h.imagex = SketcHex.horde10;
+			break;
 		}
 	}
 
