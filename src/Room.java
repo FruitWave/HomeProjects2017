@@ -27,7 +27,22 @@ public class Room extends GameObject implements ActionListener {
 	int randomfunint222 = new Random().nextInt(255);
 	int randomfunint333 = new Random().nextInt(255);
 	Color randomfun3 = new Color(randomfunint111, randomfunint222, randomfunint333);
-
+	int randomfunint1111 = new Random().nextInt(255);
+	int randomfunint2222 = new Random().nextInt(255);
+	int randomfunint3333 = new Random().nextInt(255);
+	Color randomfun4 = new Color(randomfunint1111, randomfunint2222, randomfunint3333);
+	int randomfunint11112 = new Random().nextInt(255);
+	int randomfunint22223 = new Random().nextInt(255);
+	int randomfunint33334 = new Random().nextInt(255);
+	Color randomfun5 = new Color(randomfunint11112, randomfunint22223, randomfunint33334);
+	int randomfunint111123 = new Random().nextInt(255);
+	int randomfunint222234 = new Random().nextInt(255);
+	int randomfunint333345 = new Random().nextInt(255);
+	Color randomfun6 = new Color(randomfunint111123, randomfunint222234, randomfunint333345);
+	int randomfunint1111234 = new Random().nextInt(255);
+	int randomfunint2222345 = new Random().nextInt(255);
+	int randomfunint3333456 = new Random().nextInt(255);
+	Color randomfun7 = new Color(randomfunint1111234, randomfunint2222345, randomfunint3333456);
 	// *
 	Room newNonbaseRoom;
 	int level = 1;
@@ -133,15 +148,15 @@ public class Room extends GameObject implements ActionListener {
 		if (randomNum == 0) {
 			roomColorSetter = randomfun;
 		} else if (randomNum == 1) {
-			roomColorSetter = Color.cyan;
+			roomColorSetter = randomfun7;
 		} else if (randomNum == 2) {
-			roomColorSetter = Color.green;
+			roomColorSetter = randomfun6;
 		} else if (randomNum == 3) {
-			roomColorSetter = Color.pink;
+			roomColorSetter = randomfun5;
 		} else if (randomNum == 4) {
 			roomColorSetter = darkdarkblue;
 		} else if (randomNum == 5) {
-			roomColorSetter = Color.red;
+			roomColorSetter = randomfun4;
 		} else if (randomNum == 6) {
 			roomColorSetter = randomfun2;
 		} else if (randomNum == 7) {
