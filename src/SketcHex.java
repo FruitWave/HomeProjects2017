@@ -59,6 +59,10 @@ public class SketcHex extends JPanel implements ActionListener, KeyListener {
 	static BufferedImage horde8;
 	static BufferedImage horde9;
 	static BufferedImage horde10;
+	String cheatsEnabledBasicAccessPassword = "peppermintHydra";
+	String cheatsEnabledAdminAccessPassword = "SSC";
+	boolean cheatsBasicAccessGranted = false;
+	boolean cheatsAdminAccessGranted = false;
 
 	public SketcHex() {
 		gameSpeed = new Timer(1000 / 120, this);
@@ -323,144 +327,216 @@ public class SketcHex extends JPanel implements ActionListener, KeyListener {
 	@Override
 	public void keyPressed(KeyEvent e) {
 		// System.out.println(e.getKeyCode());
-		if (e.getKeyCode() == KeyEvent.VK_UP) {
-			flynn.transpey = -5;
-		} else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-			flynn.transpex = -5;
-		} else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-			flynn.transpex = 5;
-		} else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
-			flynn.transpey = 5;
+		if (currentState == GAME_STATE) {
+			if (e.getKeyCode() == KeyEvent.VK_UP) {
+				flynn.transpey = -5;
+			} else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
+				flynn.transpex = -5;
+			} else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+				flynn.transpex = 5;
+			} else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
+				flynn.transpey = 5;
+			}
+			if (e.getKeyCode() == KeyEvent.VK_Z) {
+				bulletfired(false);
+			} else if (e.getKeyCode() == KeyEvent.VK_X) {
+				bulletfired(true);
+			}
+			if ((e.getKeyCode() == KeyEvent.VK_M) && (flynn.nukeSuitEquipped == false)) {
+				if (flynn.nukeSuitCount > 0) {
+					flynn.nukeSuitEquipped = true;
+					flynn.nukeSuitCount--;
+				} else {
+					JOptionPane.showMessageDialog(null, "No Nuka-Cola Suit Available For Use");
+				}
+
+			} else if ((e.getKeyCode() == KeyEvent.VK_M) && (flynn.nukeSuitEquipped == true)) {
+				JOptionPane.showMessageDialog(null, "Nuka-Cola Suit Already Equipped");
+			} else if (e.getKeyCode() == KeyEvent.VK_N) {
+				if (flynn.nukeCount > 0) {
+					flynn.nukeCount--;
+					for (int i = 0; i < megahead.objects.size(); i++) {
+						GameObject o1 = megahead.objects.get(i);
+						if (o1 instanceof Horde) {
+							Horde ohOne = (Horde) o1;
+							ohOne.isAlive = false;
+							casualtyCount += ohOne.deathPotential;
+						}
+					}
+					if (flynn.nukeSuitEquipped) {
+
+						flynn.nukeSuitEquipped = false;
+					} else if (flynn.nukeSuitEquipped == false) {
+						flynn.isAlive = false;
+					}
+				} else {
+					if (flynn.nukeSuitEquipped == false) {
+						JOptionPane.showMessageDialog(null,
+								"Out Of Nuclear Warheads. You'll Have To Commit Suicide Some Other Way. Sorry, Chump");
+					} else {
+						JOptionPane.showMessageDialog(null, "Out Of Nuclear Warheads.");
+					}
+
+				}
+			}
 		}
-		if (e.getKeyCode() == KeyEvent.VK_Z) {
-			bulletfired(false);
-		} else if (e.getKeyCode() == KeyEvent.VK_X) {
-			bulletfired(true);
-		} else if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+		if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 			if (currentState == MENU_STATE) {
 				currentState = GAME_STATE;
 			} else if (currentState == GAME_STATE) {
 				currentState = END_STATE;
 			}
 			System.out.println("The current state is " + currentState + ".");
-		} else if ((e.getKeyCode() == KeyEvent.VK_C) && (currentState == MENU_STATE)) {
-			currentState = GAME_STATE;
-			flynn.health = 2000000000;
-			flynn.bulletAmmo = 2000000000;
-			flynn.nukeCount = 2000000000;
-			flynn.nukeSuitCount = 2000000000;
-			System.out.println("The current state is " + currentState + ".");
-		} else if (e.getKeyCode() == KeyEvent.VK_PERIOD) {
-			if (flynn.transpex < 0) {
-				flynn.transpex -= 50;
-			} else if (flynn.transpex > 0) {
-				flynn.transpex += 50;
+		}
+		if (((!cheatsBasicAccessGranted) && (!cheatsAdminAccessGranted)) && ((e.getKeyCode() == KeyEvent.VK_C)
+				|| (e.getKeyCode() == KeyEvent.VK_PERIOD) || (e.getKeyCode() == KeyEvent.VK_S)
+				|| (e.getKeyCode() == KeyEvent.VK_COMMA) || (e.getKeyCode() == KeyEvent.VK_K)
+				|| (e.getKeyCode() == KeyEvent.VK_J) || (e.getKeyCode() == KeyEvent.VK_L))) {
+			JOptionPane.showMessageDialog(null,
+					"Cheat Code Access is NOT granted. This cheat code is not available until you enter your Cheats Enabled Mode password, which you can enter in the menu screen by pressing P.");
+		}
+		if ((cheatsBasicAccessGranted) || (cheatsAdminAccessGranted)) {
+			if ((e.getKeyCode() == KeyEvent.VK_C) && (currentState == MENU_STATE)) {
+				currentState = GAME_STATE;
+				flynn.health = 2000000000;
+				flynn.bulletAmmo = 2000000000;
+				flynn.nukeCount = 2000000000;
+				flynn.nukeSuitCount = 2000000000;
+				System.out.println("The current state is " + currentState + ".");
+			} else if (e.getKeyCode() == KeyEvent.VK_PERIOD) {
+				if (flynn.transpex < 0) {
+					flynn.transpex -= 50;
+				} else if (flynn.transpex > 0) {
+					flynn.transpex += 50;
+				}
+				if (flynn.transpey < 0) {
+					flynn.transpey -= 50;
+				} else if (flynn.transpey > 0) {
+					flynn.transpey += 50;
+				}
+			} else if (e.getKeyCode() == KeyEvent.VK_S) {
+				String hordelevel = JOptionPane.showInputDialog(
+						"What level horde do you want to spawn? Use the number keys, or the numpad. Press a number 1, 9, or any one inbetween. One is the lowest level, and nine is the highest.");
+				String hordesize = JOptionPane
+						.showInputDialog("How many shall this new Horde compose? Use the number keys, or the numpad.");
+				int type1to9sketchex = Integer.parseInt(hordelevel);
+				int numberToSpawnsketchex = Integer.parseInt(hordesize);
+				megahead.spawnHorde(type1to9sketchex, numberToSpawnsketchex);
+			} else if (e.getKeyCode() == KeyEvent.VK_COMMA) {
+				flynn.health += 50000;
+				flynn.bulletAmmo += 50000;
 			}
-			if (flynn.transpey < 0) {
-				flynn.transpey -= 50;
-			} else if (flynn.transpey > 0) {
-				flynn.transpey += 50;
-			}
-		} else if (e.getKeyCode() == KeyEvent.VK_S) {
-			String hordelevel = JOptionPane.showInputDialog(
-					"What level horde do you want to spawn? Use the number keys, or the numpad. Press a number 1, 9, or any one inbetween. One is the lowest level, and nine is the highest.");
-			String hordesize = JOptionPane
-					.showInputDialog("How many shall this new Horde compose? Use the number keys, or the numpad.");
-			int type1to9sketchex = Integer.parseInt(hordelevel);
-			int numberToSpawnsketchex = Integer.parseInt(hordesize);
-			megahead.spawnHorde(type1to9sketchex, numberToSpawnsketchex);
-		} else if (e.getKeyCode() == KeyEvent.VK_N) {
-			if (flynn.nukeCount > 0) {
-				flynn.nukeCount--;
-				for (int i = 0; i < megahead.objects.size(); i++) {
-					GameObject o1 = megahead.objects.get(i);
-					if (o1 instanceof Horde) {
-						Horde ohOne = (Horde) o1;
-						ohOne.isAlive = false;
-						casualtyCount += ohOne.deathPotential;
+			if ((e.getKeyCode() == KeyEvent.VK_K) && (currentState == GAME_STATE)) {
+				String healthpane = JOptionPane.showInputDialog("Cheat Code Activated! Enter Flynn's desired health!");
+				int newhealth = Integer.parseInt(healthpane);
+				flynn.health = newhealth;
+				System.out.println("New Health: " + newhealth);
+			} else if ((e.getKeyCode() == KeyEvent.VK_J) && (currentState == GAME_STATE)) {
+				String bulletpane = JOptionPane
+						.showInputDialog("Cheat Code Activated! Enter Flynn's desired bullet ammo stock!");
+				int newammo = Integer.parseInt(bulletpane);
+				flynn.bulletAmmo = newammo;
+				System.out.println("New Bullet Ammo: " + newammo);
+
+			} else if ((e.getKeyCode() == KeyEvent.VK_L) && (currentState == GAME_STATE)) {
+				String lcheats = JOptionPane.showInputDialog("Type 1 to show level. Type 2 to show item locations.");
+				if (lcheats.equals("1")) {
+					System.out.println("Level: " + onScreenRoom.levelShower());
+				} else if (lcheats.equals("2")) {
+					int numberOfItems = 0;
+					System.out.println("Spawned Item Locations:");
+					for (int i = 0; i < megahead.objects.size(); i++) {
+						GameObject o1 = megahead.objects.get(i);
+						if (o1 instanceof SpawningItem) {
+							SpawningItem s = (SpawningItem) o1;
+							numberOfItems++;
+							System.out.println("Item " + numberOfItems + ": TYPE: " + s.typeparameter + " X: " + s.x
+									+ " Y: " + s.y);
+						}
 					}
 				}
-				if (flynn.nukeSuitEquipped) {
-
-					flynn.nukeSuitEquipped = false;
-				} else if (flynn.nukeSuitEquipped == false) {
-					flynn.isAlive = false;
-				}
-			} else {
-				if (flynn.nukeSuitEquipped == false) {
-					JOptionPane.showMessageDialog(null,
-							"Out Of Nuclear Warheads. You'll Have To Commit Suicide Some Other Way. Sorry, Chump");
-				} else {
-					JOptionPane.showMessageDialog(null, "Out Of Nuclear Warheads.");
-				}
-
 			}
-		} else if (e.getKeyCode() == KeyEvent.VK_COMMA) {
-			flynn.health += 50000;
-			flynn.bulletAmmo += 50000;
-		} else if ((e.getKeyCode() == KeyEvent.VK_I) && (currentState == MENU_STATE)) {
-			String wat = JOptionPane.showInputDialog(
+		}
+		if ((e.getKeyCode() == KeyEvent.VK_I) && (currentState == MENU_STATE)) {
+			String directory = JOptionPane.showInputDialog(
 					"For BASIC PLAYING KNOWLEDGE, press 1. For CONTROLS, press 2. For CHEATS, press 3.");
-			if (wat.equals("1")) {
+			int dirNum = Integer.parseInt(directory);
+			switch (dirNum) {
+			case 1:
 				JOptionPane.showMessageDialog(null,
 						"To Go Into next room, simply run into the wall. One may move rooms horizontally, but not vertically. "
-								+ "Basic statistics such as health, bullet ammunition, and your kill count are displayed on the top of the screen.");
-			}
-			JOptionPane.showMessageDialog(null,
-					"BASIC KNOWLEDGE: To Go Into next room, simply run into the wall. One may move rooms horizontally, but not vertically. CONTROLS: Arrow Keys To Move. CHEATS: Come up to me and whisper into my ear, 'You would not believe your  eyes\n"
-							+ "If ten million fireflies\n" + "Lit up the world as I fell asleep\n" + "\n"
-							+ "'Cause they fill the open air\n" + "And leave teardrops everywhere\n"
-							+ "You'd think me rude but I would just stand and stare\n" + "\n"
-							+ "I'd like to make myself believe that planet earth turns slowly\n"
-							+ "It's hard to say that I'd rather stay awake when I'm asleep\n"
-							+ "'Cause everything is never as it seems\n" + "\n" + "'Cause I'd get a thousand hugs\n"
-							+ "From ten thousand lightning bugs\n" + "As they tried to teach me how to dance\n" + "\n"
-							+ "A foxtrot above my head\n" + "A sock hop beneath my bed\n"
-							+ "A disco ball is just hanging by a thread (thread, thread)\n" + "\n"
-							+ "I'd like to make myself believe that planet earth turns slowly\n"
-							+ "It's hard to say that I'd rather stay awake when I'm asleep\n"
-							+ "'Cause everything is never as it seems (when I fall asleep)\n" + "\n"
-							+ "Leave my door open just a crack\n" + "Please take me away from here\n"
-							+ "'Cause I feel like such an insomniac\n" + "Please take me away from here\n"
-							+ "Why do I tire of counting sheep\n" + "Please take me away from here\n"
-							+ "When I'm far too tired to fall asleep\n" + "\n" + "To ten million fireflies\n"
-							+ "I'm weird cause I hate goodbyes\n"
-							+ "I got misty eyes as they said farewell (said farewell)\n" + "\n"
-							+ "But I'll know where several are\n" + "If my dreams get real bizarre\n"
-							+ "'Cause I saved a few and I keep them in a jar (jar, jar)\n" + "\n"
-							+ "I'd like to make myself believe that planet earth turns slowly\n"
-							+ "It's hard to say that I'd rather stay awake when I'm asleep\n"
-							+ "'Cause everything is never as it seems (when I fall asleep)\n" + "\n"
-							+ "I'd like to make myself believe that planet earth turns slowly\n"
-							+ "It's hard to say that I'd rather stay awake when I'm asleep\n"
-							+ "'Cause everything is never as it seems (when I fall asleep)'. If you do this, I may consider lending you a cheat code or two. ");
+								+ "Basic statistics such as health, bullet ammunition, and your kill count are displayed on the top of the screen. Always arm a Nuka-Cola suit before detonating a nuclear bomb, or you will die.");
+				break;
+			case 2:
+				JOptionPane.showMessageDialog(null,
+						"Use the arrow keys to move. Fire bullets by pressing Z or X. Arm a Nuka-Cola suit by pressing M. Detonate a nuclear bomb by pressing N. For the Cheats Enabled Mode password, close this window and press I, then 3.");
+				break;
+			case 3:
+				JOptionPane.showMessageDialog(null, "For the Cheats Enabled Mode password,  " + "\n"
+						+ "Come up to me and whisper into my ear," + "\n" + "\n" + "'You would not believe your  eyes"
+						+ "\n" + "If ten million fireflies\n" + "Lit up the world as I fell asleep\n" + "\n"
+						+ "'Cause they fill the open air\n" + "And leave teardrops everywhere\n"
+						+ "You'd think me rude but I would just stand and stare\n" + "\n"
+						+ "I'd like to make myself believe that planet earth turns slowly\n"
+						+ "It's hard to say that I'd rather stay awake when I'm asleep\n"
+						+ "'Cause everything is never as it seems\n" + "\n" + "'Cause I'd get a thousand hugs\n"
+						+ "From ten thousand lightning bugs\n" + "As they tried to teach me how to dance\n" + "\n"
+						+ "A foxtrot above my head\n" + "A sock hop beneath my bed\n"
+						+ "A disco ball is just hanging by a thread (thread, thread)\n" + "\n"
+						+ "I'd like to make myself believe that planet earth turns slowly\n"
+						+ "It's hard to say that I'd rather stay awake when I'm asleep\n"
+						+ "'Cause everything is never as it seems (when I fall asleep)\n" + "\n"
+						+ "Leave my door open just a crack\n" + "Please take me away from here\n"
+						+ "'Cause I feel like such an insomniac\n" + "Please take me away from here\n"
+						+ "Why do I tire of counting sheep\n" + "Please take me away from here\n"
+						+ "When I'm far too tired to fall asleep\n" + "\n" + "To ten million fireflies\n"
+						+ "I'm weird cause I hate goodbyes\n"
+						+ "I got misty eyes as they said farewell (said farewell)\n" + "\n"
+						+ "But I'll know where several are\n" + "If my dreams get real bizarre\n"
+						+ "'Cause I saved a few and I keep them in a jar (jar, jar)\n" + "\n"
+						+ "I'd like to make myself believe that planet earth turns slowly\n"
+						+ "It's hard to say that I'd rather stay awake when I'm asleep\n"
+						+ "'Cause everything is never as it seems (when I fall asleep)\n" + "\n"
+						+ "I'd like to make myself believe that planet earth turns slowly\n"
+						+ "It's hard to say that I'd rather stay awake when I'm asleep\n"
+						+ "'Cause everything is never as it seems (when I fall asleep)'. \n If you do this, I may consider lending you a cheat code or two. Also, the Cheats Enabled Mode password is peppermintHydra. Press P (for 'Cheat Portal') when on the menu screen to activate it--just follow the instructions.");
+				break;
 
+			default:
+				JOptionPane.showMessageDialog(null, "Invalid Key Entered. No Information Available.");
+				break;
+			}
+			// if (directory.equals("1")) {
+			// JOptionPane.showMessageDialog(null,
+			// "To Go Into next room, simply run into the wall. One may move rooms
+			// horizontally, but not vertically. "
+			// + "Basic statistics such as health, bullet ammunition, and your kill count
+			// are displayed on the top of the screen.");
+			// }
+
+		} else if ((e.getKeyCode() == KeyEvent.VK_P) && (currentState == MENU_STATE)) {
+			String password = JOptionPane.showInputDialog("Howdy there, Admin! If you're Annalise, welcome to my game. "
+					+ "\n"
+					+ "It's complicated, but I suggest ye run this through in basic immortal mode first--meaning,"
+					+ "\n" + "don't use cheats the first time, just using ridiculously high health, ammo, et cetera."
+					+ "\n" + " If you choose to do so, quit out of this pane and press C. The Admin password is 'SSC'."
+					+ " It's just quick and memorable. Otherwise," + "\n"
+					+ "continue by entering the Cheats Enabled Mode password you have been given.");
+			if (password.equalsIgnoreCase(cheatsEnabledBasicAccessPassword)) {
+				cheatsBasicAccessGranted = true;
+				JOptionPane.showMessageDialog(null, "Cheats Enabled Mode is on!");
+			}
+			if (password.equalsIgnoreCase(cheatsEnabledAdminAccessPassword)) {
+				cheatsAdminAccessGranted = true;
+				JOptionPane.showMessageDialog(null, "Cheats Enabled Mode is on!");
+			}
 		}
-		if (e.getKeyCode() == KeyEvent.VK_BACK_SPACE) {
+		if (e.getKeyCode() == KeyEvent.VK_BACK_SPACE)
+
+		{
 			fullRestart();
 		}
-		if (e.getKeyCode() == KeyEvent.VK_M) {
-			if (flynn.nukeSuitCount > 0) {
-				flynn.nukeSuitEquipped = true;
-				flynn.nukeSuitCount--;
-			} else {
-				JOptionPane.showMessageDialog(null, "No Nuka-Cola Suit Available For Use");
-			}
 
-		}
-		if ((e.getKeyCode() == KeyEvent.VK_K) && (currentState == GAME_STATE)) {
-			String healthpane = JOptionPane.showInputDialog("Cheat Code Activated! Enter Flynn's desired health!");
-			int newhealth = Integer.parseInt(healthpane);
-			flynn.health = newhealth;
-			System.out.println("New Health: " + newhealth);
-		} else if ((e.getKeyCode() == KeyEvent.VK_J) && (currentState == GAME_STATE)) {
-			String bulletpane = JOptionPane
-					.showInputDialog("Cheat Code Activated! Enter Flynn's desired bullet ammo stock!");
-			int newammo = Integer.parseInt(bulletpane);
-			flynn.bulletAmmo = newammo;
-			System.out.println("New Bullet Ammo: " + newammo);
-
-		}
 		// if ((e.getKeyCode() == KeyEvent.VK_P) && (paused == false)) {
 		// pause();
 		// }
@@ -469,24 +545,6 @@ public class SketcHex extends JPanel implements ActionListener, KeyListener {
 		// paused = false;
 		// }
 		// for some reason unpause doesnt work (haven't looked into it yet)
-		if ((e.getKeyCode() == KeyEvent.VK_L) && (currentState == GAME_STATE)) {
-			String lcheats = JOptionPane.showInputDialog("Type 1 to show level. Type 2 to show item locations.");
-			if (lcheats.equals("1")) {
-				System.out.println("Level: " + onScreenRoom.levelShower());
-			} else if (lcheats.equals("2")) {
-				int numberOfItems = 0;
-				System.out.println("Spawned Item Locations:");
-				for (int i = 0; i < megahead.objects.size(); i++) {
-					GameObject o1 = megahead.objects.get(i);
-					if (o1 instanceof SpawningItem) {
-						SpawningItem s = (SpawningItem) o1;
-						numberOfItems++;
-						System.out.println(
-								"Item " + numberOfItems + ": TYPE: " + s.typeparameter + " X: " + s.x + " Y: " + s.y);
-					}
-				}
-			}
-		}
 	}
 
 	private void fullRestart() {
@@ -506,6 +564,8 @@ public class SketcHex extends JPanel implements ActionListener, KeyListener {
 		flynn.isAlive = true;
 		paused = false;
 		flynnroomnumber = 0;
+		cheatsBasicAccessGranted = false;
+		cheatsAdminAccessGranted = false;
 		startGame();
 	}
 
