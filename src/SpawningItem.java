@@ -89,12 +89,23 @@ public class SpawningItem extends GameObject {
 			colortype = Color.red;
 		}
 
+		if (colortype == bcolor) {
+			quantummarshmallowcake.drawImage(SketcHex.bpGun, x, y, width, height, null);
+		} else if (colortype == hcolor) {
+			quantummarshmallowcake.drawImage(SketcHex.healthpackimg, x, y, width, height, null);
+		} else if (colortype == ncolor) {
+			quantummarshmallowcake.drawImage(SketcHex.nukeimg, x, y, width, height, null);
+		} else if (colortype == scolor) {
+			quantummarshmallowcake.drawImage(SketcHex.nukacola, x, y, width, height, null);
+		} else {
+			quantummarshmallowcake.drawImage(SketcHex.notFound, x, y, width, height, null);
+		}
 		// *
 		// System.out.println("Colortype: " + colortype);
-		quantummarshmallowcake.setColor(colortype);
+		// quantummarshmallowcake.setColor(colortype);
 
 		// *
-		quantummarshmallowcake.fillRect(x, y, width, height);
+		// quantummarshmallowcake.fillRect(x, y, width, height);
 		// System.out.println("stats: " + x + " " + y + " " + width + " " +
 		// height);
 	}

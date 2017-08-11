@@ -59,6 +59,11 @@ public class SketcHex extends JPanel implements ActionListener, KeyListener {
 	static BufferedImage horde8;
 	static BufferedImage horde9;
 	static BufferedImage horde10;
+	static BufferedImage nukacola;
+	static BufferedImage bpGun;
+	static BufferedImage healthpackimg;
+	static BufferedImage notFound;
+	static BufferedImage nukeimg;
 	String cheatsEnabledBasicAccessPassword = "peppermintHydra";
 	String cheatsEnabledAdminAccessPassword = "SSC";
 	boolean cheatsBasicAccessGranted = false;
@@ -88,7 +93,11 @@ public class SketcHex extends JPanel implements ActionListener, KeyListener {
 			horde7 = ImageIO.read(this.getClass().getResourceAsStream("Zombie7.png"));
 			horde8 = ImageIO.read(this.getClass().getResourceAsStream("Zombie8.png"));
 			horde9 = ImageIO.read(this.getClass().getResourceAsStream("Zombie9.png"));
-			horde10 = ImageIO.read(this.getClass().getResourceAsStream("Zombie10.png"));
+			nukacola = ImageIO.read(this.getClass().getResourceAsStream("nuka-cola.png"));
+			bpGun = ImageIO.read(this.getClass().getResourceAsStream("bpGun.png"));
+			healthpackimg = ImageIO.read(this.getClass().getResourceAsStream("healthpack.png"));
+			notFound = ImageIO.read(this.getClass().getResourceAsStream("Not-found.jpg"));
+			nukeimg = ImageIO.read(this.getClass().getResourceAsStream("atomicbomb.png"));
 
 			// buletImg =
 			// ImageIO.read(this.getClass().getResourceAsStream("bullet.png"));
@@ -464,8 +473,23 @@ public class SketcHex extends JPanel implements ActionListener, KeyListener {
 			switch (dirNum) {
 			case 1:
 				JOptionPane.showMessageDialog(null,
-						"To Go Into next room, simply run into the wall. One may move rooms horizontally, but not vertically. "
-								+ "Basic statistics such as health, bullet ammunition, and your kill count are displayed on the top of the screen. Always arm a Nuka-Cola suit before detonating a nuclear bomb, or you will die.");
+						"The HORDE (Horde Of Really Deadly Enemies) is composed of little horde. " + "\n"
+								+ "Avoid the Horde, and even little, individual horde, at all costs!! However, " + "\n"
+								+ "when two horde of the same level touch each other, they combine. Horde of the same level look the same."
+								+ "\n"
+								+ "When horde combine, the resulting HORDE is generally bigger, and always much more powerful."
+								+ "\n"
+								+ "If a horde, or a HORDE, touch(es) you, it will deal its damage to you and bounce off to your left or right."
+								+ "\n" + "\n" + "Moving Rooms" + "\n"
+								+ "To Go Into next room, simply run into the wall. One may move rooms horizontally, but not vertically. "
+								+ "\n"
+								+ "Basic statistics such as health, bullet ammunition, and your kill count are displayed on the top of the screen. "
+								+ "\n"
+								+ "Always arm a Nuka-Cola suit before detonating a nuclear bomb, or you will die."
+								+ "\n" + "\n" + "Items" + "\n"
+								+ "Items can be found randomly spawning in rooms. Nuka-Cola bottles will grant you one Nuka-Cola suit each, while Nuclear Bombs will grant you one nuke each. "
+								+ "\n" + "Healthpacks, which are red with a white cross, will grant you 15 health each."
+								+ "\n" + "Bulletpacks, black gun sillouhettes, will grant you 10 bullets each.");
 				break;
 			case 2:
 				JOptionPane.showMessageDialog(null,

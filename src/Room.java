@@ -76,8 +76,8 @@ public class Room extends GameObject implements ActionListener {
 	@SuppressWarnings("static-access")
 	private void roomSwitch(boolean isRight) {
 		Room r00m;
-		int itemwidth = 20;
-		int itemheight = 20;
+		int itemwidth = 80;
+		int itemheight = 80;
 		int randomItemX = new Random().nextInt(HordeRunner.width - (HordeRunner.width / 5) - itemwidth);
 		int randomItemY = new Random().nextInt(HordeRunner.height - (HordeRunner.height / 5) - itemheight);
 		hex.flynn.x += isRight ? -HordeRunner.width + 5 : HordeRunner.width - 5;
