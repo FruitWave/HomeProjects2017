@@ -44,7 +44,6 @@ public class Room extends GameObject implements ActionListener {
 	int randomfunint3333456 = new Random().nextInt(255);
 	Color randomfun7 = new Color(randomfunint1111234, randomfunint2222345, randomfunint3333456);
 	// *
-	Room newNonbaseRoom;
 	int level = 1;
 	int levelupper = 0;
 	int leveluppermultiplier = 1;
@@ -97,11 +96,12 @@ public class Room extends GameObject implements ActionListener {
 				System.out.println("Level Upper is: " + levelupper);
 				if (apoint != bpoint) {
 					// System.out.println(
-					// "Level Up! (Now Level " + level + "!). Health is up too! Now at " +
+					// "Level Up! (Now Level " + level + "!). Health is up too!
+					// Now at " +
 					// hex.flynn.health + ".");
 					hex.flynn.health += (5 * level);
-					JOptionPane.showMessageDialog(null,
-							"Level Up! (Now Level " + level + "!). Health is up too! Now at " + hex.flynn.health + ".");
+					JOptionPane.showMessageDialog(null, "Level Up! (Now Level " + level
+							+ "!). Health and bullets are up too! Now at " + hex.flynn.health + ".");
 
 				}
 				levelupper = 0;

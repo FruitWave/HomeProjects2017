@@ -68,6 +68,8 @@ public class SketcHex extends JPanel implements ActionListener, KeyListener {
 	String cheatsEnabledAdminAccessPassword = "SSC";
 	boolean cheatsBasicAccessGranted = false;
 	boolean cheatsAdminAccessGranted = false;
+	Song main_title;
+	static BufferedImage fireplace;
 
 	public SketcHex() {
 		gameSpeed = new Timer(1000 / 120, this);
@@ -92,13 +94,14 @@ public class SketcHex extends JPanel implements ActionListener, KeyListener {
 			horde6 = ImageIO.read(this.getClass().getResourceAsStream("Zombie6.png"));
 			horde7 = ImageIO.read(this.getClass().getResourceAsStream("Zombie7.png"));
 			horde8 = ImageIO.read(this.getClass().getResourceAsStream("Zombie8.png"));
+			horde10 = ImageIO.read(this.getClass().getResourceAsStream("Zombie10.png"));
 			horde9 = ImageIO.read(this.getClass().getResourceAsStream("Zombie9.png"));
 			nukacola = ImageIO.read(this.getClass().getResourceAsStream("nuka-cola.png"));
 			bpGun = ImageIO.read(this.getClass().getResourceAsStream("bpGun.png"));
 			healthpackimg = ImageIO.read(this.getClass().getResourceAsStream("healthpack.png"));
 			notFound = ImageIO.read(this.getClass().getResourceAsStream("Not-found.jpg"));
 			nukeimg = ImageIO.read(this.getClass().getResourceAsStream("atomicbomb.png"));
-
+			fireplace = ImageIO.read(this.getClass().getResourceAsStream("fireplace.png"));
 			// buletImg =
 			// ImageIO.read(this.getClass().getResourceAsStream("bullet.png"));
 		} catch (IOException e) {
@@ -213,6 +216,8 @@ public class SketcHex extends JPanel implements ActionListener, KeyListener {
 
 	}
 
+	// arcade picture makedr link
+	// https://www.imgonline.com.ua/eng/8bit-picture.php
 	public void startGame() {
 		gameSpeed.start();
 		roomcolors = new ArrayList<Color>();
@@ -230,6 +235,8 @@ public class SketcHex extends JPanel implements ActionListener, KeyListener {
 		roomColor = onScreenRoom.color;
 		// *
 		roomSwitcherGuard.start();
+		main_title = new Song("main_title.mp3");
+		main_title.play();
 
 	}
 
@@ -265,6 +272,7 @@ public class SketcHex extends JPanel implements ActionListener, KeyListener {
 	}
 
 	void drawMenuState(Graphics a) {
+
 		int startscript = HordeRunner.width / 3;
 		// a.setColor(Color.blue);
 		a.drawImage(menuImg, 0, 0, null);
@@ -287,6 +295,8 @@ public class SketcHex extends JPanel implements ActionListener, KeyListener {
 		b.setColor(onScreenRoom.color);
 		// *
 		b.fillRect(0, 0, 1000, 1000);
+		// THE ROOMS DRAW HERE
+
 		megahead.draw(b);
 		showStatistics(b);
 
@@ -532,18 +542,23 @@ public class SketcHex extends JPanel implements ActionListener, KeyListener {
 			}
 			// if (directory.equals("1")) {
 			// JOptionPane.showMessageDialog(null,
-			// "To Go Into next room, simply run into the wall. One may move rooms
+			// "To Go Into next room, simply run into the wall. One may move
+			// rooms
 			// horizontally, but not vertically. "
-			// + "Basic statistics such as health, bullet ammunition, and your kill count
+			// + "Basic statistics such as health, bullet ammunition, and your
+			// kill count
 			// are displayed on the top of the screen.");
 			// }
 
 		} else if ((e.getKeyCode() == KeyEvent.VK_P) && (currentState == MENU_STATE)) {
-			String password = JOptionPane.showInputDialog("Howdy there, Admin! If you're Annalise, welcome to my game. "
+			String password = JOptionPane.showInputDialog("Howdy there, Admin!"
+					// + "If you're Annalise, welcome to my game. "
 					+ "\n"
-					+ "It's complicated, but I suggest ye run this through in basic immortal mode first--meaning,"
-					+ "\n" + "don't use cheats the first time, just using ridiculously high health, ammo, et cetera."
-					+ "\n" + " If you choose to do so, quit out of this pane and press C. The Admin password is 'SSC'."
+					// + "It's complicated, but /*
+					+ "I suggest ye run this through in basic immortal mode first--meaning," + "\n"
+					+ "don't use cheats the first time, per say, just use ridiculously high health, ammo, et cetera."
+					+ "\n" + " If you choose to do so, quit out of this pane and press C. "
+					// + "The Admin password is 'SSC'."
 					+ " It's just quick and memorable. Otherwise," + "\n"
 					+ "continue by entering the Cheats Enabled Mode password you have been given.");
 			if (password.equalsIgnoreCase(cheatsEnabledBasicAccessPassword)) {

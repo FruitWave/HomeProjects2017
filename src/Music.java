@@ -1,14 +1,19 @@
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.net.URL;
 
-class Song {
- 
+import javazoom.jl.player.advanced.AdvancedPlayer;
+import javazoom.jl.player.advanced.PlaybackEvent;
+import javazoom.jl.player.advanced.PlaybackListener;
+
+class Song extends PlaybackListener {
+
 	private int duration;
 	private String songAddress;
 	private AdvancedPlayer mp3Player;
 	private InputStream songStream;
- 
+
 	/**
 	 * Songs can be constructed from files on your computer or Internet
 	 * addresses.
@@ -22,7 +27,11 @@ class Song {
 	public Song(String songAddress) {
 		this.songAddress = songAddress;
 	}
- 
+	public void playbackFinished(PlaybackEvent evt){
+		play();
+		
+	}
+
 	public void play() {
 		loadFile();
 		if (songStream != null) {
@@ -31,16 +40,16 @@ class Song {
 		} else
 			System.err.println("Unable to load file: " + songAddress);
 	}
- 
+
 	public void setDuration(int seconds) {
 		this.duration = seconds * 100;
 	}
- 
+
 	public void stop() {
 		if (mp3Player != null)
 			mp3Player.close();
 	}
- 
+
 	private void startSong() {
 		Thread t = new Thread() {
 			public void run() {
@@ -55,21 +64,21 @@ class Song {
 		};
 		t.start();
 	}
- 
+
 	private void loadPlayer() {
 		try {
 			this.mp3Player = new AdvancedPlayer(songStream);
 		} catch (Exception e) {
 		}
 	}
- 
+
 	private void loadFile() {
 		if (songAddress.contains("http"))
 			this.songStream = loadStreamFromInternet();
 		else
 			this.songStream = loadStreamFromComputer();
 	}
- 
+
 	private InputStream loadStreamFromInternet() {
 		try {
 			return new URL(songAddress).openStream();
@@ -77,7 +86,7 @@ class Song {
 			return null;
 		}
 	}
- 
+
 	private InputStream loadStreamFromComputer() {
 		try {
 			return new FileInputStream(songAddress);
