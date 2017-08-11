@@ -49,6 +49,8 @@ public class Room extends GameObject implements ActionListener {
 	int leveluppermultiplier = 1;
 	int leveluppermultipliercounter = 0;
 	SpawningItem xenomorpheousSubstance;
+	int roomImage = 10;
+	Color aCopy;
 
 	public Room(int x, int y, int width, int height, int roomsroomnumber, boolean unspawnedhorde, Color color,
 			SketcHex hex) {
@@ -83,7 +85,7 @@ public class Room extends GameObject implements ActionListener {
 		hex.flynnroomnumber += isRight ? 1 : -1;
 		hex.roomcolors.add(color);
 		Color a = randomColor();
-
+		aCopy = a;
 		// *
 		hex.roomColor = a;
 
@@ -123,8 +125,8 @@ public class Room extends GameObject implements ActionListener {
 			} else if (xenomorpheousSubstance.x > HordeRunner.width - (HordeRunner.width / 5)) {
 				xenomorpheousSubstance.x -= HordeRunner.width - (HordeRunner.width / 5);
 			}
-			if (xenomorpheousSubstance.y < HordeRunner.width / 5) {
-				xenomorpheousSubstance.y += HordeRunner.width / 5;
+			if (xenomorpheousSubstance.y < HordeRunner.height / 5) {
+				xenomorpheousSubstance.y += HordeRunner.height / 5;
 			} else if (xenomorpheousSubstance.y > HordeRunner.height - (HordeRunner.height / 5)) {
 				xenomorpheousSubstance.y -= HordeRunner.height - (HordeRunner.height / 5);
 			}
@@ -170,7 +172,13 @@ public class Room extends GameObject implements ActionListener {
 
 	// *
 	public void draw(Graphics g) {
-
+		g.setColor(hex.onScreenRoom.color);
+		// *
+		g.fillRect(0, 0, 1000, 1000);
+		if (aCopy.equals(randomfun)) {
+			g.drawImage(SketcHex.fireplace, 0, 0, HordeRunner.width, HordeRunner.height, null);
+		}
+		// THE ROOMS DRAW HERE
 	}
 
 	@Override

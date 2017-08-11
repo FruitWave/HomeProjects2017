@@ -100,10 +100,9 @@ public class SketcHex extends JPanel implements ActionListener, KeyListener {
 			bpGun = ImageIO.read(this.getClass().getResourceAsStream("bpGun.png"));
 			healthpackimg = ImageIO.read(this.getClass().getResourceAsStream("healthpack.png"));
 			notFound = ImageIO.read(this.getClass().getResourceAsStream("Not-found.jpg"));
+
 			nukeimg = ImageIO.read(this.getClass().getResourceAsStream("atomicbomb.png"));
-			fireplace = ImageIO.read(this.getClass().getResourceAsStream("fireplace.png"));
-			// buletImg =
-			// ImageIO.read(this.getClass().getResourceAsStream("bullet.png"));
+			fireplace = ImageIO.read(this.getClass().getResourceAsStream("fireplaceYTrim.png"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -292,10 +291,6 @@ public class SketcHex extends JPanel implements ActionListener, KeyListener {
 	}
 
 	void drawGameState(Graphics b) {
-		b.setColor(onScreenRoom.color);
-		// *
-		b.fillRect(0, 0, 1000, 1000);
-		// THE ROOMS DRAW HERE
 
 		megahead.draw(b);
 		showStatistics(b);
