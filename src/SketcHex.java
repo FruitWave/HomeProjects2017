@@ -64,12 +64,16 @@ public class SketcHex extends JPanel implements ActionListener, KeyListener {
 	static BufferedImage healthpackimg;
 	static BufferedImage notFound;
 	static BufferedImage nukeimg;
+	static BufferedImage an8bitfire;
+	static BufferedImage an8bitquake;
+	static BufferedImage an8bitvault;
+	static BufferedImage fireplace;
+	static BufferedImage run;
 	String cheatsEnabledBasicAccessPassword = "peppermintHydra";
 	String cheatsEnabledAdminAccessPassword = "SSC";
 	boolean cheatsBasicAccessGranted = false;
 	boolean cheatsAdminAccessGranted = false;
 	Song main_title;
-	static BufferedImage fireplace;
 
 	public SketcHex() {
 		gameSpeed = new Timer(1000 / 120, this);
@@ -100,8 +104,12 @@ public class SketcHex extends JPanel implements ActionListener, KeyListener {
 			bpGun = ImageIO.read(this.getClass().getResourceAsStream("bpGun.png"));
 			healthpackimg = ImageIO.read(this.getClass().getResourceAsStream("healthpack.png"));
 			notFound = ImageIO.read(this.getClass().getResourceAsStream("Not-found.jpg"));
-
 			nukeimg = ImageIO.read(this.getClass().getResourceAsStream("atomicbomb.png"));
+			an8bitfire = ImageIO.read(this.getClass().getResourceAsStream("8bitfire.png"));
+			an8bitquake = ImageIO.read(this.getClass().getResourceAsStream("8bitquake.png"));
+			an8bitvault = ImageIO.read(this.getClass().getResourceAsStream("8bitvault.png"));
+			run = ImageIO.read(this.getClass().getResourceAsStream("run.png"));
+
 			fireplace = ImageIO.read(this.getClass().getResourceAsStream("fireplaceYTrim.png"));
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -221,7 +229,7 @@ public class SketcHex extends JPanel implements ActionListener, KeyListener {
 		gameSpeed.start();
 		roomcolors = new ArrayList<Color>();
 		// *
-		base = new Room(0, 0, 1000, 1000, 0, true, Color.blue, this);
+		base = new Room(0, 0, 1000, 1000, 0, true, Color.BLUE, this);
 		roomcolors.add(base.color);
 		roomSwitcherGuard = new Timer(1000 / 4, base);
 		megahead = new ObjectManager(this);
@@ -292,7 +300,37 @@ public class SketcHex extends JPanel implements ActionListener, KeyListener {
 
 	void drawGameState(Graphics b) {
 
+		if (onScreenRoom.color == Color.BLUE) {
+			b.drawImage(SketcHex.run, 0, 75, HordeRunner.width, HordeRunner.height, null);
+		} else if (onScreenRoom.color == Color.BLACK) {
+			b.drawImage(SketcHex.fireplace, 0, 75, HordeRunner.width, HordeRunner.height, null);
+		} else if (onScreenRoom.color == Color.CYAN) {
+			b.drawImage(SketcHex.an8bitfire, 0, 75, HordeRunner.width, HordeRunner.height, null);
+		} else if (onScreenRoom.color == Color.GREEN) {
+			b.drawImage(SketcHex.an8bitquake, 0, 75, HordeRunner.width, HordeRunner.height, null);
+		} else if (onScreenRoom.color == Color.MAGENTA) {
+			b.drawImage(SketcHex.an8bitvault, 0, 75, HordeRunner.width, HordeRunner.height, null);
+		} else {
+			if (onScreenRoom.color == Color.WHITE) {
+				b.drawImage(SketcHex.fireplace, 0, 75, HordeRunner.width, HordeRunner.height, null);
+			} else if (onScreenRoom.color == Color.GRAY) {
+				b.drawImage(SketcHex.an8bitfire, 0, 75, HordeRunner.width, HordeRunner.height, null);
+			} else if (onScreenRoom.color == Color.ORANGE) {
+				b.drawImage(SketcHex.an8bitquake, 0, 75, HordeRunner.width, HordeRunner.height, null);
+			} else if (onScreenRoom.color == Color.PINK) {
+				b.drawImage(SketcHex.an8bitvault, 0, 75, HordeRunner.width, HordeRunner.height, null);
+			} else {
+				System.out.println("image showing failed");
+				b.setColor(onScreenRoom.color);
+				b.fillRect(0, 0, 1000, 1000);
+			}
+
+		}
+		// *
+
+		// THE ROOMS DRAW HERE
 		megahead.draw(b);
+
 		showStatistics(b);
 
 	}

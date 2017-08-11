@@ -37,17 +37,17 @@ public class Hecker extends GameObject {
 		// //*
 		// pvd.fillRect(x, y, width, height);
 		if (transpex > 0) {
-			pvd.drawImage(SketcHex.spectreright, x, y, null);
 			imagewidth = SketcHex.spectreright.getWidth();
 			imageheight = SketcHex.spectreright.getHeight();
+			pvd.drawImage(SketcHex.spectreright, x, y, imagewidth, imageheight, null);
 		} else if (transpex < 0) {
-			pvd.drawImage(SketcHex.spectreleft, x, y, null);
 			imagewidth = SketcHex.spectreleft.getWidth();
 			imageheight = SketcHex.spectreleft.getHeight();
+			pvd.drawImage(SketcHex.spectreleft, x, y, imagewidth, imageheight, null);
 		} else {
-			pvd.drawImage(SketcHex.reaper, x, y, null);
 			imagewidth = SketcHex.reaper.getWidth();
 			imageheight = SketcHex.reaper.getHeight();
+			pvd.drawImage(SketcHex.reaper, x, y, imagewidth, imageheight, null);
 		}
 	}
 }

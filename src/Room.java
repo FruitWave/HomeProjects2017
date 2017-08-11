@@ -14,35 +14,41 @@ public class Room extends GameObject implements ActionListener {
 	int roomsroomnumber;
 	boolean unspawnedhorde;
 	Color color;
-	Color darkdarkblue = new Color(0, 0, 50);
-	int randomfunint1 = new Random().nextInt(255);
-	int randomfunint2 = new Random().nextInt(255);
-	int randomfunint3 = new Random().nextInt(255);
-	Color randomfun = new Color(randomfunint1, randomfunint2, randomfunint3);
-	int randomfunint11 = new Random().nextInt(255);
-	int randomfunint22 = new Random().nextInt(255);
-	int randomfunint33 = new Random().nextInt(255);
-	Color randomfun2 = new Color(randomfunint11, randomfunint22, randomfunint33);
-	int randomfunint111 = new Random().nextInt(255);
-	int randomfunint222 = new Random().nextInt(255);
-	int randomfunint333 = new Random().nextInt(255);
-	Color randomfun3 = new Color(randomfunint111, randomfunint222, randomfunint333);
-	int randomfunint1111 = new Random().nextInt(255);
-	int randomfunint2222 = new Random().nextInt(255);
-	int randomfunint3333 = new Random().nextInt(255);
-	Color randomfun4 = new Color(randomfunint1111, randomfunint2222, randomfunint3333);
-	int randomfunint11112 = new Random().nextInt(255);
-	int randomfunint22223 = new Random().nextInt(255);
-	int randomfunint33334 = new Random().nextInt(255);
-	Color randomfun5 = new Color(randomfunint11112, randomfunint22223, randomfunint33334);
-	int randomfunint111123 = new Random().nextInt(255);
-	int randomfunint222234 = new Random().nextInt(255);
-	int randomfunint333345 = new Random().nextInt(255);
-	Color randomfun6 = new Color(randomfunint111123, randomfunint222234, randomfunint333345);
-	int randomfunint1111234 = new Random().nextInt(255);
-	int randomfunint2222345 = new Random().nextInt(255);
-	int randomfunint3333456 = new Random().nextInt(255);
-	Color randomfun7 = new Color(randomfunint1111234, randomfunint2222345, randomfunint3333456);
+	// Color darkdarkblue = new Color(0, 0, 50);
+	// int randomfunint1 = new Random().nextInt(255);
+	// int randomfunint2 = new Random().nextInt(255);
+	// int randomfunint3 = new Random().nextInt(255);
+	// Color randomfun = new Color(randomfunint1, randomfunint2, randomfunint3);
+	// int randomfunint11 = new Random().nextInt(255);
+	// int randomfunint22 = new Random().nextInt(255);
+	// int randomfunint33 = new Random().nextInt(255);
+	// Color randomfun2 = new Color(randomfunint11, randomfunint22, randomfunint33);
+	// int randomfunint111 = new Random().nextInt(255);
+	// int randomfunint222 = new Random().nextInt(255);
+	// int randomfunint333 = new Random().nextInt(255);
+	// Color randomfun3 = new Color(randomfunint111, randomfunint222,
+	// randomfunint333);
+	// int randomfunint1111 = new Random().nextInt(255);
+	// int randomfunint2222 = new Random().nextInt(255);
+	// int randomfunint3333 = new Random().nextInt(255);
+	// Color randomfun4 = new Color(randomfunint1111, randomfunint2222,
+	// randomfunint3333);
+	// int randomfunint11112 = new Random().nextInt(255);
+	// int randomfunint22223 = new Random().nextInt(255);
+	// int randomfunint33334 = new Random().nextInt(255);
+	// Color randomfun5 = new Color(randomfunint11112, randomfunint22223,
+	// randomfunint33334);
+	// int randomfunint111123 = new Random().nextInt(255);
+	// int randomfunint222234 = new Random().nextInt(255);
+	// int randomfunint333345 = new Random().nextInt(255);
+	// Color randomfun6 = new Color(randomfunint111123, randomfunint222234,
+	// randomfunint333345);
+	// int randomfunint1111234 = new Random().nextInt(255);
+	// int randomfunint2222345 = new Random().nextInt(255);
+	// int randomfunint3333456 = new Random().nextInt(255);
+	// Color randomfun7 = new Color(randomfunint1111234, randomfunint2222345,
+	// randomfunint3333456);
+	// Color a;
 	// *
 	int level = 1;
 	int levelupper = 0;
@@ -50,7 +56,16 @@ public class Room extends GameObject implements ActionListener {
 	int leveluppermultipliercounter = 0;
 	SpawningItem xenomorpheousSubstance;
 	int roomImage = 10;
-	Color aCopy;
+	public static Color randomColorDuplicate;
+	public int outsideRandNum = 20;
+	Color rfduplicate;
+	Color rf2duplicate;
+	Color rf3duplicate;
+	Color rf4duplicate;
+	Color rf5duplicate;
+	Color rf6duplicate;
+	Color rf7duplicate;
+	Color ddbduplicate;
 
 	public Room(int x, int y, int width, int height, int roomsroomnumber, boolean unspawnedhorde, Color color,
 			SketcHex hex) {
@@ -85,7 +100,6 @@ public class Room extends GameObject implements ActionListener {
 		hex.flynnroomnumber += isRight ? 1 : -1;
 		hex.roomcolors.add(color);
 		Color a = randomColor();
-		aCopy = a;
 		// *
 		hex.roomColor = a;
 
@@ -147,38 +161,58 @@ public class Room extends GameObject implements ActionListener {
 	public Color randomColor() {
 		Color roomColorSetter;
 		int randomNum = new Random().nextInt(8);
-		if (randomNum == 0) {
-			roomColorSetter = randomfun;
-		} else if (randomNum == 1) {
-			roomColorSetter = randomfun7;
-		} else if (randomNum == 2) {
-			roomColorSetter = randomfun6;
-		} else if (randomNum == 3) {
-			roomColorSetter = randomfun5;
-		} else if (randomNum == 4) {
-			roomColorSetter = darkdarkblue;
-		} else if (randomNum == 5) {
-			roomColorSetter = randomfun4;
-		} else if (randomNum == 6) {
-			roomColorSetter = randomfun2;
-		} else if (randomNum == 7) {
-			roomColorSetter = randomfun3;
-		} else {
+		outsideRandNum = randomNum;
+		switch (randomNum) {
+		case 0:
+			roomColorSetter = Color.BLACK;
+			// roomColorSetter = randomfun;
+			// rfduplicate = randomfun;
+			break;
+		case 1:
+			roomColorSetter = Color.CYAN;
+			// roomColorSetter = randomfun7;
+			// rf7duplicate = randomfun7;
+			break;
+		case 2:
+			roomColorSetter = Color.GREEN;
+			// roomColorSetter = randomfun6;
+			// rf6duplicate = randomfun6;
+			break;
+		case 3:
+			roomColorSetter = Color.MAGENTA;
+			// roomColorSetter = randomfun5;
+			// rf5duplicate = randomfun5;
+			break;
+		case 4:
+			roomColorSetter = Color.WHITE;
+			// roomColorSetter = darkdarkblue;
+			// ddbduplicate = darkdarkblue;
+			break;
+		case 5:
+			roomColorSetter = Color.GRAY;
+			// roomColorSetter = randomfun4;
+			// rf4duplicate = randomfun4;
+			break;
+		case 6:
+			roomColorSetter = Color.ORANGE;
+			// roomColorSetter = randomfun2;
+			// rf2duplicate = randomfun2;
+			break;
+		case 7:
+			roomColorSetter = Color.PINK;
+			// roomColorSetter = randomfun3;
+			// rf3duplicate = randomfun3;
+			break;
+		default:
 			roomColorSetter = Color.yellow;
-
 		}
+		// randomColorDuplicate = roomColorSetter;
 		return roomColorSetter;
 	}
 
 	// *
 	public void draw(Graphics g) {
-		g.setColor(hex.onScreenRoom.color);
-		// *
-		g.fillRect(0, 0, 1000, 1000);
-		if (aCopy.equals(randomfun)) {
-			g.drawImage(SketcHex.fireplace, 0, 0, HordeRunner.width, HordeRunner.height, null);
-		}
-		// THE ROOMS DRAW HERE
+
 	}
 
 	@Override
