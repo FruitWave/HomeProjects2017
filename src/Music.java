@@ -15,8 +15,7 @@ class Song extends PlaybackListener {
 	private InputStream songStream;
 
 	/**
-	 * Songs can be constructed from files on your computer or Internet
-	 * addresses.
+	 * Songs can be constructed from files on your computer or Internet addresses.
 	 * 
 	 * Examples: <code> 
 	 * 		new Song("everywhere.mp3"); 	//from default package 
@@ -27,9 +26,10 @@ class Song extends PlaybackListener {
 	public Song(String songAddress) {
 		this.songAddress = songAddress;
 	}
-	public void playbackFinished(PlaybackEvent evt){
+
+	public void playbackFinished(PlaybackEvent evt) {
 		play();
-		
+
 	}
 
 	public void play() {

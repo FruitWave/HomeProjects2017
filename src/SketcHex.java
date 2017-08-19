@@ -74,6 +74,9 @@ public class SketcHex extends JPanel implements ActionListener, KeyListener {
 	boolean cheatsBasicAccessGranted = false;
 	boolean cheatsAdminAccessGranted = false;
 	Song main_title;
+	Song game_theme;
+	boolean gamesongPlayed = false;
+	boolean maintitlePlayed = false;
 
 	public SketcHex() {
 		gameSpeed = new Timer(1000 / 120, this);
@@ -244,7 +247,7 @@ public class SketcHex extends JPanel implements ActionListener, KeyListener {
 		roomSwitcherGuard.start();
 		main_title = new Song("main_title.mp3");
 		main_title.play();
-
+		maintitlePlayed = true;
 	}
 
 	public void addRoomColor(Color c) {
@@ -299,7 +302,12 @@ public class SketcHex extends JPanel implements ActionListener, KeyListener {
 	}
 
 	void drawGameState(Graphics b) {
-
+		themeStopper(true);
+		if (gamesongPlayed == false) {
+			game_theme = new Song("game_theme.mp3");
+			game_theme.play();
+			gamesongPlayed = true;
+		}
 		if (onScreenRoom.color == Color.BLUE) {
 			b.drawImage(SketcHex.run, 0, 75, HordeRunner.width, HordeRunner.height, null);
 		} else if (onScreenRoom.color == Color.BLACK) {
@@ -603,9 +611,7 @@ public class SketcHex extends JPanel implements ActionListener, KeyListener {
 				JOptionPane.showMessageDialog(null, "Cheats Enabled Mode is on!");
 			}
 		}
-		if (e.getKeyCode() == KeyEvent.VK_BACK_SPACE)
-
-		{
+		if (e.getKeyCode() == KeyEvent.VK_BACK_SPACE) {
 			fullRestart();
 		}
 
@@ -634,11 +640,21 @@ public class SketcHex extends JPanel implements ActionListener, KeyListener {
 		onScreenRoom.leveluppermultiplier = 1;
 		onScreenRoom.leveluppermultipliercounter = 0;
 		flynn.isAlive = true;
-		paused = false;
+		// paused = false;
 		flynnroomnumber = 0;
 		cheatsBasicAccessGranted = false;
 		cheatsAdminAccessGranted = false;
+		themeStopper(true);
+		themeStopper(false);
+		gamesongPlayed = false;
+		maintitlePlayed = false;
 		startGame();
+	}
+
+	void themeStopper(boolean isMain_Title) {
+		Song theme;
+		theme = isMain_Title ? main_title : game_theme;
+		theme.stop();
 	}
 
 	@Override
