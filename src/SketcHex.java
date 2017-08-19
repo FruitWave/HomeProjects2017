@@ -9,7 +9,6 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
-
 import javax.imageio.ImageIO;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -29,7 +28,8 @@ public class SketcHex extends JPanel implements ActionListener, KeyListener {
 	final int MENU_STATE = 0;
 	final int GAME_STATE = 1;
 	final int END_STATE = 2;
-	static int currentState = 0;
+	final int INSTRUCTIONS_STATE = 4;
+	static int currentState = 4;
 	static int casualtyCount;
 	Hecker flynn;
 	ObjectManager megahead;
@@ -42,7 +42,8 @@ public class SketcHex extends JPanel implements ActionListener, KeyListener {
 	public int flynnroomnumber = 0;
 	static public int statisticsrectwidth = HordeRunner.width;
 	static public int statisticsrectheight = 75;
-	boolean paused = false;
+	// boolean paused = false;
+	boolean infoMsgShown;
 	static BufferedImage spectreright;
 	static BufferedImage spectreleft;
 	static BufferedImage menuImg;
@@ -69,6 +70,7 @@ public class SketcHex extends JPanel implements ActionListener, KeyListener {
 	static BufferedImage an8bitvault;
 	static BufferedImage fireplace;
 	static BufferedImage run;
+	static BufferedImage instructionsimg;
 	String cheatsEnabledBasicAccessPassword = "peppermintHydra";
 	String cheatsEnabledAdminAccessPassword = "SSC";
 	boolean cheatsBasicAccessGranted = false;
@@ -112,6 +114,7 @@ public class SketcHex extends JPanel implements ActionListener, KeyListener {
 			an8bitquake = ImageIO.read(this.getClass().getResourceAsStream("8bitquake.png"));
 			an8bitvault = ImageIO.read(this.getClass().getResourceAsStream("8bitvault.png"));
 			run = ImageIO.read(this.getClass().getResourceAsStream("run.png"));
+			instructionsimg = ImageIO.read(this.getClass().getResourceAsStream("instructions_img.jpg"));
 
 			fireplace = ImageIO.read(this.getClass().getResourceAsStream("fireplaceYTrim.png"));
 		} catch (IOException e) {
@@ -281,6 +284,10 @@ public class SketcHex extends JPanel implements ActionListener, KeyListener {
 
 	}
 
+	void updateInfoState() {
+
+	}
+
 	void drawMenuState(Graphics a) {
 
 		int startscript = HordeRunner.width / 3;
@@ -358,6 +365,60 @@ public class SketcHex extends JPanel implements ActionListener, KeyListener {
 		// *
 	}
 
+	void drawInfoState(Graphics i) {
+		i.setColor(Color.white);
+		i.drawImage(instructionsimg, 0, 0, HordeRunner.width, HordeRunner.height, null);
+		i.setFont(funFont);
+
+		if (infoMsgShown == false) {
+			infoMsgShown = true;
+			JOptionPane.showMessageDialog(null,
+					"The HORDE (Horde Of Really Deadly Enemies) is composed of little zombies. " + "\n"
+							+ "Avoid the Horde, and even little, individual zombies, at all costs!! However, " + "\n"
+							+ "when two zombies of the same level touch each other, they combine. Zombies of the same level look the same."
+							+ "\n"
+							+ "When zombies combine, the resulting HORDE is generally bigger, and always much more powerful."
+							+ "\n"
+							+ "If a zombies, or a HORDE, touch(es) you, it will deal its damage to you and bounce off to your left or right."
+							+ "\n" + "\n" + "Moving Rooms" + "\n"
+							+ "To Go Into next room, simply run into the wall. One may move rooms  horizontally, but not vertically. "
+							+ "\n"
+							+ "Basic statistics such as health, bullet ammunition, and your kill count are displayed on the top of the screen. "
+							+ "\n" + "Always arm a Nuka-Cola suit before detonating a nuclear bomb, or you will die."
+							+ "\n" + "\n" + "Items" + "\n"
+							+ "Items can be found randomly spawning in rooms. Nuka-Cola bottles will grant you one Nuka-Cola suit each, while Nuclear Bombs will grant you one nuke each. "
+							+ "\n" + "Healthpacks, which are red with a white cross, will grant you 15 health each."
+							+ "\n" + "Bulletpacks, black gun sillouhettes, will grant you 10 bullets each." + "\n"
+							+ "\n" + "Controls" + "\n" + "Use the arrow keys to move. " + "\n"
+							+ "Fire bullets by pressing Z (to fire left) or X (to fire right). " + "\n"
+							+ "Arm a Nuka-Cola suit by pressing M." + "\n" + "Detonate a nuclear bomb by pressing N.");
+			System.out.println(infoMsgShown);
+			System.out.println("shown");
+			/*
+			 * infoMsgShown = true; JOptionPane.showMessageDialog(null,
+			 * "IS this spamming. Yes, but why."); System.out.println(infoMsgShown);
+			 * System.out.println("shown");
+			 */
+
+			// if this code is run (below), the if statement will never end. this is because
+			// nothing is stopping the jop.showMessage command (according to Blythe). also
+			// the "show" statement will repeat endlessly.
+			/*
+			 * //infoMsgShown = true; System.out.println("shown");
+			 * JOptionPane.showMessageDialog(null, "IS this spamming. Yes, but why.");
+			 * System.out.println(infoMsgShown);
+			 *
+			 */
+		}
+
+		i.setFont(funFont);
+		i.setColor(Color.WHITE);
+		// i.drawString("Press delete to start", HordeRunner.width / 5,
+		// HordeRunner.height * (7 / 10));
+
+		// *
+	}
+
 	public void pause() {
 		gameSpeed.stop();
 		roomSwitcherGuard.stop();
@@ -369,7 +430,11 @@ public class SketcHex extends JPanel implements ActionListener, KeyListener {
 	}
 
 	public void paintComponent(Graphics delta) {
-		if (currentState == MENU_STATE) {
+		System.out.println("paintcomponent has been reached");
+		if (currentState == INSTRUCTIONS_STATE) {
+			drawInfoState(delta);
+			System.out.println("info state reached");
+		} else if (currentState == MENU_STATE) {
 			drawMenuState(delta);
 		} else if (currentState == GAME_STATE) {
 			drawGameState(delta);
@@ -517,91 +582,80 @@ public class SketcHex extends JPanel implements ActionListener, KeyListener {
 				}
 			}
 		}
-		if ((e.getKeyCode() == KeyEvent.VK_I) && (currentState == MENU_STATE)) {
-			String directory = JOptionPane.showInputDialog(
-					"For BASIC PLAYING KNOWLEDGE, press 1. For CONTROLS, press 2. For CHEATS, press 3.");
-			int dirNum = Integer.parseInt(directory);
-			switch (dirNum) {
-			case 1:
-				JOptionPane.showMessageDialog(null,
-						"The HORDE (Horde Of Really Deadly Enemies) is composed of little horde. " + "\n"
-								+ "Avoid the Horde, and even little, individual horde, at all costs!! However, " + "\n"
-								+ "when two horde of the same level touch each other, they combine. Horde of the same level look the same."
-								+ "\n"
-								+ "When horde combine, the resulting HORDE is generally bigger, and always much more powerful."
-								+ "\n"
-								+ "If a horde, or a HORDE, touch(es) you, it will deal its damage to you and bounce off to your left or right."
-								+ "\n" + "\n" + "Moving Rooms" + "\n"
-								+ "To Go Into next room, simply run into the wall. One may move rooms horizontally, but not vertically. "
-								+ "\n"
-								+ "Basic statistics such as health, bullet ammunition, and your kill count are displayed on the top of the screen. "
-								+ "\n"
-								+ "Always arm a Nuka-Cola suit before detonating a nuclear bomb, or you will die."
-								+ "\n" + "\n" + "Items" + "\n"
-								+ "Items can be found randomly spawning in rooms. Nuka-Cola bottles will grant you one Nuka-Cola suit each, while Nuclear Bombs will grant you one nuke each. "
-								+ "\n" + "Healthpacks, which are red with a white cross, will grant you 15 health each."
-								+ "\n" + "Bulletpacks, black gun sillouhettes, will grant you 10 bullets each.");
-				break;
-			case 2:
-				JOptionPane.showMessageDialog(null,
-						"Use the arrow keys to move. Fire bullets by pressing Z or X. Arm a Nuka-Cola suit by pressing M. Detonate a nuclear bomb by pressing N. For the Cheats Enabled Mode password, close this window and press I, then 3.");
-				break;
-			case 3:
-				JOptionPane.showMessageDialog(null, "For the Cheats Enabled Mode password,  " + "\n"
-						+ "Come up to me and whisper into my ear," + "\n" + "\n" + "'You would not believe your  eyes"
-						+ "\n" + "If ten million fireflies\n" + "Lit up the world as I fell asleep\n" + "\n"
-						+ "'Cause they fill the open air\n" + "And leave teardrops everywhere\n"
-						+ "You'd think me rude but I would just stand and stare\n" + "\n"
-						+ "I'd like to make myself believe that planet earth turns slowly\n"
-						+ "It's hard to say that I'd rather stay awake when I'm asleep\n"
-						+ "'Cause everything is never as it seems\n" + "\n" + "'Cause I'd get a thousand hugs\n"
-						+ "From ten thousand lightning bugs\n" + "As they tried to teach me how to dance\n" + "\n"
-						+ "A foxtrot above my head\n" + "A sock hop beneath my bed\n"
-						+ "A disco ball is just hanging by a thread (thread, thread)\n" + "\n"
-						+ "I'd like to make myself believe that planet earth turns slowly\n"
-						+ "It's hard to say that I'd rather stay awake when I'm asleep\n"
-						+ "'Cause everything is never as it seems (when I fall asleep)\n" + "\n"
-						+ "Leave my door open just a crack\n" + "Please take me away from here\n"
-						+ "'Cause I feel like such an insomniac\n" + "Please take me away from here\n"
-						+ "Why do I tire of counting sheep\n" + "Please take me away from here\n"
-						+ "When I'm far too tired to fall asleep\n" + "\n" + "To ten million fireflies\n"
-						+ "I'm weird cause I hate goodbyes\n"
-						+ "I got misty eyes as they said farewell (said farewell)\n" + "\n"
-						+ "But I'll know where several are\n" + "If my dreams get real bizarre\n"
-						+ "'Cause I saved a few and I keep them in a jar (jar, jar)\n" + "\n"
-						+ "I'd like to make myself believe that planet earth turns slowly\n"
-						+ "It's hard to say that I'd rather stay awake when I'm asleep\n"
-						+ "'Cause everything is never as it seems (when I fall asleep)\n" + "\n"
-						+ "I'd like to make myself believe that planet earth turns slowly\n"
-						+ "It's hard to say that I'd rather stay awake when I'm asleep\n"
-						+ "'Cause everything is never as it seems (when I fall asleep)'. \n If you do this, I may consider lending you a cheat code or two. Also, the Cheats Enabled Mode password is peppermintHydra. Press P (for 'Cheat Portal') when on the menu screen to activate it--just follow the instructions.");
-				break;
-
-			default:
-				JOptionPane.showMessageDialog(null, "Invalid Key Entered. No Information Available.");
-				break;
-			}
-			// if (directory.equals("1")) {
-			// JOptionPane.showMessageDialog(null,
-			// "To Go Into next room, simply run into the wall. One may move
-			// rooms
-			// horizontally, but not vertically. "
-			// + "Basic statistics such as health, bullet ammunition, and your
-			// kill count
-			// are displayed on the top of the screen.");
-			// }
-
+		if (e.getKeyCode() == KeyEvent.VK_I) {
+			currentState = INSTRUCTIONS_STATE;
+			/*
+			 * String directory = JOptionPane.showInputDialog(
+			 * "For BASIC PLAYING KNOWLEDGE, press 1. For CONTROLS, press 2. For CHEATS, press 3."
+			 * ); int dirNum = Integer.parseInt(directory); switch (dirNum) { case 1:
+			 * JOptionPane.showMessageDialog(null,
+			 * "The HORDE (Horde Of Really Deadly Enemies) is composed of little horde. " +
+			 * "\n" +
+			 * "Avoid the Horde, and even little, individual horde, at all costs!! However, "
+			 * + "\n" +
+			 * "when two horde of the same level touch each other, they combine. Horde of the same level look the same."
+			 * + "\n" +
+			 * "When horde combine, the resulting HORDE is generally bigger, and always much more powerful."
+			 * + "\n" +
+			 * "If a horde, or a HORDE, touch(es) you, it will deal its damage to you and bounce off to your left or right."
+			 * + "\n" + "\n" + "Moving Rooms" + "\n" +
+			 * "To Go Into next room, simply run into the wall. One may move rooms horizontally, but not vertically. "
+			 * + "\n" +
+			 * "Basic statistics such as health, bullet ammunition, and your kill count are displayed on the top of the screen. "
+			 * + "\n" +
+			 * "Always arm a Nuka-Cola suit before detonating a nuclear bomb, or you will die."
+			 * + "\n" + "\n" + "Items" + "\n" +
+			 * "Items can be found randomly spawning in rooms. Nuka-Cola bottles will grant you one Nuka-Cola suit each, while Nuclear Bombs will grant you one nuke each. "
+			 * + "\n" +
+			 * "Healthpacks, which are red with a white cross, will grant you 15 health each."
+			 * + "\n" +
+			 * "Bulletpacks, black gun sillouhettes, will grant you 10 bullets each.");
+			 * break; case 2: JOptionPane.showMessageDialog(null,
+			 * "Use the arrow keys to move. Fire bullets by pressing Z or X. Arm a Nuka-Cola suit by pressing M. Detonate a nuclear bomb by pressing N. For the Cheats Enabled Mode password, close this window and press I, then 3."
+			 * ); break; case 3: JOptionPane.showMessageDialog(null,
+			 * "For the Cheats Enabled Mode password,  " + "\n" +
+			 * "Come up to me and whisper into my ear," + "\n" + "\n" +
+			 * "'You would not believe your  eyes" + "\n" + "If ten million fireflies\n" +
+			 * "Lit up the world as I fell asleep\n" + "\n" +
+			 * "'Cause they fill the open air\n" + "And leave teardrops everywhere\n" +
+			 * "You'd think me rude but I would just stand and stare\n" + "\n" +
+			 * "I'd like to make myself believe that planet earth turns slowly\n" +
+			 * "It's hard to say that I'd rather stay awake when I'm asleep\n" +
+			 * "'Cause everything is never as it seems\n" + "\n" +
+			 * "'Cause I'd get a thousand hugs\n" + "From ten thousand lightning bugs\n" +
+			 * "As they tried to teach me how to dance\n" + "\n" +
+			 * "A foxtrot above my head\n" + "A sock hop beneath my bed\n" +
+			 * "A disco ball is just hanging by a thread (thread, thread)\n" + "\n" +
+			 * "I'd like to make myself believe that planet earth turns slowly\n" +
+			 * "It's hard to say that I'd rather stay awake when I'm asleep\n" +
+			 * "'Cause everything is never as it seems (when I fall asleep)\n" + "\n" +
+			 * "Leave my door open just a crack\n" + "Please take me away from here\n" +
+			 * "'Cause I feel like such an insomniac\n" + "Please take me away from here\n"
+			 * + "Why do I tire of counting sheep\n" + "Please take me away from here\n" +
+			 * "When I'm far too tired to fall asleep\n" + "\n" +
+			 * "To ten million fireflies\n" + "I'm weird cause I hate goodbyes\n" +
+			 * "I got misty eyes as they said farewell (said farewell)\n" + "\n" +
+			 * "But I'll know where several are\n" + "If my dreams get real bizarre\n" +
+			 * "'Cause I saved a few and I keep them in a jar (jar, jar)\n" + "\n" +
+			 * "I'd like to make myself believe that planet earth turns slowly\n" +
+			 * "It's hard to say that I'd rather stay awake when I'm asleep\n" +
+			 * "'Cause everything is never as it seems (when I fall asleep)\n" + "\n" +
+			 * "I'd like to make myself believe that planet earth turns slowly\n" +
+			 * "It's hard to say that I'd rather stay awake when I'm asleep\n" +
+			 * "'Cause everything is never as it seems (when I fall asleep)'. \n If you do this, I may consider lending you a cheat code or two. Also, the Cheats Enabled Mode password is peppermintHydra. Press P (for 'Cheat Portal') when on the menu screen to activate it--just follow the instructions."
+			 * ); break;
+			 * 
+			 * default: JOptionPane.showMessageDialog(null,
+			 * "Invalid Key Entered. No Information Available."); break; } // if
+			 * (directory.equals("1")) { // JOptionPane.showMessageDialog(null, // "To Go
+			 * Into next room, simply run into the wall. One may move // rooms //
+			 * horizontally, but not vertically. " // + "Basic statistics such as health,
+			 * bullet ammunition, and your // kill count // are displayed on the top of the
+			 * screen."); // }
+			 */
 		} else if ((e.getKeyCode() == KeyEvent.VK_P) && (currentState == MENU_STATE)) {
-			String password = JOptionPane.showInputDialog("Howdy there, Admin!"
-					// + "If you're Annalise, welcome to my game. "
-					+ "\n"
-					// + "It's complicated, but /*
-					+ "I suggest ye run this through in basic immortal mode first--meaning," + "\n"
-					+ "don't use cheats the first time, per say, just use ridiculously high health, ammo, et cetera."
-					+ "\n" + " If you choose to do so, quit out of this pane and press C. "
-					// + "The Admin password is 'SSC'."
-					+ " It's just quick and memorable. Otherwise," + "\n"
-					+ "continue by entering the Cheats Enabled Mode password you have been given.");
+			String password = JOptionPane.showInputDialog("Password Pane opened."
+					+ "continue by entering the Cheats Enabled Mode password you have been given. Then press enter, or ckick 'okay'.");
 			if (password.equalsIgnoreCase(cheatsEnabledBasicAccessPassword)) {
 				cheatsBasicAccessGranted = true;
 				JOptionPane.showMessageDialog(null, "Cheats Enabled Mode is on!");
@@ -644,10 +698,16 @@ public class SketcHex extends JPanel implements ActionListener, KeyListener {
 		flynnroomnumber = 0;
 		cheatsBasicAccessGranted = false;
 		cheatsAdminAccessGranted = false;
-		themeStopper(true);
-		themeStopper(false);
+		if (gamesongPlayed == false) {
+			themeStopper(true);
+		}
+		if (gamesongPlayed) {
+			themeStopper(false);
+		}
+
 		gamesongPlayed = false;
 		maintitlePlayed = false;
+		infoMsgShown = false;
 		startGame();
 	}
 
@@ -674,6 +734,8 @@ public class SketcHex extends JPanel implements ActionListener, KeyListener {
 			updateGameState();
 		} else if (currentState == END_STATE) {
 			updateEndState();
+		} else if (currentState == INSTRUCTIONS_STATE) {
+			updateInfoState();
 		}
 
 		// if (e.getSource() == fireTimer) {
