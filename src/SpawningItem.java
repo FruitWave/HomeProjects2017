@@ -19,9 +19,9 @@ public class SpawningItem extends GameObject {
 	Color scolor = Color.WHITE;
 
 	// *
-	SketcHex hex;
+	Sketch hex;
 
-	public SpawningItem(int x, int y, int width, int height, String typeparameto, SketcHex hex) {
+	public SpawningItem(int x, int y, int width, int height, String typeparameto, Sketch hex) {
 		super(x, y, width, height);
 		typeparameter = typeparameto;
 		this.hex = hex;
@@ -90,15 +90,15 @@ public class SpawningItem extends GameObject {
 		}
 
 		if (colortype == bcolor) {
-			quantummarshmallowcake.drawImage(SketcHex.bpGun, x, y, width, height, null);
+			quantummarshmallowcake.drawImage(Sketch.bpGun, x, y, width, height, null);
 		} else if (colortype == hcolor) {
-			quantummarshmallowcake.drawImage(SketcHex.healthpackimg, x, y, width, height, null);
+			quantummarshmallowcake.drawImage(Sketch.healthpackimg, x, y, width, height, null);
 		} else if (colortype == ncolor) {
-			quantummarshmallowcake.drawImage(SketcHex.nukeimg, x, y, width, height, null);
+			quantummarshmallowcake.drawImage(Sketch.nukeimg, x, y, width, height, null);
 		} else if (colortype == scolor) {
-			quantummarshmallowcake.drawImage(SketcHex.nukacola, x, y, width, height, null);
+			quantummarshmallowcake.drawImage(Sketch.nukacola, x, y, width, height, null);
 		} else {
-			quantummarshmallowcake.drawImage(SketcHex.notFound, x, y, width, height, null);
+			quantummarshmallowcake.drawImage(Sketch.notFound, x, y, width, height, null);
 		}
 		// *
 		// System.out.println("Colortype: " + colortype);

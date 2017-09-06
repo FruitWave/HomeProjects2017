@@ -1,7 +1,7 @@
 import java.awt.Color;
 import java.awt.Graphics;
 
-public class Hecker extends GameObject {
+public class Flynn extends GameObject {
 	int transpex;
 	int transpey;
 	int health;
@@ -12,12 +12,12 @@ public class Hecker extends GameObject {
 	int imageheight;
 	static int bulletAmmo;
 
-	public Hecker(int x, int y, int width, int height, int flynnhealth, int bulletAmmo) {
+	public Flynn(int x, int y, int width, int height, int flynnhealth, int bulletAmmo) {
 		super(x, y, width, height);
 		transpex = 5;
 		transpex = 5;
 		health = flynnhealth;
-		Hecker.bulletAmmo = bulletAmmo;
+		Flynn.bulletAmmo = bulletAmmo;
 	}
 
 	public void update() {
@@ -37,17 +37,17 @@ public class Hecker extends GameObject {
 		// //*
 		// pvd.fillRect(x, y, width, height);
 		if (transpex > 0) {
-			imagewidth = SketcHex.spectreright.getWidth();
-			imageheight = SketcHex.spectreright.getHeight();
-			pvd.drawImage(SketcHex.spectreright, x, y, imagewidth, imageheight, null);
+			imagewidth = Sketch.spectreright.getWidth();
+			imageheight = Sketch.spectreright.getHeight();
+			pvd.drawImage(Sketch.spectreright, x, y, imagewidth, imageheight, null);
 		} else if (transpex < 0) {
-			imagewidth = SketcHex.spectreleft.getWidth();
-			imageheight = SketcHex.spectreleft.getHeight();
-			pvd.drawImage(SketcHex.spectreleft, x, y, imagewidth, imageheight, null);
+			imagewidth = Sketch.spectreleft.getWidth();
+			imageheight = Sketch.spectreleft.getHeight();
+			pvd.drawImage(Sketch.spectreleft, x, y, imagewidth, imageheight, null);
 		} else {
-			imagewidth = SketcHex.reaper.getWidth();
-			imageheight = SketcHex.reaper.getHeight();
-			pvd.drawImage(SketcHex.reaper, x, y, imagewidth, imageheight, null);
+			imagewidth = Sketch.reaper.getWidth();
+			imageheight = Sketch.reaper.getHeight();
+			pvd.drawImage(Sketch.reaper, x, y, imagewidth, imageheight, null);
 		}
 	}
 }

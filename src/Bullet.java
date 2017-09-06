@@ -30,9 +30,9 @@ public class Bullet extends GameObject {
 	public void draw(Graphics pvd) {
 
 		if (flyspeed > 0) {
-			pvd.drawImage(SketcHex.rightbulletImg, x, y, null);
+			pvd.drawImage(Sketch.rightbulletImg, x, y, null);
 		} else if (flyspeed < 0) {
-			pvd.drawImage(SketcHex.leftbulletImg, x, y, null);
+			pvd.drawImage(Sketch.leftbulletImg, x, y, null);
 		}
 
 	}

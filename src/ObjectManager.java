@@ -6,10 +6,12 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Random;
 
+import javax.swing.JOptionPane;
+
 public class ObjectManager {
 	ArrayList<GameObject> objects;
 	ArrayList<Room> rooms;
-	SketcHex hex;
+	Sketch hex;
 	Color dark1 = new Color(100, 50, 50);
 	Color dark2 = new Color(200, 50, 80);
 	Color dark3 = new Color(250, 100, 10);
@@ -25,7 +27,7 @@ public class ObjectManager {
 	int enemySpawnTime = 1;
 	int flynnbulletdamage = 1;
 
-	public ObjectManager(SketcHex hex) {
+	public ObjectManager(Sketch hex) {
 		objects = new ArrayList<GameObject>();
 		rooms = new ArrayList<Room>();
 		this.hex = hex;
@@ -111,14 +113,14 @@ public class ObjectManager {
 						o2.isAlive = false;
 						if (shotHorde.health <= 0) {
 							shotHorde.isAlive = false;
-							SketcHex.casualtyCount += shotHorde.deathPotential;
+							Sketch.casualtyCount += shotHorde.deathPotential;
 
 						}
-					} else if ((o1 instanceof Horde && o2 instanceof Hecker)
-							|| (o2 instanceof Horde && o1 instanceof Hecker)) {
+					} else if ((o1 instanceof Horde && o2 instanceof Flynn)
+							|| (o2 instanceof Horde && o1 instanceof Flynn)) {
 
 						Horde hordie = o1 instanceof Horde ? (Horde) o1 : (Horde) o2;
-						Hecker omflynn = o1 instanceof Hecker ? (Hecker) o1 : (Hecker) o2;
+						Flynn omflynn = o1 instanceof Flynn ? (Flynn) o1 : (Flynn) o2;
 
 						int randomDisplacementNum = new Random().nextInt(2);
 						if (randomDisplacementNum == 0) {
@@ -134,11 +136,11 @@ public class ObjectManager {
 						} else if (hordie.health <= 0) {
 							hordie.isAlive = false;
 						}
-					} else if ((o1 instanceof SpawningItem && o2 instanceof Hecker)
-							|| (o2 instanceof SpawningItem && o1 instanceof Hecker)) {
+					} else if ((o1 instanceof SpawningItem && o2 instanceof Flynn)
+							|| (o2 instanceof SpawningItem && o1 instanceof Flynn)) {
 
 						SpawningItem item = o1 instanceof SpawningItem ? (SpawningItem) o1 : (SpawningItem) o2;
-						Hecker imflynnity = o1 instanceof Hecker ? (Hecker) o1 : (Hecker) o2;
+						Flynn imflynnity = o1 instanceof Flynn ? (Flynn) o1 : (Flynn) o2;
 
 						// System.out.println("Flynn's health is now " +
 						// imflynnity.health + ".");
@@ -205,26 +207,31 @@ public class ObjectManager {
 
 	public void spawnHorde(int type1to9, int numberToSpawn) {
 		for (int i = 0; i < numberToSpawn; i++) {
-			if (type1to9 == 1) {
+			switch (type1to9) {
+			case 1:
 				singlehorde(null);
-			} else if (type1to9 == 2) {
+			case 2:
 				minihorde(null, null);
-			} else if (type1to9 == 3) {
+			case 3:
 				horde(null, null);
-			} else if (type1to9 == 4) {
+			case 4:
 				megahorde(null, null);
-			} else if (type1to9 == 5) {
+			case 5:
 				ultrahorde(null, null);
-			} else if (type1to9 == 6) {
+			case 6:
 				hellhorde(null, null);
-			} else if (type1to9 == 7) {
+			case 7:
 				deathhorde(null, null);
-			} else if (type1to9 == 8) {
+			case 8:
 				archhorde(null, null);
-			} else if (type1to9 == 9) {
+			case 9:
 				darkhorde(null, null);
-			} else if (type1to9 == 10) {
+			case 10:
 				eternalhellicates(null, null);
+
+			default:
+				JOptionPane.showMessageDialog(null, "Horde Spawn Error");
+				break;
 			}
 		}
 	}
@@ -233,13 +240,23 @@ public class ObjectManager {
 		if (alreadyExistent == null) {
 			int dissolventwidth = 30;
 			int dissolventheight = 60;
-			int randomxone = new Random().nextInt(600 - dissolventwidth);
-			int randomyone = new Random().nextInt(600 - dissolventheight);
-			Horde basiclisantratimortis = new Horde(randomxone + 200, randomyone + 200, dissolventwidth,
-					dissolventheight, hex, 1, null);
+			int randomxone = new Random().nextInt(Runner.width - dissolventwidth);
+			int randomyone = new Random().nextInt(Runner.height - dissolventheight);
+			Horde basiclisantratimortis = new Horde(randomxone, randomyone, dissolventwidth, dissolventheight, hex, 1,
+					null);
 			// *
 			hordeImageUp(basiclisantratimortis);
 			addObject(basiclisantratimortis);
+			if (basiclisantratimortis.x < Runner.width / 5) {
+				basiclisantratimortis.x += Runner.width / 5;
+			} else if (basiclisantratimortis.x > Runner.width - (Runner.width / 5)) {
+				basiclisantratimortis.x -= Runner.width / 5;
+			}
+			if (basiclisantratimortis.y < Runner.height / 5) {
+				basiclisantratimortis.y += Runner.height / 5;
+			} else if (basiclisantratimortis.y > Runner.height - (Runner.height / 5)) {
+				basiclisantratimortis.y -= Runner.height / 5;
+			}
 			return basiclisantratimortis;
 		} else {
 			Horde russel = alreadyExistent;
@@ -252,10 +269,9 @@ public class ObjectManager {
 		if (alreadyExistent == null) {
 			int dissolventwidth = 60;
 			int dissolventheight = 120;
-			int randomxone = new Random().nextInt(600 - dissolventwidth);
-			int randomyone = new Random().nextInt(600 - dissolventheight);
-			Horde russel = new Horde(randomxone + 200, randomyone + 200, dissolventwidth, dissolventheight, hex, 2,
-					null);
+			int randomxone = new Random().nextInt(Runner.width - dissolventwidth);
+			int randomyone = new Random().nextInt(Runner.height - dissolventheight);
+			Horde russel = new Horde(randomxone, randomyone, dissolventwidth, dissolventheight, hex, 2, null);
 			russel.level = 2;
 			hordeImageUp(russel);
 			// *
@@ -263,7 +279,16 @@ public class ObjectManager {
 			russel.speed = 2;
 			addObject(russel);
 			System.out.println("Minihorde!");
-
+			if (russel.x < Runner.width / 5) {
+				russel.x += Runner.width / 5;
+			} else if (russel.x > Runner.width - (Runner.width / 5)) {
+				russel.x -= Runner.width / 5;
+			}
+			if (russel.y < Runner.height / 5) {
+				russel.y += Runner.height / 5;
+			} else if (russel.y > Runner.height - (Runner.height / 5)) {
+				russel.y -= Runner.height / 5;
+			}
 			return russel;
 		} else {
 			alreadyExistentDiedInCombination.isAlive = false;
@@ -287,9 +312,9 @@ public class ObjectManager {
 		if (alreadyExistent == null) {
 			int packwidth = 120;
 			int packheight = 240;
-			int randomxone = new Random().nextInt(600 - packwidth);
-			int randomyone = new Random().nextInt(600 - packheight);
-			Horde pack = new Horde(randomxone + 200, randomyone + 200, packwidth, packheight, hex, 3, null);
+			int randomxone = new Random().nextInt(Runner.width - packwidth);
+			int randomyone = new Random().nextInt(Runner.height - packheight);
+			Horde pack = new Horde(randomxone, randomyone, packwidth, packheight, hex, 3, null);
 			// *
 			pack.level = 3;
 			hordeImageUp(pack);
@@ -297,6 +322,16 @@ public class ObjectManager {
 			pack.speed = 3;
 			addObject(pack);
 			System.out.println("Horde!");
+			if (pack.x < Runner.width / 5) {
+				pack.x += Runner.width / 5;
+			} else if (pack.x > Runner.width - (Runner.width / 5)) {
+				pack.x -= Runner.width / 5;
+			}
+			if (pack.y < Runner.height / 5) {
+				pack.y += Runner.height / 5;
+			} else if (pack.y > Runner.height - (Runner.height / 5)) {
+				pack.y -= Runner.height / 5;
+			}
 			return pack;
 		} else {
 			if (alreadyExistentDiedInCombination != null) {
@@ -322,9 +357,9 @@ public class ObjectManager {
 		if (alreadyExistent == null) {
 			int packwidth = 240;
 			int packheight = 480;
-			int randomxone = new Random().nextInt(600 - packwidth);
-			int randomyone = new Random().nextInt(600 - packheight);
-			Horde deathcrowd = new Horde(randomxone + 200, randomyone + 200, packwidth, packheight, hex, 4, null);
+			int randomxone = new Random().nextInt(Runner.width - packwidth);
+			int randomyone = new Random().nextInt(Runner.height - packheight);
+			Horde deathcrowd = new Horde(randomxone, randomyone, packwidth, packheight, hex, 4, null);
 			// *
 			deathcrowd.level = 4;
 			hordeImageUp(deathcrowd);
@@ -332,6 +367,16 @@ public class ObjectManager {
 			deathcrowd.speed = 4;
 			addObject(deathcrowd);
 			System.out.println("Megahorde!");
+			if (deathcrowd.x < Runner.width / 5) {
+				deathcrowd.x += Runner.width / 5;
+			} else if (deathcrowd.x > Runner.width - (Runner.width / 5)) {
+				deathcrowd.x -= Runner.width / 5;
+			}
+			if (deathcrowd.y < Runner.height / 5) {
+				deathcrowd.y += Runner.height / 5;
+			} else if (deathcrowd.y > Runner.height - (Runner.height / 5)) {
+				deathcrowd.y -= Runner.height / 5;
+			}
 			return deathcrowd;
 		} else {
 			if (alreadyExistentDiedInCombination != null) {
@@ -358,9 +403,9 @@ public class ObjectManager {
 
 			int packwidth = 245;
 			int packheight = 485;
-			int randomxone = new Random().nextInt(600 - packwidth);
-			int randomyone = new Random().nextInt(600 - packheight);
-			Horde ultroidcapacitor = new Horde(randomxone + 200, randomyone + 200, packwidth, packheight, hex, 8, null);
+			int randomxone = new Random().nextInt(Runner.width - packwidth);
+			int randomyone = new Random().nextInt(Runner.height - packheight);
+			Horde ultroidcapacitor = new Horde(randomxone, randomyone, packwidth, packheight, hex, 8, null);
 			// *
 			ultroidcapacitor.level = 5;
 			hordeImageUp(ultroidcapacitor);
@@ -368,6 +413,16 @@ public class ObjectManager {
 			ultroidcapacitor.speed = 5;
 			addObject(ultroidcapacitor);
 			System.out.println("Ultrahorde!");
+			if (ultroidcapacitor.x < Runner.width / 5) {
+				ultroidcapacitor.x += Runner.width / 5;
+			} else if (ultroidcapacitor.x > Runner.width - (Runner.width / 5)) {
+				ultroidcapacitor.x -= Runner.width / 5;
+			}
+			if (ultroidcapacitor.y < Runner.height / 5) {
+				ultroidcapacitor.y += Runner.height / 5;
+			} else if (ultroidcapacitor.y > Runner.height - (Runner.height / 5)) {
+				ultroidcapacitor.y -= Runner.height / 5;
+			}
 			return ultroidcapacitor;
 		} else {
 
@@ -394,15 +449,25 @@ public class ObjectManager {
 		if (alreadyExistent == null) {
 			int packwidth = 250;
 			int packheight = 490;
-			int randomxone = new Random().nextInt(600 - packwidth);
-			int randomyone = new Random().nextInt(600 - packheight);
-			Horde hellsGreeters = new Horde(randomxone + 200, randomyone + 200, packwidth, packheight, hex, 16, null);
+			int randomxone = new Random().nextInt(Runner.width - packwidth);
+			int randomyone = new Random().nextInt(Runner.height - packheight);
+			Horde hellsGreeters = new Horde(randomxone, randomyone, packwidth, packheight, hex, 16, null);
 			hellsGreeters.level = 6;
 			hordeImageUp(hellsGreeters);
 			hellsGreeters.deathPotential = 32;
 			hellsGreeters.speed = 6;
 			addObject(hellsGreeters);
 			System.out.println("Hellhorde!");
+			if (hellsGreeters.x < Runner.width / 5) {
+				hellsGreeters.x += Runner.width / 5;
+			} else if (hellsGreeters.x > Runner.width - (Runner.width / 5)) {
+				hellsGreeters.x -= Runner.width / 5;
+			}
+			if (hellsGreeters.y < Runner.height / 5) {
+				hellsGreeters.y += Runner.height / 5;
+			} else if (hellsGreeters.y > Runner.height - (Runner.height / 5)) {
+				hellsGreeters.y -= Runner.height / 5;
+			}
 			return hellsGreeters;
 		} else {
 			if (alreadyExistentDiedInCombination != null) {
@@ -427,15 +492,25 @@ public class ObjectManager {
 		if (alreadyExistent == null) {
 			int packwidth = 255;
 			int packheight = 495;
-			int randomxone = new Random().nextInt(600 - packwidth);
-			int randomyone = new Random().nextInt(600 - packheight);
-			Horde hellsGreeters = new Horde(randomxone + 200, randomyone + 200, packwidth, packheight, hex, 32, null);
+			int randomxone = new Random().nextInt(Runner.width - packwidth);
+			int randomyone = new Random().nextInt(Runner.height - packheight);
+			Horde hellsGreeters = new Horde(randomxone, randomyone, packwidth, packheight, hex, 32, null);
 			hellsGreeters.level = 7;
 			hordeImageUp(hellsGreeters);
 			hellsGreeters.deathPotential = 64;
 			hellsGreeters.speed = 7;
 			addObject(hellsGreeters);
 			System.out.println("Deathhorde!");
+			if (hellsGreeters.x < Runner.width / 5) {
+				hellsGreeters.x += Runner.width / 5;
+			} else if (hellsGreeters.x > Runner.width - (Runner.width / 5)) {
+				hellsGreeters.x -= Runner.width / 5;
+			}
+			if (hellsGreeters.y < Runner.height / 5) {
+				hellsGreeters.y += Runner.height / 5;
+			} else if (hellsGreeters.y > Runner.height - (Runner.height / 5)) {
+				hellsGreeters.y -= Runner.height / 5;
+			}
 			return hellsGreeters;
 		} else {
 			if (alreadyExistentDiedInCombination != null) {
@@ -461,15 +536,25 @@ public class ObjectManager {
 		if (alreadyExistent == null) {
 			int packwidth = 260;
 			int packheight = 500;
-			int randomxone = new Random().nextInt(600 - packwidth);
-			int randomyone = new Random().nextInt(600 - packheight);
-			Horde archies = new Horde(randomxone + 200, randomyone + 200, packwidth, packheight, hex, 64, null);
+			int randomxone = new Random().nextInt(Runner.width - packwidth);
+			int randomyone = new Random().nextInt(Runner.height - packheight);
+			Horde archies = new Horde(randomxone, randomyone, packwidth, packheight, hex, 64, null);
 			archies.level = 8;
 			hordeImageUp(archies);
 			archies.deathPotential = 128;
 			archies.speed = 7;
 			addObject(archies);
 			System.out.println("Archpack!");
+			if (archies.x < Runner.width / 5) {
+				archies.x += Runner.width / 5;
+			} else if (archies.x > Runner.width - (Runner.width / 5)) {
+				archies.x -= Runner.width / 5;
+			}
+			if (archies.y < Runner.height / 5) {
+				archies.y += Runner.height / 5;
+			} else if (archies.y > Runner.height - (Runner.height / 5)) {
+				archies.y -= Runner.height / 5;
+			}
 			return archies;
 		} else {
 			if (alreadyExistentDiedInCombination != null) {
@@ -495,14 +580,24 @@ public class ObjectManager {
 		if (alreadyExistent == null) {
 			int packwidth = 260;
 			int packheight = 500;
-			int randomxone = new Random().nextInt(600 - packwidth);
-			int randomyone = new Random().nextInt(600 - packheight);
-			Horde darknyssez = new Horde(randomxone + 200, randomyone + 200, packwidth, packheight, hex, 128, null);
+			int randomxone = new Random().nextInt(Runner.width - packwidth);
+			int randomyone = new Random().nextInt(Runner.height - packheight);
+			Horde darknyssez = new Horde(randomxone, randomyone, packwidth, packheight, hex, 128, null);
 			darknyssez.level = 9;
 			hordeImageUp(darknyssez);
 			darknyssez.deathPotential = 256;
 			darknyssez.speed = 7;
 			addObject(darknyssez);
+			if (darknyssez.x < Runner.width / 5) {
+				darknyssez.x += Runner.width / 5;
+			} else if (darknyssez.x > Runner.width - (Runner.width / 5)) {
+				darknyssez.x -= Runner.width / 5;
+			}
+			if (darknyssez.y < Runner.height / 5) {
+				darknyssez.y += Runner.height / 5;
+			} else if (darknyssez.y > Runner.height - (Runner.height / 5)) {
+				darknyssez.y -= Runner.height / 5;
+			}
 			return darknyssez;
 		} else {
 			if (alreadyExistentDiedInCombination != null) {
@@ -526,15 +621,25 @@ public class ObjectManager {
 		if (alreadyExistent == null) {
 			int packwidth = 260;
 			int packheight = 500;
-			int randomxone = new Random().nextInt(600 - packwidth);
-			int randomyone = new Random().nextInt(600 - packheight);
-			Horde eternityswhim = new Horde(randomxone + 200, randomyone + 200, packwidth, packheight, hex, 256, null);
+			int randomxone = new Random().nextInt(Runner.width - packwidth);
+			int randomyone = new Random().nextInt(Runner.height - packheight);
+			Horde eternityswhim = new Horde(randomxone, randomyone, packwidth, packheight, hex, 256, null);
 			eternityswhim.level = 10;
 			hordeImageUp(eternityswhim);
 			eternityswhim.deathPotential = 512;
 			eternityswhim.speed = 7;
 			addObject(eternityswhim);
 			System.out.println("Eternitypack!");
+			if (eternityswhim.x < Runner.width / 5) {
+				eternityswhim.x += Runner.width / 5;
+			} else if (eternityswhim.x > Runner.width - (Runner.width / 5)) {
+				eternityswhim.x -= Runner.width / 5;
+			}
+			if (eternityswhim.y < Runner.height / 5) {
+				eternityswhim.y += Runner.height / 5;
+			} else if (eternityswhim.y > Runner.height - (Runner.height / 5)) {
+				eternityswhim.y -= Runner.height / 5;
+			}
 			return eternityswhim;
 		} else {
 			if (alreadyExistentDiedInCombination != null) {
@@ -558,37 +663,35 @@ public class ObjectManager {
 
 	public void hordeImageUp(Horde h) {
 		switch (h.level) {
-		// do this for all 10 cases (9 more). make sure u make the images in sketcHex
-		// first.
 		case 1:
-			h.imagex = SketcHex.horde1;
+			h.imagex = Sketch.horde1;
 			break;
 		case 2:
-			h.imagex = SketcHex.horde2;
+			h.imagex = Sketch.horde2;
 			break;
 		case 3:
-			h.imagex = SketcHex.horde3;
+			h.imagex = Sketch.horde3;
 			break;
 		case 4:
-			h.imagex = SketcHex.horde4;
+			h.imagex = Sketch.horde4;
 			break;
 		case 5:
-			h.imagex = SketcHex.horde5;
+			h.imagex = Sketch.horde5;
 			break;
 		case 6:
-			h.imagex = SketcHex.horde6;
+			h.imagex = Sketch.horde6;
 			break;
 		case 7:
-			h.imagex = SketcHex.horde7;
+			h.imagex = Sketch.horde7;
 			break;
 		case 8:
-			h.imagex = SketcHex.horde8;
+			h.imagex = Sketch.horde8;
 			break;
 		case 9:
-			h.imagex = SketcHex.horde9;
+			h.imagex = Sketch.horde9;
 			break;
 		case 10:
-			h.imagex = SketcHex.horde10;
+			h.imagex = Sketch.horde10;
 			break;
 		}
 	}

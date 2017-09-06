@@ -8,7 +8,7 @@ import javax.swing.JOptionPane;
 import javax.swing.Timer;
 
 public class Room extends GameObject implements ActionListener {
-	SketcHex hex;
+	Sketch hex;
 
 	int roomStuckTime = 0;
 	int roomsroomnumber;
@@ -68,7 +68,7 @@ public class Room extends GameObject implements ActionListener {
 	Color ddbduplicate;
 
 	public Room(int x, int y, int width, int height, int roomsroomnumber, boolean unspawnedhorde, Color color,
-			SketcHex hex) {
+			Sketch hex) {
 		super(x, y, width, height);
 		this.hex = hex;
 		this.roomsroomnumber = roomsroomnumber;
@@ -81,7 +81,7 @@ public class Room extends GameObject implements ActionListener {
 		super.update();
 
 		// moving to the next room right
-		if (hex.flynn.x >= 1000) {
+		if (hex.flynn.x >= Runner.width) {
 			roomSwitch(true);
 		} else if (hex.flynn.x <= 0) {
 			roomSwitch(false);
@@ -89,21 +89,20 @@ public class Room extends GameObject implements ActionListener {
 
 	}
 
-	@SuppressWarnings("static-access")
 	private void roomSwitch(boolean isRight) {
 		Room r00m;
 		int itemwidth = 80;
 		int itemheight = 80;
-		int randomItemX = new Random().nextInt(HordeRunner.width - (HordeRunner.width / 5) - itemwidth);
-		int randomItemY = new Random().nextInt(HordeRunner.height - (HordeRunner.height / 5) - itemheight);
-		hex.flynn.x += isRight ? -HordeRunner.width + 5 : HordeRunner.width - 5;
+		int randomItemX = new Random().nextInt(Runner.width - (Runner.width / 5) - itemwidth);
+		int randomItemY = new Random().nextInt(Runner.height - (Runner.height / 5) - itemheight);
+		hex.flynn.x += isRight ? -Runner.width + 5 : Runner.width - 5;
 		hex.flynnroomnumber += isRight ? 1 : -1;
 		hex.roomcolors.add(color);
 		Color a = randomColor();
 		// *
 		hex.roomColor = a;
 
-		if (hex.megahead.getRoom(hex.flynnroomnumber) == null) {
+		if (hex.masterComm.getRoom(hex.flynnroomnumber) == null) {
 			levelupper++;
 			if ((levelupper >= level) && (levelupper % 2 == 0)) {
 				int apoint = level;
@@ -115,38 +114,40 @@ public class Room extends GameObject implements ActionListener {
 					// "Level Up! (Now Level " + level + "!). Health is up too!
 					// Now at " +
 					// hex.flynn.health + ".");
-					hex.flynn.health += (5 * level);
-					JOptionPane.showMessageDialog(null, "Level Up! (Now Level " + level
-							+ "!). Health and bullets are up too! Now at " + hex.flynn.health + ".");
+					hex.flynn.health += 5 * level;
+					hex.flynn.health += 7 * level;
+					JOptionPane.showMessageDialog(null,
+							"Level Up! (Now Level " + level + "!). Health and bullets are up too! Now at "
+									+ hex.flynn.health + " and " + hex.flynn.bulletAmmo + ", respectively.");
 
 				}
 				levelupper = 0;
 			}
-			r00m = new Room(0, 0, HordeRunner.width, HordeRunner.height, hex.flynnroomnumber, true, a, hex);
-			hex.megahead.addObject(r00m);
+			r00m = new Room(0, 0, Runner.width, Runner.height, hex.flynnroomnumber, true, a, hex);
+			hex.masterComm.addObject(r00m);
 			if (isRight) {
-				hex.megahead.addRoom(r00m, true);
+				hex.masterComm.addRoom(r00m, true);
 				hex.hordeAdder = level;
 			} else {
-				hex.megahead.addRoom(r00m, false);
+				hex.masterComm.addRoom(r00m, false);
 				hex.hordeAdder = level;
 			}
 			hex.enteredNewRoom(isRight, true);
 			xenomorpheousSubstance = new SpawningItem(randomItemX, randomItemY, itemwidth, itemheight, "type unset",
 					hex);
-			if (xenomorpheousSubstance.x < HordeRunner.width / 5) {
-				xenomorpheousSubstance.x += HordeRunner.width / 5;
-			} else if (xenomorpheousSubstance.x > HordeRunner.width - (HordeRunner.width / 5)) {
-				xenomorpheousSubstance.x -= HordeRunner.width - (HordeRunner.width / 5);
+			if (xenomorpheousSubstance.x < Runner.width / 5) {
+				xenomorpheousSubstance.x += Runner.width / 5;
+			} else if (xenomorpheousSubstance.x > Runner.width - (Runner.width / 5)) {
+				xenomorpheousSubstance.x -= Runner.width - (Runner.width / 5);
 			}
-			if (xenomorpheousSubstance.y < HordeRunner.height / 5) {
-				xenomorpheousSubstance.y += HordeRunner.height / 5;
-			} else if (xenomorpheousSubstance.y > HordeRunner.height - (HordeRunner.height / 5)) {
-				xenomorpheousSubstance.y -= HordeRunner.height - (HordeRunner.height / 5);
+			if (xenomorpheousSubstance.y < Runner.height / 5) {
+				xenomorpheousSubstance.y += Runner.height / 5;
+			} else if (xenomorpheousSubstance.y > Runner.height - (Runner.height / 5)) {
+				xenomorpheousSubstance.y -= Runner.height - (Runner.height / 5);
 			}
-			hex.megahead.addObject(xenomorpheousSubstance);
+			hex.masterComm.addObject(xenomorpheousSubstance);
 		} else {
-			r00m = hex.megahead.getRoom(hex.flynnroomnumber);
+			r00m = hex.masterComm.getRoom(hex.flynnroomnumber);
 			hex.enteredNewRoom(isRight, false);
 		}
 
@@ -217,11 +218,11 @@ public class Room extends GameObject implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if ((hex.flynn.x == HordeRunner.width) || (hex.flynn.x == 0)) {
+		if ((hex.flynn.x == Runner.width) || (hex.flynn.x == 0)) {
 			roomStuckTime++;
 			if (roomStuckTime == 2) {
 				roomStuckTime = 0;
-				hex.flynn.x += HordeRunner.width / 5;
+				hex.flynn.x += Runner.width / 10 + hex.flynn.width;
 			} else {
 				JOptionPane.showMessageDialog(null, "Moving in: " + (4 - roomStuckTime) + ".");
 			}

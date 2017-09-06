@@ -1,20 +1,20 @@
 import javax.swing.JFrame;
 
-public class HordeRunner {
+public class Runner {
 	JFrame frame;
-	static final int width = 1000;
-	static final int height = 800;
-	SketcHex hex;
+	static final int width = 1920;
+	static final int height = 1080;
+	Sketch hex;
 
 	// constructor
-	public HordeRunner() {
+	public Runner() {
 		frame = new JFrame();
-		hex = new SketcHex();
+		hex = new Sketch();
 		setup();
 	}
 
 	public static void main(String[] args) {
-		HordeRunner battlehead = new HordeRunner();
+		Runner battlehead = new Runner();
 	}
 
 	void setup() {

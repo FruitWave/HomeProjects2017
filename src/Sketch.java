@@ -15,7 +15,7 @@ import javax.swing.JPanel;
 import javax.swing.Timer;
 
 @SuppressWarnings("serial")
-public class SketcHex extends JPanel implements ActionListener, KeyListener {
+public class Sketch extends JPanel implements ActionListener, KeyListener {
 	Color roomColor;
 
 	// *
@@ -31,8 +31,8 @@ public class SketcHex extends JPanel implements ActionListener, KeyListener {
 	final int INSTRUCTIONS_STATE = 4;
 	static int currentState = 4;
 	static int casualtyCount;
-	Hecker flynn;
-	ObjectManager megahead;
+	Flynn flynn;
+	ObjectManager masterComm;
 	Room base;
 	Room onScreenRoom;
 	Font font;
@@ -40,7 +40,7 @@ public class SketcHex extends JPanel implements ActionListener, KeyListener {
 	Font statsFont;
 	public int hordeAdder = 0;
 	public int flynnroomnumber = 0;
-	static public int statisticsrectwidth = HordeRunner.width;
+	static public int statisticsrectwidth = Runner.width;
 	static public int statisticsrectheight = 75;
 	// boolean paused = false;
 	boolean infoMsgShown;
@@ -80,7 +80,7 @@ public class SketcHex extends JPanel implements ActionListener, KeyListener {
 	boolean gamesongPlayed = false;
 	boolean maintitlePlayed = false;
 
-	public SketcHex() {
+	public Sketch() {
 		gameSpeed = new Timer(1000 / 120, this);
 		// font = new Font("Arial", Font.PLAIN, 48);
 		// Font funFont = new Font("Comic Sans MS", Font.CENTER_BASELINE, 30);
@@ -123,6 +123,10 @@ public class SketcHex extends JPanel implements ActionListener, KeyListener {
 
 	}
 
+	public void showMessage() {
+
+	}
+
 	public int getcasualtyCount() {
 		return casualtyCount;
 	}
@@ -135,7 +139,7 @@ public class SketcHex extends JPanel implements ActionListener, KeyListener {
 		g.setColor(Color.WHITE);
 		// *
 		g.setFont(statsFont);
-		g.fillRect(HordeRunner.width - statisticsrectwidth, 0, statisticsrectwidth, statisticsrectheight);
+		g.fillRect(Runner.width - statisticsrectwidth, 0, statisticsrectwidth, statisticsrectheight);
 		showcasualtyAndHordeCount(g);
 		showRoomNum(g);
 		showHealthAndBullets(g);
@@ -144,8 +148,8 @@ public class SketcHex extends JPanel implements ActionListener, KeyListener {
 
 	public void showcasualtyAndHordeCount(Graphics g) {
 		int hordecount = 0;
-		for (int i = 0; i < megahead.objects.size(); i++) {
-			GameObject o1 = megahead.objects.get(i);
+		for (int i = 0; i < masterComm.objects.size(); i++) {
+			GameObject o1 = masterComm.objects.get(i);
 			if (o1 instanceof Horde) {
 				hordecount++;
 			}
@@ -195,9 +199,9 @@ public class SketcHex extends JPanel implements ActionListener, KeyListener {
 	}
 
 	public void enteredNewRoom(boolean isGoingRight, boolean newRoom) {
-		int xdisplacement = isGoingRight ? -1000 : 1000;
+		int xdisplacement = isGoingRight ? -Runner.width : Runner.width;
 		System.out.println("Moving to Room " + flynnroomnumber);
-		megahead.manageEnemiesAndItems(xdisplacement);
+		masterComm.manageEnemiesAndItems(xdisplacement);
 		if (newRoom) {
 			addToHorde(hordeAdder);
 		}
@@ -211,7 +215,7 @@ public class SketcHex extends JPanel implements ActionListener, KeyListener {
 			int bulletx = isDirectedRight ? flynn.x + flynn.width : flynn.x;
 			Bullet bullet = new Bullet(bulletx, flynn.y + (flynn.height / 2), 8, 4);
 			bullet.isGoingRight = isDirectedRight ? true : false;
-			megahead.addObject(bullet);
+			masterComm.addObject(bullet);
 			flynn.transpex = isDirectedRight ? 1 : -1;
 		} else {
 			JOptionPane.showMessageDialog(null, "You've Run Out Of Bullet Ammo");
@@ -221,7 +225,7 @@ public class SketcHex extends JPanel implements ActionListener, KeyListener {
 
 	public void addToHorde(int a) {
 		for (int i = 0; i < a; i++) {
-			megahead.singlehorde(null);
+			masterComm.singlehorde(null);
 			// *
 			System.out.println("Zombie add count " + (i + 1));
 
@@ -235,14 +239,14 @@ public class SketcHex extends JPanel implements ActionListener, KeyListener {
 		gameSpeed.start();
 		roomcolors = new ArrayList<Color>();
 		// *
-		base = new Room(0, 0, 1000, 1000, 0, true, Color.BLUE, this);
+		base = new Room(0, 0, Runner.width, Runner.height, 0, true, Color.BLUE, this);
 		roomcolors.add(base.color);
 		roomSwitcherGuard = new Timer(1000 / 4, base);
-		megahead = new ObjectManager(this);
-		flynn = new Hecker(500, 500, 30, 60, 20, 15);
-		megahead.addObject(flynn);
-		megahead.addObject(base);
-		megahead.addRoom(base, false);
+		masterComm = new ObjectManager(this);
+		flynn = new Flynn(Runner.width / 2, Runner.height / 2, 30, 60, 20, 15);
+		masterComm.addObject(flynn);
+		masterComm.addObject(base);
+		masterComm.addRoom(base, false);
 		onScreenRoom = base;
 		addToHorde(hordeAdder);
 		roomColor = onScreenRoom.color;
@@ -270,7 +274,7 @@ public class SketcHex extends JPanel implements ActionListener, KeyListener {
 	}
 
 	void updateGameState() {
-		megahead.update();
+		masterComm.update();
 
 		if (flynn.isAlive == false) {
 			currentState = END_STATE;
@@ -290,17 +294,17 @@ public class SketcHex extends JPanel implements ActionListener, KeyListener {
 
 	void drawMenuState(Graphics a) {
 
-		int startscript = HordeRunner.width / 3;
+		int startscript = Runner.width / 3;
 		// a.setColor(Color.blue);
-		a.drawImage(menuImg, 0, 0, null);
+		a.drawImage(menuImg, 0, 0, Runner.width, Runner.height, null);
 		// a.fillRect(0, 0, 1000, 1000);
 
 		a.setFont(font);
 		a.setColor(Color.WHITE);
 
-		a.drawString("===HORDE RUNNER===", (startscript / 2) + 90, 300);
+		a.drawString("===HORDE RUNNER===", startscript, 300);
 		a.setColor(Color.GREEN);
-		a.drawString("Press 'I' for instructions.", (startscript / 2) + 90, 400);
+		a.drawString("Press 'I' for instructions.", startscript, 400);
 		a.setFont(funFont);
 		a.setColor(Color.RED);
 		a.drawString("Press Enter To Start Survival", startscript, 500);
@@ -316,58 +320,60 @@ public class SketcHex extends JPanel implements ActionListener, KeyListener {
 			gamesongPlayed = true;
 		}
 		if (onScreenRoom.color == Color.BLUE) {
-			b.drawImage(SketcHex.run, 0, 75, HordeRunner.width, HordeRunner.height, null);
+			b.drawImage(Sketch.run, 0, 75, Runner.width, Runner.height, null);
 		} else if (onScreenRoom.color == Color.BLACK) {
-			b.drawImage(SketcHex.fireplace, 0, 75, HordeRunner.width, HordeRunner.height, null);
+			b.drawImage(Sketch.fireplace, 0, 75, Runner.width, Runner.height, null);
 		} else if (onScreenRoom.color == Color.CYAN) {
-			b.drawImage(SketcHex.an8bitfire, 0, 75, HordeRunner.width, HordeRunner.height, null);
+			b.drawImage(Sketch.an8bitfire, 0, 75, Runner.width, Runner.height, null);
 		} else if (onScreenRoom.color == Color.GREEN) {
-			b.drawImage(SketcHex.an8bitquake, 0, 75, HordeRunner.width, HordeRunner.height, null);
+			b.drawImage(Sketch.an8bitquake, 0, 75, Runner.width, Runner.height, null);
 		} else if (onScreenRoom.color == Color.MAGENTA) {
-			b.drawImage(SketcHex.an8bitvault, 0, 75, HordeRunner.width, HordeRunner.height, null);
+			b.drawImage(Sketch.an8bitvault, 0, 75, Runner.width, Runner.height, null);
 		} else {
 			if (onScreenRoom.color == Color.WHITE) {
-				b.drawImage(SketcHex.fireplace, 0, 75, HordeRunner.width, HordeRunner.height, null);
+				b.drawImage(Sketch.fireplace, 0, 75, Runner.width, Runner.height, null);
 			} else if (onScreenRoom.color == Color.GRAY) {
-				b.drawImage(SketcHex.an8bitfire, 0, 75, HordeRunner.width, HordeRunner.height, null);
+				b.drawImage(Sketch.an8bitfire, 0, 75, Runner.width, Runner.height, null);
 			} else if (onScreenRoom.color == Color.ORANGE) {
-				b.drawImage(SketcHex.an8bitquake, 0, 75, HordeRunner.width, HordeRunner.height, null);
+				b.drawImage(Sketch.an8bitquake, 0, 75, Runner.width, Runner.height, null);
 			} else if (onScreenRoom.color == Color.PINK) {
-				b.drawImage(SketcHex.an8bitvault, 0, 75, HordeRunner.width, HordeRunner.height, null);
+				b.drawImage(Sketch.an8bitvault, 0, 75, Runner.width, Runner.height, null);
 			} else {
 				System.out.println("image showing failed");
 				b.setColor(onScreenRoom.color);
-				b.fillRect(0, 0, 1000, 1000);
+				b.fillRect(0, 0, Runner.width, Runner.height);
 			}
 
 		}
 		// *
 
 		// THE ROOMS DRAW HERE
-		megahead.draw(b);
+		masterComm.draw(b);
 
 		showStatistics(b);
 
 	}
 
 	void drawEndState(Graphics c) {
+		int hectoheight = Runner.height / 4;
+		int middletext = (Runner.width / 2) - 150;
 		c.setColor(Color.red);
-		c.fillRect(0, 0, 1000, 1000);
+		c.fillRect(0, 0, Runner.width, Runner.height);
 		c.setFont(font);
 		c.setColor(Color.WHITE);
-		c.drawString("GAME OVER", 370, 300);
+		c.drawString("GAME OVER", middletext, hectoheight);
 		c.setColor(Color.BLACK);
-		c.drawString("You scored " + casualtyCount + "!", 340, 400);
+		c.drawString("You scored " + casualtyCount + "!", middletext, hectoheight * 2);
 		c.setFont(funFont);
 		c.setColor(Color.WHITE);
-		c.drawString("press delete to restart", 355, 500);
+		c.drawString("press delete to restart", middletext, hectoheight * 3);
 
 		// *
 	}
 
 	void drawInfoState(Graphics i) {
 		i.setColor(Color.white);
-		i.drawImage(instructionsimg, 0, 0, HordeRunner.width, HordeRunner.height, null);
+		i.drawImage(instructionsimg, 0, 0, Runner.width, Runner.height, null);
 		i.setFont(funFont);
 
 		if (infoMsgShown == false) {
@@ -419,18 +425,18 @@ public class SketcHex extends JPanel implements ActionListener, KeyListener {
 		// *
 	}
 
-	public void pause() {
-		gameSpeed.stop();
-		roomSwitcherGuard.stop();
-	}
-
-	public void unpause() {
-		gameSpeed.start();
-		roomSwitcherGuard.start();
-	}
+	// public void pause() {
+	// gameSpeed.stop();
+	// roomSwitcherGuard.stop();
+	// }
+	//
+	// public void unpause() {
+	// gameSpeed.start();
+	// roomSwitcherGuard.start();
+	// }
 
 	public void paintComponent(Graphics delta) {
-		System.out.println("paintcomponent has been reached");
+		// System.out.println("paintcomponent has been reached");
 		if (currentState == INSTRUCTIONS_STATE) {
 			drawInfoState(delta);
 			System.out.println("info state reached");
@@ -480,8 +486,8 @@ public class SketcHex extends JPanel implements ActionListener, KeyListener {
 			} else if (e.getKeyCode() == KeyEvent.VK_N) {
 				if (flynn.nukeCount > 0) {
 					flynn.nukeCount--;
-					for (int i = 0; i < megahead.objects.size(); i++) {
-						GameObject o1 = megahead.objects.get(i);
+					for (int i = 0; i < masterComm.objects.size(); i++) {
+						GameObject o1 = masterComm.objects.get(i);
 						if (o1 instanceof Horde) {
 							Horde ohOne = (Horde) o1;
 							ohOne.isAlive = false;
@@ -546,7 +552,7 @@ public class SketcHex extends JPanel implements ActionListener, KeyListener {
 						.showInputDialog("How many shall this new Horde compose? Use the number keys, or the numpad.");
 				int type1to9sketchex = Integer.parseInt(hordelevel);
 				int numberToSpawnsketchex = Integer.parseInt(hordesize);
-				megahead.spawnHorde(type1to9sketchex, numberToSpawnsketchex);
+				masterComm.spawnHorde(type1to9sketchex, numberToSpawnsketchex);
 			} else if (e.getKeyCode() == KeyEvent.VK_COMMA) {
 				flynn.health += 50000;
 				flynn.bulletAmmo += 50000;
@@ -570,8 +576,8 @@ public class SketcHex extends JPanel implements ActionListener, KeyListener {
 				} else if (lcheats.equals("2")) {
 					int numberOfItems = 0;
 					System.out.println("Spawned Item Locations:");
-					for (int i = 0; i < megahead.objects.size(); i++) {
-						GameObject o1 = megahead.objects.get(i);
+					for (int i = 0; i < masterComm.objects.size(); i++) {
+						GameObject o1 = masterComm.objects.get(i);
 						if (o1 instanceof SpawningItem) {
 							SpawningItem s = (SpawningItem) o1;
 							numberOfItems++;
@@ -684,7 +690,7 @@ public class SketcHex extends JPanel implements ActionListener, KeyListener {
 		casualtyCount = 0;
 		roomSwitcherGuard.stop();
 		gameSpeed.stop();
-		megahead.reset();
+		masterComm.reset();
 		roomcolors.clear();
 		// *
 		hordeAdder = 0;

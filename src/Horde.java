@@ -2,7 +2,7 @@ import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
 public class Horde extends GameObject {
-	SketcHex hex;
+	Sketch hex;
 	int transpex;
 	int transpey;
 	BufferedImage imagex;
@@ -13,7 +13,7 @@ public class Horde extends GameObject {
 	int health;
 	int level;
 
-	public Horde(int x, int y, int width, int height, SketcHex hex, int health, BufferedImage imagex) {
+	public Horde(int x, int y, int width, int height, Sketch hex, int health, BufferedImage imagex) {
 
 		// *
 		super(x, y, width, height);
