@@ -3,14 +3,14 @@
 /8bitquake.png
 /8bitvault.png
 /Bullet.class
+/Flynn.class
 /GameObject.class
-/Hecker.class
 /Horde.class
-/HordeRunner.class
 /Not-found.jpg
 /ObjectManager.class
 /Room.class
-/SketcHex.class
+/Runner.class
+/Sketch.class
 /Song$1.class
 /Song.class
 /SpawningItem.class
@@ -40,6 +40,3 @@
 /run.png
 /spectreleft.png
 /spectreright.png
-/Flynn.class
-/Runner.class
-/Sketch.class

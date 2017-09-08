@@ -439,7 +439,6 @@ public class Sketch extends JPanel implements ActionListener, KeyListener {
 		// System.out.println("paintcomponent has been reached");
 		if (currentState == INSTRUCTIONS_STATE) {
 			drawInfoState(delta);
-			System.out.println("info state reached");
 		} else if (currentState == MENU_STATE) {
 			drawMenuState(delta);
 		} else if (currentState == GAME_STATE) {
